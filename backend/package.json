@@ -4,7 +4,7 @@
   "description": "Electronic Voting System for Kazakhstan",
   "main": "/src/index.jx",
   "scripts": {
-    "test": "npm test"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
