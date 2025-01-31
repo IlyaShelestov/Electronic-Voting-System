@@ -1,0 +1,40 @@
+{
+  "name": "e-voting",
+  "version": "1.0.0",
+  "description": "Electronic Voting System for Kazakhstan",
+  "main": "/src/index.jx",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IlyaShelestov/Diploma-Work.git"
+  },
+  "keywords": [
+    "Voting",
+    "Vote",
+    "Electronic",
+    "Voting",
+    "Elections"
+  ],
+  "author": "Ilya Shelestov, Yersultan Serimbetov, Rauan Yessentayev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IlyaShelestov/Diploma-Work/issues"
+  },
+  "homepage": "https://github.com/IlyaShelestov/Diploma-Work#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.13.1",
+    "rate-limiter-flexible": "^5.0.5",
+    "redis": "^4.7.0",
+    "winston": "^3.17.0"
+  }
+}
