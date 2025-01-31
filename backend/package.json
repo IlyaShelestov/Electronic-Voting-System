@@ -4,6 +4,7 @@
   "description": "Electronic Voting System for Kazakhstan",
   "main": "/src/index.jx",
   "scripts": {
+    "test": "jest",
     "start": "node src/index.js"
   },
   "repository": {
@@ -36,5 +37,9 @@
     "rate-limiter-flexible": "^5.0.5",
     "redis": "^4.7.0",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
