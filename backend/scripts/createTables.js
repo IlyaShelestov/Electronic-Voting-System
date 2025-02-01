@@ -16,9 +16,11 @@ async function createTables() {
         address VARCHAR(255),
         sex VARCHAR(64),
         email VARCHAR(255),
-        phone VARCHAR(64),
-        password VARCHAR(255),
-        role VARCHAR(64)
+        phone VARCHAR(64) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(64) NOT NULL DEFAULT 'user',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
     console.log("Tables created successfully.");

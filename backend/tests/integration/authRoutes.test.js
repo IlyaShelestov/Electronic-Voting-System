@@ -38,5 +38,30 @@ describe("Auth API Tests", () => {
 
     expect(res.status).toBe(201);
     expect(res.body[0]).toHaveProperty("iin", "123456789012");
+    expect(res.body[0]).toHaveProperty("name", "TestName");
+    expect(res.body[0]).toHaveProperty("surname", "TestSurname");
+    expect(res.body[0]).toHaveProperty("patronymic", "TestPatronymic");
+    expect(res.body[0]).toHaveProperty("nationality", "TestNationality");
+    expect(res.body[0]).toHaveProperty("birth_date", "2021-01-01");
+    expect(res.body[0]).toHaveProperty("region", "TestRegion");
+    expect(res.body[0]).toHaveProperty("city", "TestCity");
+    expect(res.body[0]).toHaveProperty("address", "TestAddress");
+    expect(res.body[0]).toHaveProperty("sex", "TestSex");
+    expect(res.body[0]).toHaveProperty("email", "test@test.com");
+    expect(res.body[0]).toHaveProperty("phone", "1234567890");
+    expect(res.body[0]).toHaveProperty("role", "user");
+    expect(res.body[0]).toHaveProperty("password");
+    expect(res.body[0]).toHaveProperty("created_at");
+    expect(res.body[0]).toHaveProperty("updated_at");
+  });
+
+  test("Should login a user", async () => {
+    const res = await request(server).post("/api/auth/login").send({
+      iin: "123456789012",
+      password: "testpassword",
+    });
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("token");
   });
 });
