@@ -16,7 +16,7 @@ async function createTables() {
         date_of_birth DATE NOT NULL,
         region VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
+        password_hash TEXT NOT NULL,
         role VARCHAR(20) NOT NULL DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
