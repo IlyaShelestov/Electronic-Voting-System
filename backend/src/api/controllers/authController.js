@@ -6,13 +6,13 @@ exports.register = async (req, res) => {
   try {
     const {
       iin,
-      name,
-      surname,
+      first_name,
+      last_name,
       patronymic,
       date_of_birth,
       region,
       city,
-      phone,
+      phone_number,
       email,
       password,
     } = req.body;
@@ -21,13 +21,13 @@ exports.register = async (req, res) => {
 
     const newUser = await User.createUser(
       iin,
-      name,
-      surname,
+      first_name,
+      last_name,
       patronymic,
       date_of_birth,
       region,
       city,
-      phone,
+      phone_number,
       email,
       hashedPassword
     );

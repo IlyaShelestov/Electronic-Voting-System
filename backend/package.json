@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node src/index.js",
-    "migrate": "node scripts/deleteTables.js && node scripts/createTables.js"
+    "migrate": "node scripts/dropTables.js && node scripts/createTables.js"
   },
   "repository": {
     "type": "git",
