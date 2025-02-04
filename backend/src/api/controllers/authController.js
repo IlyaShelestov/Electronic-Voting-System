@@ -9,33 +9,26 @@ exports.register = async (req, res) => {
       name,
       surname,
       patronymic,
-      nationality,
       birth_date,
       region,
       city,
-      address,
-      sex,
-      email,
       phone,
       password,
-      role,
     } = req.body;
+
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.createUser(
       iin,
       name,
       surname,
       patronymic,
-      nationality,
       birth_date,
       region,
       city,
-      address,
-      sex,
-      email,
       phone,
       hashedPassword,
-      role
+      "user"
     );
 
     res.status(201).json(newUser);

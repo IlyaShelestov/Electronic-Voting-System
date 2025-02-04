@@ -24,16 +24,11 @@ describe("Auth API Tests", () => {
       name: "TestName",
       surname: "TestSurname",
       patronymic: "TestPatronymic",
-      nationality: "TestNationality",
       birth_date: "2021-01-01",
       region: "TestRegion",
       city: "TestCity",
-      address: "TestAddress",
-      sex: "TestSex",
-      email: "test@test.com",
       phone: "1234567890",
       password: "testpassword",
-      role: "user",
     });
 
     expect(res.status).toBe(201);
@@ -41,13 +36,9 @@ describe("Auth API Tests", () => {
     expect(res.body[0]).toHaveProperty("name", "TestName");
     expect(res.body[0]).toHaveProperty("surname", "TestSurname");
     expect(res.body[0]).toHaveProperty("patronymic", "TestPatronymic");
-    expect(res.body[0]).toHaveProperty("nationality", "TestNationality");
     expect(res.body[0]).toHaveProperty("birth_date", "2021-01-01");
     expect(res.body[0]).toHaveProperty("region", "TestRegion");
     expect(res.body[0]).toHaveProperty("city", "TestCity");
-    expect(res.body[0]).toHaveProperty("address", "TestAddress");
-    expect(res.body[0]).toHaveProperty("sex", "TestSex");
-    expect(res.body[0]).toHaveProperty("email", "test@test.com");
     expect(res.body[0]).toHaveProperty("phone", "1234567890");
     expect(res.body[0]).toHaveProperty("role", "user");
     expect(res.body[0]).toHaveProperty("password");
