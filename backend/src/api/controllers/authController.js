@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
       name,
       surname,
       patronymic,
-      birth_date,
+      date_of_birth,
       region,
       city,
       phone,
@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
       name,
       surname,
       patronymic,
-      birth_date,
+      date_of_birth,
       region,
       city,
       phone,
@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
   try {
     const { iin, password } = req.body;
     const user = await User.findByIIN(iin);
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 

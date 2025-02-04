@@ -6,27 +6,27 @@ class User {
     name,
     surname,
     patronymic,
-    birth_date,
+    date_of_birth,
     region,
     city,
     phone,
     email,
-    password,
+    password_hash,
     role = "user"
   ) {
     const query =
-      "INSERT INTO users (iin, name, surname, patronymic, birth_date, region, city, phone, email, password, role) VALUES ($1, $2, $3, $4, $5::date, $6, $7, $8, $9, $10, $11) RETURNING *, birth_date::text as birth_date";
+      "INSERT INTO users (iin, name, surname, patronymic, date_of_birth, region, city, phone, email, password_hash, role) VALUES ($1, $2, $3, $4, $5::date, $6, $7, $8, $9, $10, $11) RETURNING *, date_of_birth::text as date_of_birth";
     const values = [
       iin,
       name,
       surname,
       patronymic,
-      birth_date,
+      date_of_birth,
       region,
       city,
       phone,
       email,
-      password,
+      password_hash,
       role,
     ];
     const { rows } = await pool.query(query, values);

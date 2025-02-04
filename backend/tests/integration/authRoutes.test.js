@@ -24,7 +24,7 @@ describe("Auth API Tests", () => {
       name: "TestName",
       surname: "TestSurname",
       patronymic: "TestPatronymic",
-      birth_date: "2021-01-01",
+      date_of_birth: "2021-01-01",
       region: "TestRegion",
       city: "TestCity",
       phone: "1234567890",
@@ -37,13 +37,13 @@ describe("Auth API Tests", () => {
     expect(res.body[0]).toHaveProperty("name", "TestName");
     expect(res.body[0]).toHaveProperty("surname", "TestSurname");
     expect(res.body[0]).toHaveProperty("patronymic", "TestPatronymic");
-    expect(res.body[0]).toHaveProperty("birth_date", "2021-01-01");
+    expect(res.body[0]).toHaveProperty("date_of_birth", "2021-01-01");
     expect(res.body[0]).toHaveProperty("region", "TestRegion");
     expect(res.body[0]).toHaveProperty("city", "TestCity");
     expect(res.body[0]).toHaveProperty("phone", "1234567890");
     expect(res.body[0]).toHaveProperty("email", "TestEmail");
     expect(res.body[0]).toHaveProperty("role", "user");
-    expect(res.body[0]).toHaveProperty("password");
+    expect(res.body[0]).toHaveProperty("password_hash");
     expect(res.body[0]).toHaveProperty("created_at");
     expect(res.body[0]).toHaveProperty("updated_at");
   });
