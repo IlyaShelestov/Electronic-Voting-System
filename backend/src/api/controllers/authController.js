@@ -13,6 +13,7 @@ exports.register = async (req, res) => {
       region,
       city,
       phone,
+      email,
       password,
     } = req.body;
 
@@ -27,8 +28,8 @@ exports.register = async (req, res) => {
       region,
       city,
       phone,
-      hashedPassword,
-      "user"
+      email,
+      hashedPassword
     );
 
     res.status(201).json(newUser);

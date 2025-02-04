@@ -28,7 +28,8 @@ describe("Auth API Tests", () => {
       region: "TestRegion",
       city: "TestCity",
       phone: "1234567890",
-      password: "testpassword",
+      email: "TestEmail",
+      password: "TestPassword",
     });
 
     expect(res.status).toBe(201);
@@ -40,6 +41,7 @@ describe("Auth API Tests", () => {
     expect(res.body[0]).toHaveProperty("region", "TestRegion");
     expect(res.body[0]).toHaveProperty("city", "TestCity");
     expect(res.body[0]).toHaveProperty("phone", "1234567890");
+    expect(res.body[0]).toHaveProperty("email", "TestEmail");
     expect(res.body[0]).toHaveProperty("role", "user");
     expect(res.body[0]).toHaveProperty("password");
     expect(res.body[0]).toHaveProperty("created_at");
@@ -49,7 +51,7 @@ describe("Auth API Tests", () => {
   test("Should login a user", async () => {
     const res = await request(server).post("/api/auth/login").send({
       iin: "123456789012",
-      password: "testpassword",
+      password: "TestPassword",
     });
 
     expect(res.status).toBe(200);

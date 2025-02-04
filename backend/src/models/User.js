@@ -10,11 +10,12 @@ class User {
     region,
     city,
     phone,
+    email,
     password,
     role = "user"
   ) {
     const query =
-      "INSERT INTO users (iin, name, surname, patronymic, birth_date, region, city, phone, password, role) VALUES ($1, $2, $3, $4, $5::date, $6, $7, $8, $9, $10) RETURNING *, birth_date::text as birth_date";
+      "INSERT INTO users (iin, name, surname, patronymic, birth_date, region, city, phone, email, password, role) VALUES ($1, $2, $3, $4, $5::date, $6, $7, $8, $9, $10, $11) RETURNING *, birth_date::text as birth_date";
     const values = [
       iin,
       name,
@@ -24,6 +25,7 @@ class User {
       region,
       city,
       phone,
+      email,
       password,
       role,
     ];
