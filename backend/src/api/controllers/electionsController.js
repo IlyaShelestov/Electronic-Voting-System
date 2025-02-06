@@ -19,3 +19,13 @@ exports.getAvaliable = async (req, res) => {
     res.status(500).json({ message: "Error getting avaliable elections" });
   }
 };
+
+exports.getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const report = await Election.getDailyVotes(id);
+    res.status(200).json(report);
+  } catch (err) {
+    res.status(500).json({ message: "Error getting votes report" });
+  }
+};

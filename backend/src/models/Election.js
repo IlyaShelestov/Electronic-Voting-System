@@ -31,6 +31,25 @@ class Election {
     return result.rows[0];
   }
 
+  static async getDailyVotes(electionId) {
+    const query = `
+      SELECT 
+        c.candidate_id,
+        c.user_id,
+        c.bio,
+        c.party,
+        DATE(v.voted_at) AS voted_day,
+        COUNT(v.vote_id) AS vote_count
+      FROM candidates c
+      LEFT JOIN voters v ON v.candidate_id = c.candidate_id
+      WHERE c.election_id = $1
+      GROUP BY c.candidate_id, c.user_id, c.bio, c.party, DATE(v.voted_at)
+      ORDER BY voted_day;
+    `;
+    const result = await pool.query(query, [electionId]);
+    return result.rows;
+  }
+
   static async getAvailable(data) {
     const query =
       "SELECT * FROM elections WHERE (region = $1 OR city = $2) AND start_date <= $3 AND end_date >= $3";
