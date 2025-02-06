@@ -33,19 +33,19 @@ describe("Auth API Tests", () => {
     });
 
     expect(res.status).toBe(201);
-    expect(res.body[0]).toHaveProperty("iin", "123456789012");
-    expect(res.body[0]).toHaveProperty("first_name", "TestName");
-    expect(res.body[0]).toHaveProperty("last_name", "TestSurname");
-    expect(res.body[0]).toHaveProperty("patronymic", "TestPatronymic");
-    expect(res.body[0]).toHaveProperty("date_of_birth", "2021-01-01");
-    expect(res.body[0]).toHaveProperty("region", "TestRegion");
-    expect(res.body[0]).toHaveProperty("city", "TestCity");
-    expect(res.body[0]).toHaveProperty("phone_number", "1234567890");
-    expect(res.body[0]).toHaveProperty("email", "TestEmail");
-    expect(res.body[0]).toHaveProperty("role", "user");
-    expect(res.body[0]).toHaveProperty("password_hash");
-    expect(res.body[0]).toHaveProperty("created_at");
-    expect(res.body[0]).toHaveProperty("updated_at");
+    expect(res.body).toHaveProperty("iin", "123456789012");
+    expect(res.body).toHaveProperty("first_name", "TestName");
+    expect(res.body).toHaveProperty("last_name", "TestSurname");
+    expect(res.body).toHaveProperty("patronymic", "TestPatronymic");
+    expect(res.body).toHaveProperty("date_of_birth", "2021-01-01");
+    expect(res.body).toHaveProperty("region", "TestRegion");
+    expect(res.body).toHaveProperty("city", "TestCity");
+    expect(res.body).toHaveProperty("phone_number", "1234567890");
+    expect(res.body).toHaveProperty("email", "TestEmail");
+    expect(res.body).toHaveProperty("role", "user");
+    expect(res.body).toHaveProperty("password_hash");
+    expect(res.body).toHaveProperty("created_at");
+    expect(res.body).toHaveProperty("updated_at");
   });
 
   test("Should login a user", async () => {
