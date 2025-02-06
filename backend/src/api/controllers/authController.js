@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
       role: "user",
     };
 
-    const newUser = await User.createUser(data);
+    const newUser = await User.create(data);
 
     res.status(201).json(newUser);
   } catch (err) {
@@ -49,10 +49,19 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-    res.json({ token });
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        role: user.role,
+        city: user.city,
+        region: user.region,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });
   }

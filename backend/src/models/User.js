@@ -1,7 +1,7 @@
 const pool = require("../config/db");
 
 class User {
-  static async createUser(data) {
+  static async create(data) {
     const query =
       "INSERT INTO users (iin, first_name, last_name, patronymic, date_of_birth, region, city, phone_number, email, password_hash, role) VALUES ($1, $2, $3, $4, $5::date, $6, $7, $8, $9, $10, $11) RETURNING *, date_of_birth::text as date_of_birth";
     const values = [

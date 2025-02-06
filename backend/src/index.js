@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 const authRoutes = require("./api/routes/authRoutes");
+const electionsRoutes = require("./api/routes/electionsRoutes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/elections", electionsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
