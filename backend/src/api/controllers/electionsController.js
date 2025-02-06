@@ -1,5 +1,4 @@
 const Election = require("../../models/Election");
-const { getRegionAndCity } = require("../../utils/tokenHelper");
 
 exports.getAll = async (req, res) => {
   try {
@@ -12,7 +11,7 @@ exports.getAll = async (req, res) => {
 
 exports.getAvaliable = async (req, res) => {
   try {
-    const { region, city } = getRegionAndCity(req);
+    const { region, city } = req.user;
     const date = new Date();
     const elections = await Election.getAvailable({ region, city, date });
     res.status(200).json(elections);

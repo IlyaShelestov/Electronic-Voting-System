@@ -66,3 +66,12 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Error logging in" });
   }
 };
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out" });
+  } catch (err) {
+    res.status(500).json({ message: "Error logging out" });
+  }
+};

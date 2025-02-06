@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./api/routes/authRoutes");
 const electionsRoutes = require("./api/routes/electionsRoutes");
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {

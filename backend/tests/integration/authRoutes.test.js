@@ -57,4 +57,30 @@ describe("Auth API Tests", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("token");
   });
+
+  test("Should logout a user", async () => {
+    const loginRes = await request(server).post("/api/auth/login").send({
+      iin: "123456789012",
+      password: "TestPassword",
+    });
+
+    expect(loginRes.status).toBe(200);
+    expect(loginRes.body).toHaveProperty("token");
+
+    const token = loginRes.body.token;
+
+    const logoutRes = await request(server)
+      .post("/api/auth/logout")
+      .set("Cookie", `token=${token}`);
+
+    expect(logoutRes.status).toBe(200);
+    expect(logoutRes.body).toHaveProperty("message", "Logged out");
+
+    const cookies = logoutRes.headers["set-cookie"];
+    expect(cookies).toBeDefined();
+    const tokenCookieCleared = cookies.some(
+      (cookie) => cookie.includes("token=;") && cookie.includes("Expires=")
+    );
+    expect(tokenCookieCleared).toBe(true);
+  });
 });
