@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
       email,
       password_hash: hashedPassword,
       role: "user",
-    }
+    };
 
     const newUser = await User.createUser(data);
 

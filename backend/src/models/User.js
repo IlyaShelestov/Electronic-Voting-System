@@ -17,7 +17,7 @@ class User {
       data.password_hash,
       data.role,
     ];
-    
+
     const result = await pool.query(query, values);
     return result.rows[0];
   }
