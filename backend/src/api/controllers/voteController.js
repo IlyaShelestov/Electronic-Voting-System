@@ -1,11 +1,11 @@
 const Vote = require("../../models/Vote");
+const { generateOneTimeToken } = require("../../utils/voteToken");
 
 exports.castVote = async (req, res) => {
   try {
     const { electionId, candidateId } = req.body;
     const { id } = req.user;
-    // Добавить сюда функцию генерации токена
-    const token = generateToken();
+    const token = await generateOneTimeToken();
     const vote = await Vote.cast({
       electionId,
       candidateId,
