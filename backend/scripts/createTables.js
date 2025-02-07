@@ -41,6 +41,9 @@ async function createTables() {
         user_id INT UNIQUE NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
         election_id INT NOT NULL REFERENCES elections(election_id) ON DELETE CASCADE,
         bio TEXT,
+        avatar_url TEXT,
+        additional_url_1 TEXT,
+        additional_url_2 TEXT,
         party VARCHAR(100),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

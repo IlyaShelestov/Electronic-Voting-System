@@ -8,7 +8,7 @@ class User {
       data.iin,
       data.first_name,
       data.last_name,
-      data.patronymic,
+      data.patronymic || null,
       data.date_of_birth,
       data.region,
       data.city,

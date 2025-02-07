@@ -7,12 +7,11 @@ const {
   getReport,
   getCandidates,
 } = require("../controllers/electionsController");
-const { verifyToken } = require("../middlewares/authMiddleware");
 
-router.get("/", verifyToken, getAll);
-router.get("/available", verifyToken, getAvaliable);
-router.get("/:id/report", verifyToken, getReport);
-router.get("/:id/candidates", verifyToken, getCandidates);
-router.get("/:id", verifyToken, getById);
+router.get("/", getAll);
+router.get("/available", getAvaliable);
+router.get("/:id/report", getReport);
+router.get("/:id/candidates", getCandidates);
+router.get("/:id", getById);
 
 module.exports = router;

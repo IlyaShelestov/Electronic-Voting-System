@@ -5,8 +5,10 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
+const { verifyToken } = require("./api/middlewares/authMiddleware");
 const authRoutes = require("./api/routes/authRoutes");
 const electionsRoutes = require("./api/routes/electionsRoutes");
+const candidatesRoutes = require("./api/routes/candidatesRoutes");
 
 const app = express();
 
@@ -21,7 +23,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/elections", electionsRoutes);
+app.use("/api/elections", verifyToken, electionsRoutes);
+app.use("/api/candidates", verifyToken, candidatesRoutes);
 
 const PORT = process.env.PORT || 5000;
 
