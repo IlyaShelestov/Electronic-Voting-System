@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const {
   verifyToken,
   isAdmin,
-  isAnalyst,
+  isManager,
 } = require("./api/middlewares/authMiddleware");
 const authRoutes = require("./api/routes/authRoutes");
 const electionsRoutes = require("./api/routes/electionsRoutes");
@@ -16,7 +16,7 @@ const candidatesRoutes = require("./api/routes/candidatesRoutes");
 const voteRoutes = require("./api/routes/voteRoutes");
 const usersRoutes = require("./api/routes/usersRoutes");
 const eventsRoutes = require("./api/routes/eventsRoutes");
-const analystRoutes = require("./api/routes/analystRoutes");
+const managerRoutes = require("./api/routes/ManagerRoutes");
 //const adminRoutes = require("./api/routes/adminRoutes");
 
 const app = express();
@@ -37,7 +37,7 @@ app.use("/api/candidates", verifyToken, candidatesRoutes);
 app.use("/api/vote", verifyToken, voteRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/events", verifyToken, eventsRoutes);
-app.use("/api/analyst", verifyToken, isAnalyst, analystRoutes);
+app.use("/api/manager", verifyToken, isManager, managerRoutes);
 //app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
 
 const PORT = process.env.PORT || 5000;

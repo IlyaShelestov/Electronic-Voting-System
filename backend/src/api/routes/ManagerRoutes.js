@@ -10,7 +10,7 @@ const {
   createEvent,
   deleteEvent,
   updateEvent,
-} = require("../controllers/analystController");
+} = require("../controllers/managerController");
 
 router.post("/election", createElection);
 router.delete("/election/:id", deleteElection);
