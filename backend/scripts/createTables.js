@@ -39,7 +39,7 @@ async function createTables() {
       CREATE TABLE IF NOT EXISTS candidates (
         candidate_id SERIAL PRIMARY KEY,
         user_id INT UNIQUE NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-        election_id INT NOT NULL REFERENCES elections(election_id) ON DELETE CASCADE,
+        election_id INT REFERENCES elections(election_id) ON DELETE CASCADE,
         bio TEXT,
         avatar_url TEXT,
         additional_url_1 TEXT,
