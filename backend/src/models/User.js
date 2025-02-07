@@ -43,7 +43,7 @@ class User {
     return result.rows[0];
   }
 
-  static async deleteUser(id) {
+  static async delete(id) {
     const result = await pool.query(
       "DELETE FROM users WHERE user_id = $1 RETURNING *",
       [id]
@@ -51,12 +51,12 @@ class User {
     return result.rows[0];
   }
 
-  static async getAllUsers() {
+  static async getAll() {
     const result = await pool.query("SELECT * FROM users");
     return result.rows;
   }
 
-  static async updateUser(id, data) {
+  static async update(id, data) {
     const keys = Object.keys(data);
     const values = Object.values(data);
     const set = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");

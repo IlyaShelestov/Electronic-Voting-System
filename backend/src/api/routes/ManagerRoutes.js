@@ -12,12 +12,12 @@ const {
   updateEvent,
 } = require("../controllers/managerController");
 
-router.post("/election", createElection);
-router.delete("/election/:id", deleteElection);
-router.post("/candidate", createCandidate);
-router.post("/candidate/attach", attachCandidate);
-router.delete("/candidate/:id", deleteCandidate);
-router.put("/candidate/:id", updateCandidate);
+router.post("/elections", createElection);
+router.delete("/elections/:id", deleteElection);
+router.post("/candidates", createCandidate);
+router.post("/candidates/attach", attachCandidate);
+router.delete("/candidates/:id", deleteCandidate);
+router.put("/candidates/:id", updateCandidate);
 router.post("/events/:id", createEvent);
 router.delete("/events/:id", deleteEvent);
 router.put("/events/:id", updateEvent);

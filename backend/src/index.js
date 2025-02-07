@@ -17,7 +17,7 @@ const voteRoutes = require("./api/routes/voteRoutes");
 const usersRoutes = require("./api/routes/usersRoutes");
 const eventsRoutes = require("./api/routes/eventsRoutes");
 const managerRoutes = require("./api/routes/ManagerRoutes");
-//const adminRoutes = require("./api/routes/adminRoutes");
+const adminRoutes = require("./api/routes/adminRoutes");
 
 const app = express();
 
@@ -38,7 +38,7 @@ app.use("/api/vote", verifyToken, voteRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/events", verifyToken, eventsRoutes);
 app.use("/api/manager", verifyToken, isManager, managerRoutes);
-//app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
+app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
