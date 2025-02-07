@@ -24,7 +24,7 @@ class Election {
   }
 
   static async getById(id) {
-    const query = "SELECT * FROM elections WHERE id = $1";
+    const query = "SELECT * FROM elections WHERE election_id = $1";
     const values = [id];
 
     const result = await pool.query(query, values);
@@ -68,7 +68,7 @@ class Election {
   }
 
   static async delete(id) {
-    const query = "DELETE FROM elections WHERE id = $1";
+    const query = "DELETE FROM elections WHERE election_id = $1";
     const values = [id];
 
     const result = await pool.query(query, values);

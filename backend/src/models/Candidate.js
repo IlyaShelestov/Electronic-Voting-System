@@ -41,7 +41,7 @@ class Candidate {
     return result.rows[0];
   }
 
-  static async deleteCandidate(id) {
+  static async delete(id) {
     const result = await pool.query(
       "DELETE FROM candidates WHERE candidate_id = $1",
       [id]
@@ -49,7 +49,7 @@ class Candidate {
     return result;
   }
 
-  static async updateCandidate(id, data) {
+  static async update(id, data) {
     const keys = Object.keys(data);
     const values = Object.values(data);
     const set = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");

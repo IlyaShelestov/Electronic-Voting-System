@@ -30,7 +30,9 @@ class User {
   }
 
   static async findbyID(id) {
-    const result = await pool.query("SELECT * FROM users where id = $1", [id]);
+    const result = await pool.query("SELECT * FROM users where user_id = $1", [
+      id,
+    ]);
     return result.rows[0];
   }
 
@@ -42,7 +44,9 @@ class User {
   }
 
   static async deleteUser(id) {
-    const result = await pool.query("DELETE FROM users WHERE id = $1", [id]);
+    const result = await pool.query("DELETE FROM users WHERE user_id = $1", [
+      id,
+    ]);
     return result;
   }
 
@@ -55,7 +59,7 @@ class User {
     const keys = Object.keys(data);
     const values = Object.values(data);
     const set = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");
-    const query = `UPDATE users SET ${set} WHERE id = $${
+    const query = `UPDATE users SET ${set} WHERE user_id = $${
       keys.length + 1
     } RETURNING *`;
     const result = await pool.query(query, [...values, id]);
