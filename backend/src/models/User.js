@@ -29,7 +29,7 @@ class User {
     return result.rows[0];
   }
 
-  static async findbyID(id) {
+  static async findbyId(id) {
     const result = await pool.query("SELECT * FROM users where user_id = $1", [
       id,
     ]);

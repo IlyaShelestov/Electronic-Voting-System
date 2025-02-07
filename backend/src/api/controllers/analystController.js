@@ -1,5 +1,6 @@
 const Candidate = require("../../models/Candidate");
 const Election = require("../../models/Election");
+const Event = require("../../models/Event");
 
 exports.createElection = async (req, res) => {
   try {
@@ -85,6 +86,7 @@ exports.updateCandidate = async (req, res) => {
     res.status(500).json({ message: "Error updating candidate" });
   }
 };
+
 exports.attachCandidate = async (req, res) => {
   try {
     const { election_id, candidate_id } = req.body;
@@ -95,5 +97,36 @@ exports.attachCandidate = async (req, res) => {
     res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: "Error attaching candidate" });
+  }
+};
+
+exports.createEvent = async (req, res) => {
+  try {
+    const { title, description, event_date } = req.body;
+    const event = await Event.create({ title, description, event_date });
+    res.status(201).json(event);
+  } catch (err) {
+    res.status(500).json({ message: "Error creating event" });
+  }
+};
+
+exports.updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, event_date } = req.body;
+    const response = await Event.update(id, { title, description, event_date });
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating event" });
+  }
+};
+
+exports.deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await Event.delete(id);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting event" });
   }
 };

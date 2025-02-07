@@ -14,7 +14,8 @@ const authRoutes = require("./api/routes/authRoutes");
 const electionsRoutes = require("./api/routes/electionsRoutes");
 const candidatesRoutes = require("./api/routes/candidatesRoutes");
 const voteRoutes = require("./api/routes/voteRoutes");
-//const userRoutes = require("./api/routes/userRoutes");
+const usersRoutes = require("./api/routes/usersRoutes");
+const eventsRoutes = require("./api/routes/eventsRoutes");
 const analystRoutes = require("./api/routes/analystRoutes");
 //const adminRoutes = require("./api/routes/adminRoutes");
 
@@ -34,7 +35,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/elections", verifyToken, electionsRoutes);
 app.use("/api/candidates", verifyToken, candidatesRoutes);
 app.use("/api/vote", verifyToken, voteRoutes);
-//app.use("/api/user", verifyToken, userRoutes);
+app.use("/api/users", verifyToken, usersRoutes);
+app.use("/api/events", verifyToken, eventsRoutes);
 app.use("/api/analyst", verifyToken, isAnalyst, analystRoutes);
 //app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
 
