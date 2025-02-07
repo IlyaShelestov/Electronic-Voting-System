@@ -31,6 +31,14 @@ class Election {
     return result.rows[0];
   }
 
+  static async getCandidates(electionId) {
+    const query = "SELECT * FROM candidates WHERE election_id = $1";
+    const values = [electionId];
+
+    const result = await pool.query(query, values);
+    return result.rows;
+  }
+
   static async getDailyVotes(electionId) {
     const query = `
       SELECT 
