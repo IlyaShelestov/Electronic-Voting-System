@@ -30,7 +30,7 @@ class Candidate {
     const query = "SELECT * FROM candidates";
 
     const result = await pool.query(query);
-    return result;
+    return result.rows;
   }
 
   static async getById(id) {
@@ -43,10 +43,10 @@ class Candidate {
 
   static async delete(id) {
     const result = await pool.query(
-      "DELETE FROM candidates WHERE candidate_id = $1",
+      "DELETE FROM candidates WHERE candidate_id = $1 RETURNING *",
       [id]
     );
-    return result;
+    return result.rows[0];
   }
 
   static async update(id, data) {
