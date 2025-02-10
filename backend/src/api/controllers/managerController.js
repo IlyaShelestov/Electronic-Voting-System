@@ -35,6 +35,7 @@ exports.createCandidate = async (req, res) => {
       election_id,
       bio,
       party,
+      avatar_url,
       additional_url_1,
       additional_url_2,
     } = req.body;
@@ -43,6 +44,7 @@ exports.createCandidate = async (req, res) => {
       election_id,
       bio,
       party,
+      avatar_url,
       additional_url_1,
       additional_url_2,
     });
@@ -70,6 +72,7 @@ exports.updateCandidate = async (req, res) => {
       election_id,
       bio,
       party,
+      avatar_url,
       additional_url_1,
       additional_url_2,
     } = req.body;
@@ -78,6 +81,7 @@ exports.updateCandidate = async (req, res) => {
       election_id,
       bio,
       party,
+      avatar_url,
       additional_url_1,
       additional_url_2,
     });

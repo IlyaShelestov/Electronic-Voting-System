@@ -9,6 +9,7 @@ class Candidate {
       data.election_id || null,
       data.bio,
       data.party,
+      data.avatar_url || null,
       data.additional_url_1 || null,
       data.additional_url_2 || null,
     ];
