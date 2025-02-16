@@ -16,7 +16,7 @@ const candidatesRoutes = require("./api/routes/candidatesRoutes");
 const voteRoutes = require("./api/routes/voteRoutes");
 const usersRoutes = require("./api/routes/usersRoutes");
 const eventsRoutes = require("./api/routes/eventsRoutes");
-const managerRoutes = require("./api/routes/ManagerRoutes");
+const managerRoutes = require("./api/routes/managerRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 
 const app = express();
