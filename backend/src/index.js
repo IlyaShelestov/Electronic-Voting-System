@@ -47,7 +47,9 @@ app.use(
   })
 );
 
-app.use(morgan("dev"));
+if (process.env.NODE_ENV !== "test") {
+  app.use(morgan("dev"));
+}
 app.use(cookieParser());
 app.use(express.json());
 
@@ -66,8 +68,10 @@ app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
