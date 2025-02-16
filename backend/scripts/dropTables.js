@@ -1,6 +1,4 @@
-const pool = require("../src/config/db");
-
-async function dropTables() {
+async function dropTables(pool) {
   try {
     await pool.query("BEGIN");
 
@@ -17,9 +15,7 @@ async function dropTables() {
   } catch (err) {
     await pool.query("ROLLBACK");
     console.error("Error deleting tables:", err);
-  } finally {
-    pool.end();
   }
 }
 
-dropTables();
+module.exports = dropTables;

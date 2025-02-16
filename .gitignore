@@ -1,2 +1,4 @@
 /backend/.env
+/backend/.env.test
 /backend/node_modules/
+/backend/coverage/

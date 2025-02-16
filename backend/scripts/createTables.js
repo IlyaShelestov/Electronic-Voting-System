@@ -1,6 +1,4 @@
-const pool = require("../src/config/db");
-
-async function createTables() {
+async function createTables(pool) {
   try {
     await pool.query("BEGIN");
 
@@ -94,9 +92,7 @@ async function createTables() {
   } catch (err) {
     await pool.query("ROLLBACK");
     console.error("Error creating tables:", err);
-  } finally {
-    pool.end();
   }
 }
 
-createTables();
+module.exports = createTables;

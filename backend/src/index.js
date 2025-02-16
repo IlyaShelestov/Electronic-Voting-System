@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("./config/environment");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -16,34 +16,36 @@ const candidatesRoutes = require("./api/routes/candidatesRoutes");
 const voteRoutes = require("./api/routes/voteRoutes");
 const usersRoutes = require("./api/routes/usersRoutes");
 const eventsRoutes = require("./api/routes/eventsRoutes");
-const managerRoutes = require("./api/routes/ManagerRoutes");
+const managerRoutes = require("./api/routes/managerRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 
 const app = express();
 
 app.use(cors());
 
-app.use(helmet({
+app.use(
+  helmet({
     contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'", "data:"],
-            connectSrc: ["'self'"],
-            frameAncestors: ["'none'"],
-        }
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:"],
+        connectSrc: ["'self'"],
+        frameAncestors: ["'none'"],
+      },
     },
-    crossOriginOpenerPolicy: { policy: 'same-origin' },
-    crossOriginResourcePolicy: { policy: 'same-origin' }, 
-    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    crossOriginOpenerPolicy: { policy: "same-origin" },
+    crossOriginResourcePolicy: { policy: "same-origin" },
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
-    xFrameOptions: { action: 'deny' },
+    xFrameOptions: { action: "deny" },
     xContentTypeOptions: true,
     xDnsPrefetchControl: { allow: false },
-    permittedCrossDomainPolicies: { policy: 'none' },
+    permittedCrossDomainPolicies: { policy: "none" },
     hidePoweredBy: true,
-}));
+  })
+);
 
 app.use(morgan("dev"));
 app.use(cookieParser());

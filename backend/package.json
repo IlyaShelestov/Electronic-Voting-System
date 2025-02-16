@@ -4,9 +4,11 @@
   "description": "Electronic Voting System for Kazakhstan",
   "main": "/src/index.jx",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand --forceExit",
+    "test:coverage": "jest --runInBand --forceExit --coverage",
     "start": "node src/index.js",
-    "migrate": "node scripts/dropTables.js && node scripts/createTables.js"
+    "migrate": "node scripts/migrate.js",
+    "migrate:test": "cross-env NODE_ENV=test node scripts/migrate.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +44,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "supertest": "^7.0.0"
   }
