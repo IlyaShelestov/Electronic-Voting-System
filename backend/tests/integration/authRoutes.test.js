@@ -61,6 +61,36 @@ describe("Auth API Integration Tests", () => {
       expect(res.status).toBe(500);
       expect(res.body).toMatchObject({ message: "Error creating user" });
     });
+
+    it("should return 403 if already logged in", async () => {
+      const newUser = {
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      };
+
+      await request(app).post("/api/auth/register").send(newUser);
+
+      const loginRes = await request(app)
+        .post("/api/auth/login")
+        .send({ iin: newUser.iin, password: newUser.password });
+      const token = loginRes.body.token;
+
+      const res = await request(app)
+        .post("/api/auth/register")
+        .set("Cookie", `token=${token}`)
+        .send(newUser);
+
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Already logged in" });
+    });
   });
 
   describe("POST /api/auth/login", () => {
@@ -130,6 +160,20 @@ describe("Auth API Integration Tests", () => {
       expect(res.body).toMatchObject({ message: "Error logging in" });
 
       User.findByIIN.mockRestore();
+    });
+
+    it("should return 403 if user already logged in", async () => {
+      const loginRes = await request(app).post("/api/auth/login").send({
+        iin: "123456789012",
+        password: "TestPassword",
+      });
+      const token = loginRes.body.token;
+      const res = await request(app)
+        .post("/api/auth/login")
+        .set("Cookie", `token=${token}`);
+
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Already logged in" });
     });
   });
 
