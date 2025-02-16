@@ -4,7 +4,7 @@
   "description": "Electronic Voting System for Kazakhstan",
   "main": "/src/index.jx",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand --forceExit",
     "start": "node src/index.js",
     "migrate": "node scripts/dropTables.js && node scripts/createTables.js"
   },

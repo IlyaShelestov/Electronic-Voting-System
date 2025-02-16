@@ -1,5 +1,4 @@
 const crypto = require("crypto");
-require("dotenv").config();
 
 const SECRET_KEY = process.env.VOTE_SECRET_KEY;
 
