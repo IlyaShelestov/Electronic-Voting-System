@@ -1,0 +1,34 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #f5f0f0;
+  padding: 1rem;
+  position: fixed;
+  transition: left 0.3s ease-in-out;
+  top: 0;
+  left: 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 10px 0;
+      font-size: 18px;
+    }
+  }
+
+  .logout {
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  &_wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
