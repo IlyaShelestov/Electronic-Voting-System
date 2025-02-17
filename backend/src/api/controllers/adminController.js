@@ -26,6 +26,20 @@ exports.createUser = async (req, res) => {
       role,
     } = req.body;
 
+    if (
+      !iin ||
+      !first_name ||
+      !last_name ||
+      !date_of_birth ||
+      !region ||
+      !city ||
+      !phone_number ||
+      !email ||
+      !password
+    ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const data = {
@@ -72,6 +86,18 @@ exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    foundByIIn = await User.findByIIN(data.iin);
+    foundByPhoneNumber = await User.findByPhoneNumber(data.phone_number);
+    foundByEmail = await User.findByEmail(data.email);
+    if (foundByIIn && foundByIIn.user_id != id) {
+      return res.status(409).json({ message: "IIN already exists" });
+    }
+    if (foundByPhoneNumber && foundByPhoneNumber.user_id != id) {
+      return res.status(409).json({ message: "Phone number already exists" });
+    }
+    if (foundByEmail && foundByEmail.user_id != id) {
+      return res.status(409).json({ message: "Email already exists" });
+    }
     const response = await User.update(id, data);
     res.status(200).json(response);
   } catch (err) {

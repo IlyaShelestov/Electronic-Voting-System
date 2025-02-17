@@ -4,8 +4,9 @@
   "description": "Electronic Voting System for Kazakhstan",
   "main": "/src/index.jx",
   "scripts": {
-    "test": "jest --runInBand --forceExit --verbose",
+    "test": "jest --runInBand --forceExit",
     "test:coverage": "jest --runInBand --forceExit --coverage",
+    "test:verbose": "jest --runInBand --forceExit --verbose",
     "start": "node src/index.js",
     "migrate": "node scripts/migrate.js",
     "migrate:test": "cross-env NODE_ENV=test node scripts/migrate.js"

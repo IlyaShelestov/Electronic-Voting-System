@@ -1,11 +1,13 @@
 const request = require("supertest");
-const { getAdminToken } = require("../helpers/tokenHelper");
+const { getAdminToken, getUserToken } = require("../helpers/tokenHelper");
 const { createStandardUser } = require("../helpers/usersHelper");
 const app = require("../../src/index");
+const { update } = require("../../src/models/User");
 
 describe("Admin API Integration Tests", () => {
   beforeAll(async () => {
-    token = getAdminToken();
+    adminToken = getAdminToken();
+    userToken = getUserToken();
   });
 
   describe("GET /api/admin/users", () => {
@@ -14,7 +16,7 @@ describe("Admin API Integration Tests", () => {
       const user2 = await createStandardUser();
       const res = await request(app)
         .get("/api/admin/users")
-        .set("Cookie", `token=${token}`);
+        .set("Cookie", `token=${adminToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveLength(2);
@@ -32,6 +34,20 @@ describe("Admin API Integration Tests", () => {
           }),
         ])
       );
+    });
+
+    it("should return 401 if not logged in", async () => {
+      const res = await request(app).get(`/api/admin/users`);
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Unauthorized" });
+    });
+
+    it("should return 403 if not admin", async () => {
+      const res = await request(app)
+        .get(`/api/admin/users`)
+        .set("Cookie", `token=${userToken}`);
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Forbidden" });
     });
   });
 
@@ -53,7 +69,7 @@ describe("Admin API Integration Tests", () => {
 
       const res = await request(app)
         .post("/api/admin/users")
-        .set("Cookie", `token=${token}`)
+        .set("Cookie", `token=${adminToken}`)
         .send(newUser);
 
       expect(res.status).toBe(201);
@@ -72,6 +88,30 @@ describe("Admin API Integration Tests", () => {
       expect(res.body).toHaveProperty("user_id");
       expect(res.body).toHaveProperty("created_at");
       expect(res.body).toHaveProperty("updated_at");
+    });
+
+    it("should return 400 if missing required fields", async () => {
+      const res = await request(app)
+        .post("/api/admin/users")
+        .set("Cookie", `token=${adminToken}`)
+        .send({});
+      expect(res.status).toBe(400);
+      expect(res.body).toMatchObject({ message: "Missing required fields" });
+    });
+
+    it("should return 401 if not logged in", async () => {
+      const res = await request(app).post(`/api/admin/users`).send({});
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Unauthorized" });
+    });
+
+    it("should return 403 if not admin", async () => {
+      const res = await request(app)
+        .post(`/api/admin/users`)
+        .set("Cookie", `token=${userToken}`)
+        .send({});
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Forbidden" });
     });
   });
 
@@ -92,7 +132,7 @@ describe("Admin API Integration Tests", () => {
 
       const res = await request(app)
         .put(`/api/admin/users/${user.user_id}`)
-        .set("Cookie", `token=${token}`)
+        .set("Cookie", `token=${adminToken}`)
         .send(updatedData);
 
       expect(res.status).toBe(200);
@@ -103,6 +143,65 @@ describe("Admin API Integration Tests", () => {
         updated_at: expect.any(String),
       });
     });
+
+    it("should return 409 if email is already used", async () => {
+      const user = await createStandardUser();
+      const user2 = await createStandardUser();
+      const updatedData = {
+        email: user2.email,
+      };
+      const res = await request(app)
+        .put(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${adminToken}`)
+        .send(updatedData);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({ message: "Email already exists" });
+    });
+
+    it("should return 409 if phone number is already used", async () => {
+      const user = await createStandardUser();
+      const user2 = await createStandardUser();
+      const updatedData = {
+        phone_number: user2.phone_number,
+      };
+      const res = await request(app)
+        .put(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${adminToken}`)
+        .send(updatedData);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({
+        message: "Phone number already exists",
+      });
+    });
+
+    it("should return 409 if iin is already used", async () => {
+      const user = await createStandardUser();
+      const user2 = await createStandardUser();
+      const updatedData = {
+        iin: user2.iin,
+      };
+      const res = await request(app)
+        .put(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${adminToken}`)
+        .send(updatedData);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({ message: "IIN already exists" });
+    });
+
+    it("should return 401 if not logged in", async () => {
+      const res = await request(app).put(`/api/admin/users/0`).send({});
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Unauthorized" });
+    });
+
+    it("should return 403 if not admin", async () => {
+      const res = await request(app)
+        .put(`/api/admin/users/0`)
+        .set("Cookie", `token=${userToken}`)
+        .send({});
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Forbidden" });
+    });
   });
 
   describe("DELETE /api/admin/users/:id", () => {
@@ -110,7 +209,7 @@ describe("Admin API Integration Tests", () => {
       const user = await createStandardUser();
       const res = await request(app)
         .delete(`/api/admin/users/${user.user_id}`)
-        .set("Cookie", `token=${token}`);
+        .set("Cookie", `token=${adminToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({
@@ -123,7 +222,7 @@ describe("Admin API Integration Tests", () => {
     it("should return 404 if user not found", async () => {
       const res = await request(app)
         .delete(`/api/admin/users/999999`)
-        .set("Cookie", `token=${token}`);
+        .set("Cookie", `token=${adminToken}`);
       expect(res.status).toBe(404);
       expect(res.body).toMatchObject({ message: "User not found" });
     });
@@ -133,12 +232,26 @@ describe("Admin API Integration Tests", () => {
       await createStandardUser();
       await request(app)
         .delete(`/api/admin/users/${user.user_id}`)
-        .set("Cookie", `token=${token}`);
+        .set("Cookie", `token=${adminToken}`);
       const res = await request(app)
         .delete(`/api/admin/users/${user.user_id}`)
-        .set("Cookie", `token=${token}`);
+        .set("Cookie", `token=${adminToken}`);
       expect(res.status).toBe(410);
       expect(res.body).toMatchObject({ message: "User already deleted" });
+    });
+
+    it("should return 401 if not logged in", async () => {
+      const res = await request(app).delete(`/api/admin/users/0`);
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Unauthorized" });
+    });
+
+    it("should return 403 if not admin", async () => {
+      const res = await request(app)
+        .delete(`/api/admin/users/0`)
+        .set("Cookie", `token=${userToken}`);
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Forbidden" });
     });
   });
 });
