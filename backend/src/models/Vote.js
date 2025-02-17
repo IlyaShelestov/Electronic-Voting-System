@@ -9,6 +9,17 @@ class Vote {
     return result.rows[0];
   }
 
+  static async checkCanVoteLocation({ electionId, userRegion, userCity }) {
+    const query = `
+      SELECT * FROM elections 
+      WHERE election_id = $1 
+      AND (region = $2 OR city = $3)
+    `;
+    const values = [electionId, userRegion, userCity];
+    const result = await pool.query(query, values);
+    return result.rows.length > 0;
+  }
+
   static async cast(data) {
     try {
       await pool.query("BEGIN");
