@@ -39,6 +39,20 @@ class Election {
     return result.rows;
   }
 
+  static async getAllRegions() {
+    const query = "SELECT DISTINCT region FROM elections";
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async getAllCities() {
+    const query = "SELECT DISTINCT city FROM elections";
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
   static async getDailyVotes(electionId) {
     const query = `
       SELECT 

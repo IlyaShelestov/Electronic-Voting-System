@@ -20,6 +20,16 @@ exports.getAvaliable = async (req, res) => {
   }
 };
 
+exports.getAllLocations = async (req, res) => {
+  try {
+    const regions = await Election.getAllRegions();
+    const cities = await Election.getAllCities();
+    res.status(200).json({ regions, cities });
+  } catch (err) {
+    res.status(500).json({ message: "Error getting locations" });
+  }
+};
+
 exports.getReport = async (req, res) => {
   try {
     const { id } = req.params;
