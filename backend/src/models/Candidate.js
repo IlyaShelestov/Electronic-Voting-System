@@ -3,7 +3,7 @@ const pool = require("../config/db");
 class Candidate {
   static async create(data) {
     const query =
-      "INSERT INTO candidates (user_id, election_id, bio, party, additional_url_1, additional_url_2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+      "INSERT INTO candidates (user_id, election_id, bio, party, avatar_url, additional_url_1, additional_url_2) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *";
     const values = [
       data.user_id,
       data.election_id || null,
