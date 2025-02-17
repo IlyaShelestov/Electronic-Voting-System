@@ -1,4 +1,6 @@
 const Event = require("../../src/models/Event");
+const Candidate = require("../../src/models/Candidate");
+const Election = require("../../src/models/Election");
 
 const createEvent = async (overrides = {}) => {
   try {
@@ -16,6 +18,49 @@ const createEvent = async (overrides = {}) => {
   }
 };
 
+const createElection = async (overrides = {}) => {
+  try {
+    const data = {
+      title: "TestTitle",
+      start_date: "2021-01-01",
+      end_date: "2021-01-08",
+      region: "TestRegion",
+      city: "TestCity",
+      ...overrides,
+    };
+    const election = await Election.create(data);
+    return election;
+  } catch (error) {
+    console.error("Error creating election:", error);
+    throw error;
+  }
+};
+
+const attachCandidate = async (
+  electionId = 1,
+  candidateId = 1,
+  overrides = {}
+) => {
+  try {
+    const data = {
+      election_id: electionId,
+      candidate_id: candidateId,
+      ...overrides,
+    };
+    const candidate = await Candidate.attachToElection(
+      data.candidate_id,
+      data.election_id
+    );
+
+    return candidate;
+  } catch (error) {
+    console.error("Error attaching candidate:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createEvent,
+  createElection,
+  attachCandidate,
 };

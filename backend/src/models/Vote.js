@@ -3,7 +3,7 @@ const pool = require("../config/db");
 class Vote {
   static async checkVoted(data) {
     const query =
-      "SELECT * FROM voters WHERE election_id = $1 AND user_id = $2";
+      "SELECT * FROM is_voted WHERE election_id = $1 AND user_id = $2";
     const values = [data.electionId, data.userId];
     const result = await pool.query(query, values);
     return result.rows[0];
@@ -17,7 +17,14 @@ class Vote {
     `;
     const values = [electionId, userRegion, userCity];
     const result = await pool.query(query, values);
-    return result.rows.length > 0;
+    return result.rows[0];
+  }
+
+  static async checkVoteToken(token) {
+    const query = "SELECT * FROM voters WHERE token = $1";
+    const values = [token];
+    const result = await pool.query(query, values);
+    return result.rows[0];
   }
 
   static async cast(data) {
