@@ -76,17 +76,22 @@ exports.updateCandidate = async (req, res) => {
       additional_url_1,
       additional_url_2,
     } = req.body;
-    const response = await Candidate.update(id, {
-      user_id,
-      election_id,
-      bio,
-      party,
-      avatar_url,
-      additional_url_1,
-      additional_url_2,
-    });
+
+    const updateData = {};
+    if (user_id !== undefined) updateData.user_id = user_id;
+    if (election_id !== undefined) updateData.election_id = election_id;
+    if (bio !== undefined) updateData.bio = bio;
+    if (party !== undefined) updateData.party = party;
+    if (avatar_url !== undefined) updateData.avatar_url = avatar_url;
+    if (additional_url_1 !== undefined)
+      updateData.additional_url_1 = additional_url_1;
+    if (additional_url_2 !== undefined)
+      updateData.additional_url_2 = additional_url_2;
+
+    const response = await Candidate.update(id, updateData);
     res.status(200).json(response);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Error updating candidate" });
   }
 };
@@ -118,7 +123,13 @@ exports.updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, event_date } = req.body;
-    const response = await Event.update(id, { title, description, event_date });
+
+    const updateData = {};
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (event_date !== undefined) updateData.event_date = event_date;
+
+    const response = await Event.update(id, updateData);
     res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: "Error updating event" });
