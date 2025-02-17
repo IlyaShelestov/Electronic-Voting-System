@@ -11,7 +11,7 @@ const {
 
 router.get("/", getAll);
 router.get("/locations", getAllLocations);
-router.get("/available", getAvaliable);
+router.get("/avaliable", getAvaliable);
 router.get("/:id/report", getReport);
 router.get("/:id/candidates", getCandidates);
 router.get("/:id", getById);
