@@ -23,38 +23,42 @@ class User {
   }
 
   static async findByIIN(iin) {
-    const result = await pool.query("SELECT * FROM users WHERE iin = $1", [
-      iin,
-    ]);
+    const result = await pool.query(
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users users WHERE iin = $1",
+      [iin]
+    );
     return result.rows[0];
   }
 
   static async findByPhoneNumber(phone_number) {
     const result = await pool.query(
-      "SELECT * FROM users WHERE phone_number = $1",
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE phone_number = $1",
       [phone_number]
     );
     return result.rows[0];
   }
 
   static async findByEmail(email) {
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    const result = await pool.query(
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE email = $1",
+      [email]
+    );
     return result.rows[0];
   }
 
   static async findbyId(id) {
-    const result = await pool.query("SELECT * FROM users where user_id = $1", [
-      id,
-    ]);
+    const result = await pool.query(
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users where user_id = $1",
+      [id]
+    );
     return result.rows[0];
   }
 
   static async findByEmail(email) {
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    const result = await pool.query(
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE email = $1",
+      [email]
+    );
     return result.rows[0];
   }
 

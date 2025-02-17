@@ -4,6 +4,8 @@ const { createStandardUser } = require("../helpers/usersHelper");
 const app = require("../../src/index");
 
 describe("Admin API Integration Tests", () => {
+  let adminToken;
+  let userToken;
   beforeAll(async () => {
     adminToken = getAdminToken();
     userToken = getUserToken();
