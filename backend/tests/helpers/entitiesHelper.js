@@ -1,6 +1,7 @@
 const Event = require("../../src/models/Event");
 const Candidate = require("../../src/models/Candidate");
 const Election = require("../../src/models/Election");
+const Vote = require("../../src/models/Vote");
 
 const createEvent = async (overrides = {}) => {
   try {
@@ -59,8 +60,30 @@ const attachCandidate = async (
   }
 };
 
+const castVote = async (
+  token = "123",
+  electionId = 1,
+  candidateId = 1,
+  userId = 1
+) => {
+  try {
+    const data = {
+      electionId,
+      candidateId,
+      userId,
+      token,
+    };
+    const vote = await Vote.cast(data);
+    return vote;
+  } catch (error) {
+    console.error("Error casting vote:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createEvent,
   createElection,
   attachCandidate,
+  castVote,
 };

@@ -28,6 +28,11 @@ describe("Vote API Integration Tests", () => {
       city: "WrongCity",
       userId: 2,
     });
+    candidateToken = getUserToken({
+      region: "TestRegion",
+      city: "TestCity",
+      userId: 1,
+    });
     election = await createElection({ region: "TestRegion", city: "TestCity" });
     candidate = await createCandidate();
     voter = await createStandardUser();
@@ -109,6 +114,20 @@ describe("Vote API Integration Tests", () => {
         });
       expect(res.status).toBe(201);
       expect(res.body).toEqual(expect.any(String));
+    });
+
+    it("should return 409 if user tries to vote for himself", async () => {
+      const res = await request(app)
+        .post("/api/vote/cast")
+        .set("Cookie", `token=${candidateToken}`)
+        .send({
+          electionId: election.election_id,
+          candidateId: candidate.candidate_id,
+        });
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({
+        message: "User cannot vote for himself",
+      });
     });
 
     it("should return 409 if user has already voted", async () => {

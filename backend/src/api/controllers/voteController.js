@@ -1,10 +1,16 @@
 const Vote = require("../../models/Vote");
+const Candidate = require("../../models/Candidate");
 const { generateOneTimeToken } = require("../../utils/voteToken");
 
 exports.castVote = async (req, res) => {
   try {
     const { electionId, candidateId } = req.body;
     const { userId, region, city } = req.user;
+
+    const candidate = await Candidate.getById(candidateId);
+    if (candidate.user_id === userId) {
+      return res.status(409).json({ message: "User cannot vote for himself" });
+    }
 
     const hasVoted = await Vote.checkVoted({ electionId, userId: userId });
     if (hasVoted) {
