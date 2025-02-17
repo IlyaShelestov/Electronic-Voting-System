@@ -8,11 +8,32 @@ describe("Admin API Integration Tests", () => {
     token = getAdminToken();
   });
 
-  //   describe("GET /api/admin/users", () => {
-  //     it("should return a list of users", async () => {
+  describe("GET /api/admin/users", () => {
+    it("should return a list of users", async () => {
+      const user1 = await createStandardUser();
+      const user2 = await createStandardUser();
+      const res = await request(app)
+        .get("/api/admin/users")
+        .set("Cookie", `token=${token}`);
 
-  //     })
-  //   })
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(2);
+      expect(res.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            ...user1,
+            created_at: expect.any(String),
+            updated_at: expect.any(String),
+          }),
+          expect.objectContaining({
+            ...user2,
+            created_at: expect.any(String),
+            updated_at: expect.any(String),
+          }),
+        ])
+      );
+    });
+  });
 
   describe("POST /api/admin/users", () => {
     it("should create a new user", async () => {
@@ -54,9 +75,35 @@ describe("Admin API Integration Tests", () => {
     });
   });
 
-  // describe("PUT /api/admin/users/:id", () => {
+  describe("PUT /api/admin/users/:id", () => {
+    it("should update a user", async () => {
+      const user = await createStandardUser();
+      const updatedData = {
+        first_name: "UpdatedName",
+        last_name: "UpdatedSurname",
+        patronymic: "UpdatedPatronymic",
+        date_of_birth: "2021-01-02",
+        region: "UpdatedRegion",
+        city: "UpdatedCity",
+        phone_number: "0987654321",
+        email: "UpdatedEmail",
+        role: "user",
+      };
 
-  // })
+      const res = await request(app)
+        .put(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${token}`)
+        .send(updatedData);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toMatchObject({
+        ...updatedData,
+        user_id: user.user_id,
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+      });
+    });
+  });
 
   describe("DELETE /api/admin/users/:id", () => {
     it("should delete a user", async () => {
@@ -68,10 +115,30 @@ describe("Admin API Integration Tests", () => {
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({
         ...user,
-        date_of_birth: expect.any(String),
         created_at: expect.any(String),
         updated_at: expect.any(String),
       });
+    });
+
+    it("should return 404 if user not found", async () => {
+      const res = await request(app)
+        .delete(`/api/admin/users/999999`)
+        .set("Cookie", `token=${token}`);
+      expect(res.status).toBe(404);
+      expect(res.body).toMatchObject({ message: "User not found" });
+    });
+
+    it("should return 410 if user already deleted", async () => {
+      const user = await createStandardUser();
+      await createStandardUser();
+      await request(app)
+        .delete(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${token}`);
+      const res = await request(app)
+        .delete(`/api/admin/users/${user.user_id}`)
+        .set("Cookie", `token=${token}`);
+      expect(res.status).toBe(410);
+      expect(res.body).toMatchObject({ message: "User already deleted" });
     });
   });
 });

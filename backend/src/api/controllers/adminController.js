@@ -53,7 +53,15 @@ exports.createUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const lastId = await User.getLastId();
+
+    if (lastId < id) {
+      return res.status(404).json({ message: "User not found" });
+    }
     const response = await User.delete(id);
+    if (response === undefined) {
+      return res.status(410).json({ message: "User already deleted" });
+    }
     res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: "Error deleting user" });

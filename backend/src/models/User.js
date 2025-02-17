@@ -45,14 +45,16 @@ class User {
 
   static async delete(id) {
     const result = await pool.query(
-      "DELETE FROM users WHERE user_id = $1 RETURNING *",
+      "DELETE FROM users WHERE user_id = $1 RETURNING *, date_of_birth::text as date_of_birth",
       [id]
     );
     return result.rows[0];
   }
 
   static async getAll() {
-    const result = await pool.query("SELECT * FROM users");
+    const result = await pool.query(
+      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users"
+    );
     return result.rows;
   }
 
@@ -62,9 +64,16 @@ class User {
     const set = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");
     const query = `UPDATE users SET ${set} WHERE user_id = $${
       keys.length + 1
-    } RETURNING *`;
+    } RETURNING *, date_of_birth::text as date_of_birth`;
     const result = await pool.query(query, [...values, id]);
     return result.rows[0];
+  }
+
+  static async getLastId() {
+    const result = await pool.query(
+      "SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1"
+    );
+    return result.rows.length > 0 ? result.rows[0].user_id : null;
   }
 }
 
