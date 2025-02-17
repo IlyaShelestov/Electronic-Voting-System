@@ -2,7 +2,6 @@ const request = require("supertest");
 const { getAdminToken, getUserToken } = require("../helpers/tokenHelper");
 const { createStandardUser } = require("../helpers/usersHelper");
 const app = require("../../src/index");
-const { update } = require("../../src/models/User");
 
 describe("Admin API Integration Tests", () => {
   beforeAll(async () => {
