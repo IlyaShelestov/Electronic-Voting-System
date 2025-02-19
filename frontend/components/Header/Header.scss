@@ -1,0 +1,32 @@
+@use "../../styles/variables.scss" as *;
+header {
+  height: $header_height;
+  width: 100%;
+  background: url("/images/ornament.png") repeat;
+  background-color: $navbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .user {
+    font-size: 24px;
+  }
+
+  .locales {
+    display: flex;
+    gap: 10px;
+    font-size: 24px;
+    text-transform: uppercase;
+    .locale {
+      cursor: pointer;
+      &:hover {
+        color: $button_light;
+      }
+      &.active {
+        color: $button_light;
+        font-weight: 600;
+      }
+      transition: all 0.2s ease-out;
+    }
+  }
+}

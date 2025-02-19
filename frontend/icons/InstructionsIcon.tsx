@@ -1,16 +1,18 @@
-export function InstructionsIcon(props: React.SVGProps<SVGSVGElement>) {
+import { IIcon } from "@/models/IIcon";
+
+export function InstructionsIcon(props: IIcon) {
   return (
     <svg
-      width="32"
-      height="32"
+      width={props.size}
+      height={props.size}
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M28.5867 14.7333L16.3333 26.9867C14.8322 28.4878 12.7962 29.3311 10.6733 29.3311C8.55042 29.3311 6.51446 28.4878 5.01333 26.9867C3.51221 25.4855 2.66888 23.4496 2.66888 21.3267C2.66888 19.2038 3.51221 17.1678 5.01333 15.6667L17.2667 3.41334C18.2674 2.41259 19.6247 1.85037 21.04 1.85037C22.4553 1.85037 23.8126 2.41259 24.8133 3.41334C25.8141 4.41409 26.3763 5.7714 26.3763 7.18667C26.3763 8.60194 25.8141 9.95925 24.8133 10.96L12.5467 23.2133C12.0463 23.7137 11.3676 23.9948 10.66 23.9948C9.95236 23.9948 9.27371 23.7137 8.77333 23.2133C8.27296 22.713 7.99185 22.0343 7.99185 21.3267C7.99185 20.619 8.27296 19.9404 8.77333 19.44L20.0933 8.13334"
-        stroke="#222831"
-        strokeWidth="2"
+        stroke={props.color}
+        strokeWidth={props.strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
       />

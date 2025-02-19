@@ -1,0 +1,14 @@
+@use "../../styles/variables.scss" as *;
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: $header_height;
+  .oval {
+    width: 100;
+    height: 60;
+    border-radius: 60px;
+    background-color: $selected;
+  }
+}
