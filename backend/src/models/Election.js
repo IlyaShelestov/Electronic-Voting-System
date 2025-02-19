@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const { formatLocalDate } = require("../utils/dateHelper");
 
 class Election {
   static async create(data) {
@@ -13,7 +14,15 @@ class Election {
     ];
 
     const result = await pool.query(query, values);
-    return result.rows[0];
+    const election = result.rows[0];
+
+    if (election.start_date) {
+      election.start_date = formatLocalDate(election.start_date);
+    }
+    if (election.end_date) {
+      election.end_date = formatLocalDate(election.end_date);
+    }
+    return election;
   }
 
   static async getAll() {
@@ -36,6 +45,20 @@ class Election {
     const values = [electionId];
 
     const result = await pool.query(query, values);
+    return result.rows;
+  }
+
+  static async getAllRegions() {
+    const query = "SELECT DISTINCT region FROM elections";
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async getAllCities() {
+    const query = "SELECT DISTINCT city FROM elections";
+
+    const result = await pool.query(query);
     return result.rows;
   }
 

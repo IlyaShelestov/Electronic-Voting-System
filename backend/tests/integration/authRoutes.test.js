@@ -1,86 +1,225 @@
 const request = require("supertest");
-const server = require("../../src/index");
-const pool = require("../../src/config/db");
+const app = require("../../src/index");
+const User = require("../../src/models/User");
 
-describe("Auth API Tests", () => {
-  beforeAll(async () => {
-    await pool.query(`SELECT 1`);
-  });
+describe("Auth API Integration Tests", () => {
+  describe("POST /api/auth/register", () => {
+    it("should register a new user and return user data", async () => {
+      const newUser = {
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      };
 
-  afterAll(async () => {
-    try {
-      await pool.query("DELETE FROM users WHERE iin = $1", ["123456789012"]);
-      await pool.end();
-      server.close();
-    } catch (err) {
-      console.log("Error during cleanup:", err);
-      throw err;
-    }
-  });
+      const res = await request(app).post("/api/auth/register").send(newUser);
 
-  test("Should register a user", async () => {
-    const res = await request(server).post("/api/auth/register").send({
-      iin: "123456789012",
-      first_name: "TestName",
-      last_name: "TestSurname",
-      patronymic: "TestPatronymic",
-      date_of_birth: "2021-01-01",
-      region: "TestRegion",
-      city: "TestCity",
-      phone_number: "1234567890",
-      email: "TestEmail",
-      password: "TestPassword",
+      expect(res.status).toBe(201);
+      expect(res.body).toMatchObject({
+        iin: newUser.iin,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        patronymic: newUser.patronymic,
+        date_of_birth: newUser.date_of_birth,
+        region: newUser.region,
+        city: newUser.city,
+        phone_number: newUser.phone_number,
+        email: newUser.email,
+        role: "user",
+      });
+      expect(res.body).toHaveProperty("user_id");
+      expect(res.body).toHaveProperty("password_hash");
+      expect(res.body).toHaveProperty("created_at");
+      expect(res.body).toHaveProperty("updated_at");
     });
 
-    expect(res.status).toBe(201);
-    expect(res.body).toHaveProperty("iin", "123456789012");
-    expect(res.body).toHaveProperty("first_name", "TestName");
-    expect(res.body).toHaveProperty("last_name", "TestSurname");
-    expect(res.body).toHaveProperty("patronymic", "TestPatronymic");
-    expect(res.body).toHaveProperty("date_of_birth", "2021-01-01");
-    expect(res.body).toHaveProperty("region", "TestRegion");
-    expect(res.body).toHaveProperty("city", "TestCity");
-    expect(res.body).toHaveProperty("phone_number", "1234567890");
-    expect(res.body).toHaveProperty("email", "TestEmail");
-    expect(res.body).toHaveProperty("role", "user");
-    expect(res.body).toHaveProperty("password_hash");
-    expect(res.body).toHaveProperty("created_at");
-    expect(res.body).toHaveProperty("updated_at");
-  });
+    it("should return 500 if user already exists", async () => {
+      const existingUser = {
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      };
 
-  test("Should login a user", async () => {
-    const res = await request(server).post("/api/auth/login").send({
-      iin: "123456789012",
-      password: "TestPassword",
+      await request(app).post("/api/auth/register").send(existingUser);
+      const res = await request(app)
+        .post("/api/auth/register")
+        .send(existingUser);
+
+      expect(res.status).toBe(500);
+      expect(res.body).toMatchObject({ message: "Error creating user" });
     });
 
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty("token");
+    it("should return 403 if already logged in", async () => {
+      const newUser = {
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      };
+
+      await request(app).post("/api/auth/register").send(newUser);
+
+      const loginRes = await request(app)
+        .post("/api/auth/login")
+        .send({ iin: newUser.iin, password: newUser.password });
+      const token = loginRes.body.token;
+
+      const res = await request(app)
+        .post("/api/auth/register")
+        .set("Cookie", `token=${token}`)
+        .send(newUser);
+
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Already logged in" });
+    });
   });
 
-  test("Should logout a user", async () => {
-    const loginRes = await request(server).post("/api/auth/login").send({
-      iin: "123456789012",
-      password: "TestPassword",
+  describe("POST /api/auth/login", () => {
+    beforeEach(async () => {
+      await request(app).post("/api/auth/register").send({
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      });
     });
 
-    expect(loginRes.status).toBe(200);
-    expect(loginRes.body).toHaveProperty("token");
+    it("should login a user and return token", async () => {
+      const res = await request(app).post("/api/auth/login").send({
+        iin: "123456789012",
+        password: "TestPassword",
+      });
 
-    const token = loginRes.body.token;
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("token");
+    });
 
-    const logoutRes = await request(server)
-      .post("/api/auth/logout")
-      .set("Cookie", `token=${token}`);
+    it("should return 401 if invalid credentials", async () => {
+      const res = await request(app).post("/api/auth/login").send({
+        iin: "123456789012",
+        password: "InvalidPassword",
+      });
 
-    expect(logoutRes.status).toBe(200);
-    expect(logoutRes.body).toHaveProperty("message", "Logged out");
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Invalid credentials" });
+    });
 
-    const cookies = logoutRes.headers["set-cookie"];
-    expect(cookies).toBeDefined();
-    const tokenCookieCleared = cookies.some(
-      (cookie) => cookie.includes("token=;") && cookie.includes("Expires=")
-    );
-    expect(tokenCookieCleared).toBe(true);
+    it("should return 401 if user not found", async () => {
+      const res = await request(app).post("/api/auth/login").send({
+        iin: "InvalidIIN",
+        password: "TestPassword",
+      });
+
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Invalid credentials" });
+    });
+
+    it("should return 401 if missing credentials", async () => {
+      const res = await request(app).post("/api/auth/login").send({});
+
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Invalid credentials" });
+    });
+
+    it("should return 500 if error logging in", async () => {
+      jest.spyOn(User, "findByIIN").mockImplementation(() => {
+        throw new Error("Simulated DB failure");
+      });
+
+      const res = await request(app).post("/api/auth/login").send({
+        iin: "123456789012",
+        password: "TestPassword",
+      });
+
+      expect(res.status).toBe(500);
+      expect(res.body).toMatchObject({ message: "Error logging in" });
+
+      User.findByIIN.mockRestore();
+    });
+
+    it("should return 403 if user already logged in", async () => {
+      const loginRes = await request(app).post("/api/auth/login").send({
+        iin: "123456789012",
+        password: "TestPassword",
+      });
+      const token = loginRes.body.token;
+      const res = await request(app)
+        .post("/api/auth/login")
+        .set("Cookie", `token=${token}`);
+
+      expect(res.status).toBe(403);
+      expect(res.body).toMatchObject({ message: "Already logged in" });
+    });
+  });
+
+  describe("POST /api/auth/logout", () => {
+    beforeEach(async () => {
+      await request(app).post("/api/auth/register").send({
+        iin: "123456789012",
+        first_name: "TestName",
+        last_name: "TestSurname",
+        patronymic: "TestPatronymic",
+        date_of_birth: "2021-01-01",
+        region: "TestRegion",
+        city: "TestCity",
+        phone_number: "1234567890",
+        email: "TestEmail",
+        password: "TestPassword",
+      });
+
+      const loginRes = await request(app)
+        .post("/api/auth/login")
+        .send({ iin: "123456789012", password: "TestPassword" });
+
+      token = loginRes.body.token;
+    });
+
+    it("should logout a user and clear the token cookie", async () => {
+      const res = await request(app)
+        .post("/api/auth/logout")
+        .set("Cookie", `token=${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toMatchObject({ message: "Logged out" });
+
+      const cookies = res.headers["set-cookie"];
+      expect(cookies).toBeDefined();
+      const tokenCookieCleared = cookies.some(
+        (cookie) => cookie.includes("token=;") && cookie.includes("Expires=")
+      );
+      expect(tokenCookieCleared).toBe(true);
+    });
+
+    it("should return 401 if no token cookie", async () => {
+      const res = await request(app).post("/api/auth/logout");
+
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: "Unauthorized" });
+    });
   });
 });

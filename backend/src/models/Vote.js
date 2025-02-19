@@ -3,8 +3,26 @@ const pool = require("../config/db");
 class Vote {
   static async checkVoted(data) {
     const query =
-      "SELECT * FROM voters WHERE election_id = $1 AND user_id = $2";
+      "SELECT * FROM is_voted WHERE election_id = $1 AND user_id = $2";
     const values = [data.electionId, data.userId];
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  }
+
+  static async checkCanVoteLocation({ electionId, userRegion, userCity }) {
+    const query = `
+      SELECT * FROM elections 
+      WHERE election_id = $1 
+      AND (region = $2 OR city = $3)
+    `;
+    const values = [electionId, userRegion, userCity];
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  }
+
+  static async checkVoteToken(token) {
+    const query = "SELECT * FROM voters WHERE token = $1";
+    const values = [token];
     const result = await pool.query(query, values);
     return result.rows[0];
   }
