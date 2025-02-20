@@ -1,12 +1,19 @@
 @use "../../styles/variables.scss" as *;
 .sidebar {
+  width: 0;
+  height: 0;
   position: fixed;
-  width: 300px;
-  height: 100vh;
   background: $navbar;
   padding: 1rem;
   transition: left 0.3s ease-in-out;
   padding-top: 0;
+
+  &.open {
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+  }
 
   ul {
     height: 100%;

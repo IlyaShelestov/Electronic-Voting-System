@@ -1,4 +1,5 @@
 @use "./fonts.scss";
+@use "./variables.scss" as *;
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +7,7 @@
 }
 
 body {
+  color: $general_dark;
   font-family: "Montserrat", sans-serif;
   .content {
     margin-left: 300px;
@@ -39,4 +41,8 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 60px 36px;
+}
+
+input {
+  all: unset;
 }

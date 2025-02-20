@@ -2,8 +2,8 @@ import "@/styles/globals.scss";
 
 import type { Metadata } from "next";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import { MultiProvider } from "@/store/providers";
 import Header from "@/components/Header/Header";
+import ReduxProvider from "../store/StoreProvider";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -16,16 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <MultiProvider>
-        <body className={`antialiased`}>
+    <ReduxProvider>
+      <html lang="ru">
+        <body>
           <Sidebar />
           <div className="content">
             <Header />
             <main>{children}</main>
           </div>
         </body>
-      </MultiProvider>
-    </html>
+      </html>
+    </ReduxProvider>
   );
 }

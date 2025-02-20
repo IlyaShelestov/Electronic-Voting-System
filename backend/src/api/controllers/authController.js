@@ -43,6 +43,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    console.log(req.body);
     const { iin, password } = req.body;
     const user = await User.findByIIN(iin);
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {

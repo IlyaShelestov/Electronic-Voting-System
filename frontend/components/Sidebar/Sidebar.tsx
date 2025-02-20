@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { HomeIcon } from "@/icons/HomeIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
@@ -8,11 +9,30 @@ import { SupportIcon } from "@/icons/SupportIcon";
 import { AboutUsIcon } from "@/icons/AboutUsIcon";
 import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
 import "./Sidebar.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "../Logo/Logo";
 import { IIcon } from "@/models/IIcon";
+import { useUIStore } from "@/store/uiStore";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/userSlice";
 
 const Sidebar = () => {
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+
+  if (!isAuthenticated) return null;
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+
+    document.cookie =
+      "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+    router.push("/auth/login");
+  };
+
   const path = usePathname();
   const defaultIcon: IIcon = {
     color: "#222831",
@@ -58,7 +78,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <nav className="sidebar">
+    <aside className="sidebar">
       <Logo />
 
       <div className="sidebar_wrapper">
@@ -75,12 +95,15 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
-        <button className="logout">
+        <button
+          className="logout"
+          onClick={handleLogout}
+        >
           <LeftArrowIcon {...defaultIcon} />
           <div>Выход</div>
         </button>
       </div>
-    </nav>
+    </aside>
   );
 };
 
