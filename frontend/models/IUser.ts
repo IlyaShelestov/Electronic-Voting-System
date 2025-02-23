@@ -1,5 +1,4 @@
 export interface IUser {
-  user_id?: number;
   iin: string;
   first_name: string;
   last_name: string;
@@ -9,6 +8,5 @@ export interface IUser {
   city: string;
   phone_number: string;
   email: string;
-  password_hash: string;
   role: "user" | "admin" | "manager";
 }

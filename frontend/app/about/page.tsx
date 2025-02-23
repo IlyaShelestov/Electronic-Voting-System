@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "./AboutUs.scss";
+import "./About.scss";
 export default function About() {
   const profiles = [
     {

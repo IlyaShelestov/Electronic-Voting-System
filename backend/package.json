@@ -12,6 +12,7 @@
     "migrate:test": "cross-env NODE_ENV=test node scripts/migrate.js",
     "migrate:populate": "node scripts/populateData.js"
   },
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IlyaShelestov/Diploma-Work.git"

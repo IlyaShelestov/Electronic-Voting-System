@@ -1,4 +1,5 @@
-require("../src/config/environment");
+require("../src/config/environment.js");
+
 const pool = require("../src/config/db");
 const createTables = require("./createTables");
 const dropTables = require("./dropTables");
