@@ -81,7 +81,9 @@ describe("Auth API Integration Tests", () => {
       const loginRes = await request(app)
         .post("/api/auth/login")
         .send({ iin: newUser.iin, password: newUser.password });
-      const token = loginRes.body.token;
+      const token = loginRes.headers["set-cookie"][0]
+        .split(";")[0]
+        .split("=")[1];
 
       const res = await request(app)
         .post("/api/auth/register")
@@ -109,14 +111,16 @@ describe("Auth API Integration Tests", () => {
       });
     });
 
-    it("should login a user and return token", async () => {
+    it("should login a user, set a cookie and return a message", async () => {
       const res = await request(app).post("/api/auth/login").send({
         iin: "123456789012",
         password: "TestPassword",
       });
 
+      const token = res.headers["set-cookie"][0].split(";")[0].split("=")[1];
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("token");
+      expect(res.body).toMatchObject({ message: "Logged in" });
+      expect(token).toBeDefined();
     });
 
     it("should return 401 if invalid credentials", async () => {
@@ -167,7 +171,9 @@ describe("Auth API Integration Tests", () => {
         iin: "123456789012",
         password: "TestPassword",
       });
-      const token = loginRes.body.token;
+      const token = loginRes.headers["set-cookie"][0]
+        .split(";")[0]
+        .split("=")[1];
       const res = await request(app)
         .post("/api/auth/login")
         .set("Cookie", `token=${token}`);
@@ -196,7 +202,7 @@ describe("Auth API Integration Tests", () => {
         .post("/api/auth/login")
         .send({ iin: "123456789012", password: "TestPassword" });
 
-      token = loginRes.body.token;
+      token = loginRes.headers["set-cookie"][0].split(";")[0].split("=")[1];
     });
 
     it("should logout a user and clear the token cookie", async () => {
