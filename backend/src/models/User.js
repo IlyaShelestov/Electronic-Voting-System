@@ -23,7 +23,6 @@ class User {
   }
 
   static async findByIIN(iin) {
-    console.log("IIN", iin);
     const result = await pool.query(
       "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users users WHERE iin = $1",
       [iin]

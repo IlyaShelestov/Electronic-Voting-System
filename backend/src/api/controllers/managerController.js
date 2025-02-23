@@ -91,7 +91,6 @@ exports.updateCandidate = async (req, res) => {
     const response = await Candidate.update(id, updateData);
     res.status(200).json(response);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: "Error updating candidate" });
   }
 };

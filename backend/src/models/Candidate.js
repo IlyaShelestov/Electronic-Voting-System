@@ -37,7 +37,7 @@ class Candidate {
 
   static async getById(id) {
     const query =
-      "SELECT * FROM candidates WHERE candidate_id = $1 JOIN users ON candidates.user_id = users.user_id";
+      "SELECT * FROM candidates JOIN users ON candidates.user_id = users.user_id WHERE candidate_id = $1";
     const values = [id];
 
     const result = await pool.query(query, values);

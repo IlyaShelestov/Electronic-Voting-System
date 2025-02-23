@@ -15,6 +15,7 @@ exports.getById = async (req, res) => {
     const candidate = await Candidate.getById(id);
     res.status(200).json(candidate);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Error getting candidate" });
   }
 };
