@@ -1,26 +1,85 @@
 .profile-container {
+  max-width: 700px;
+  width: 100%;
+  margin: 40px auto;
+  background: #fff;
   padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .profile-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.profile-info {
-  max-width: 500px;
-  margin: 0 auto;
+.profile-card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
   text-align: left;
 }
 
-.profile-info p {
-  font-size: 16px;
-  margin-bottom: 10px;
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  font-size: 64px;
+  color: #aaa;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.role-badge.user {
+  background: #d1f7c4;
+  color: #2c7b32;
+}
+
+.role-badge.admin {
+  background: #ffccc4;
+  color: #c72525;
+}
+
+.role-badge.manager {
+  background: #cce5ff;
+  color: #254dc7;
+}
+
+.profile-details {
+  margin-top: 10px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-row:last-child {
+  border-bottom: none;
 }
 
 .loading {
-  font-size: 18px;
-  color: gray;
+  font-size: 16px;
+  color: #777;
+  text-align: center;
 }

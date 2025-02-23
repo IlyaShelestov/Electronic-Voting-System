@@ -1,10 +1,10 @@
-const API_URL = "http://localhost:5000/api/elections"; // Ensure this matches your backend route
+import { API_URL } from "@/config/env";
 
 export const electionService = {
-  // Fetch all elections
+  api: API_URL + "/elections",
   getAll: async () => {
     try {
-      const response = await fetch(`${API_URL}`, {
+      const response = await fetch(`${electionService.api}`, {
         method: "GET",
         credentials: "include",
       });
@@ -16,10 +16,9 @@ export const electionService = {
     }
   },
 
-  // Fetch available elections for a specific region and city
   getAvailable: async () => {
     try {
-      const response = await fetch(`${API_URL}/avaliable`, {
+      const response = await fetch(`${electionService.api}/avaliable`, {
         method: "GET",
         credentials: "include",
       });
@@ -31,10 +30,9 @@ export const electionService = {
     }
   },
 
-  // Fetch all locations (regions & cities)
   getAllLocations: async () => {
     try {
-      const response = await fetch(`${API_URL}/locations`, {
+      const response = await fetch(`${electionService.api}/locations`, {
         method: "GET",
         credentials: "include",
       });
@@ -46,10 +44,9 @@ export const electionService = {
     }
   },
 
-  // Fetch election details by ID
   getById: async (id: number) => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${electionService.api}/${id}`, {
         method: "GET",
         credentials: "include",
       });
@@ -61,13 +58,15 @@ export const electionService = {
     }
   },
 
-  // Fetch candidates for a specific election
   getCandidates: async (electionId: number) => {
     try {
-      const response = await fetch(`${API_URL}/${electionId}/candidates`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${electionService.api}/${electionId}/candidates`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (!response.ok)
         throw new Error(
           `Failed to fetch candidates for election ${electionId}`
@@ -84,10 +83,13 @@ export const electionService = {
 
   getReport: async (electionId: number) => {
     try {
-      const response = await fetch(`${API_URL}/${electionId}/report`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${electionService.api}/${electionId}/report`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (!response.ok)
         throw new Error(`Failed to fetch report for election ${electionId}`);
       return await response.json();

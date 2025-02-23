@@ -1,16 +1,17 @@
 import "@/styles/globals.scss";
 
 import type { Metadata } from "next";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import Header from "@/components/Header/Header";
 import ReduxProvider from "../store/StoreProvider";
 import AuthChecker from "./auth/AuthChecker";
-import { useAppSelector } from "@/store/hooks";
 import LayoutContent from "./LayoutContent";
 
 export const metadata: Metadata = {
   title: "eVote",
   description: "eVote",
+    icons: {
+      icon: "/favicon.ico",
+
+    }
 };
 
 export default function RootLayout({

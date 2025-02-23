@@ -14,6 +14,7 @@ import { logout } from "@/store/slices/userSlice";
 import { useEffect } from "react";
 import Logo from "../Logo/Logo";
 import "./Sidebar.scss";
+import {removeAuthToken} from "@/utils/tokenHelper";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    removeAuthToken();
     router.push("/auth/login");
   };
 

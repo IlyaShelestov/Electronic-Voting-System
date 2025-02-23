@@ -15,6 +15,8 @@ const AuthChecker = () => {
 
         if (user) {
           dispatch(login(user));
+        } else {
+
         }
       } catch (error) {
         console.error("User not authenticated", error);

@@ -4,14 +4,9 @@ import Logo from "../Logo/Logo";
 import "./Header.scss";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
-import { useEffect } from "react";
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);
-
-  useEffect(() => {
-    console.log("User in Header:", user);
-  }, [user]);
 
   return (
     <header>

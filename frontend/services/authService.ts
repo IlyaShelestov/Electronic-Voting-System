@@ -1,51 +1,48 @@
-const API_URL = "http://localhost:5000/api/auth";
+import {AuthResponse} from "@/models/IAuthResponse";
+import {apiClient} from "@/services/apiClient";
+import {removeAuthToken} from "@/utils/tokenHelper";
+import {IUser} from "@/models/IUser";
 
 export const authService = {
-  login: async (iin: string, password: string) => {
+  apiEndpoint: "/auth",
+
+  login: async (iin: string, password: string): Promise<AuthResponse | null> => {
     try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ iin, password }),
-      });
+      const response = await apiClient.post<AuthResponse>(
+          `${authService.apiEndpoint}/login`,
+          { iin, password }
+      );
 
-      if (!response.ok) throw new Error("Failed to login");
+      if (response.status === 403) {
+        console.warn("User is already logged in.");
+        return null;
+      }
 
-      const data = await response.json();
-
-      document.cookie = `authToken=${data.token}; path=/; Secure; HttpOnly`;
-
-      return data;
-    } catch (error) {
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        console.warn("403 Forbidden: User is already logged in.");
+        return null;
+      }
       console.error("Login Error:", error);
       throw error;
     }
   },
 
-  register: async (username: string, email: string, password: string) => {
+  register: async (userData: IUser): Promise<IUser> => {
     try {
-      const response = await fetch(`${API_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
-
-      if (!response.ok) throw new Error("Registration failed");
-
-      return await response.json();
+      const { data } = await apiClient.post<IUser>("/auth/register", userData);
+      return data;
     } catch (error) {
       console.error("Registration Error:", error);
       throw error;
     }
   },
 
-  logout: async () => {
+  logout: async (): Promise<void> => {
     try {
-      await fetch(`${API_URL}/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await apiClient.post(`${authService.apiEndpoint}/logout`);
+      removeAuthToken();
     } catch (error) {
       console.error("Logout Error:", error);
       throw error;

@@ -1,6 +1,7 @@
-const API_URL = "http://localhost:5000/api/vote";
+import { API_URL } from "@/config/env";
 
 export const voteService = {
+  api: API_URL + "/vote",
   castVote: async (electionId: number, candidateId: number) => {
     try {
       const response = await fetch(`${API_URL}/cast`, {

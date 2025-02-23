@@ -1,20 +1,15 @@
-const API_URL = "http://localhost:5000/api/users";
+import { apiClient } from "@/services/apiClient";
+import {IUser} from "@/models/IUser";
+
 export const userService = {
-  getUser: async () => {
+  apiEndpoint: "/users",
+  getUser: async (): Promise<IUser | null> => {
     try {
-      const response = await fetch(`${API_URL}/me`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        return;
-      }
-
-      return await response.json();
+      const { data } = await apiClient.get<IUser>(userService.apiEndpoint + "/me");
+      return data;
     } catch (error) {
       console.error("Get User Error:", error);
-      throw error;
+      return null;
     }
   },
 };
