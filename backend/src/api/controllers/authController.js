@@ -43,7 +43,6 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    console.log(req.body);
     const { iin, password } = req.body;
     const user = await User.findByIIN(iin);
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {
@@ -62,7 +61,8 @@ exports.login = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    res.status(200).json({ token });
+    res.cookie("token", token)
+    res.status(200).json({ message: "Logged in" });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });
   }
