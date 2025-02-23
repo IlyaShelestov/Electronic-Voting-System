@@ -28,14 +28,16 @@ class Candidate {
   }
 
   static async getAll() {
-    const query = "SELECT * FROM candidates";
+    const query =
+      "SELECT * FROM candidates JOIN users ON candidates.user_id = users.user_id";
 
     const result = await pool.query(query);
     return result.rows;
   }
 
   static async getById(id) {
-    const query = "SELECT * FROM candidates WHERE candidate_id = $1";
+    const query =
+      "SELECT * FROM candidates WHERE candidate_id = $1 JOIN users ON candidates.user_id = users.user_id";
     const values = [id];
 
     const result = await pool.query(query, values);
