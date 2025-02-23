@@ -12,7 +12,11 @@ export const authService = {
 
       if (!response.ok) throw new Error("Failed to login");
 
-      return await response.json();
+      const data = await response.json();
+
+      document.cookie = `authToken=${data.token}; path=/; Secure; HttpOnly`;
+
+      return data;
     } catch (error) {
       console.error("Login Error:", error);
       throw error;

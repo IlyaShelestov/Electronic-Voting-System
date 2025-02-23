@@ -1,22 +1,28 @@
-import Image from "next/image";
+"use client";
+
 import Logo from "../Logo/Logo";
 import "./Header.scss";
 import Link from "next/link";
+import { useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
 
 const Header = () => {
-  let user = {
-    firstName: "John",
-    lastName: "Doe",
-  };
+  const user = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    console.log("User in Header:", user);
+  }, [user]);
+
   return (
     <header>
-      {!user && <Logo />}
-      {user && (
+      {!user ? (
+        <Logo />
+      ) : (
         <Link
           href="/profile"
           className="user"
         >
-          {user.firstName} {user.lastName}
+          {user.first_name} {user.last_name}
         </Link>
       )}
       <div className="locales">

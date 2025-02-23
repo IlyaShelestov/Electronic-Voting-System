@@ -12,7 +12,6 @@ import { IUser } from "@/models/IUser";
 import { userService } from "@/services/userService";
 
 export default function LoginPage() {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const [error, setError] = useState("");
   const handleOnSubmit = async (loginData: ILogin) => {
@@ -25,10 +24,6 @@ export default function LoginPage() {
       );
 
       document.cookie = `token=${auth.token}; path=/; Secure; SameSite=Strict;`;
-
-      const user: IUser = await userService.getUser();
-
-      dispatch(login(user));
 
       router.push("/");
     } catch (err) {

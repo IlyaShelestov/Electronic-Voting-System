@@ -7,7 +7,9 @@ export const userService = {
         credentials: "include",
       });
 
-      if (!response.ok) throw new Error("Failed to get user");
+      if (!response.ok) {
+        return;
+      }
 
       return await response.json();
     } catch (error) {

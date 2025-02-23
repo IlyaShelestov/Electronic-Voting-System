@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { HomeIcon } from "@/icons/HomeIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
 import { InstructionsIcon } from "@/icons/InstructionsIcon";
@@ -8,42 +9,31 @@ import { ProfileIcon } from "@/icons/ProfileIcon";
 import { SupportIcon } from "@/icons/SupportIcon";
 import { AboutUsIcon } from "@/icons/AboutUsIcon";
 import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
-import "./Sidebar.scss";
-import { usePathname, useRouter } from "next/navigation";
-import Logo from "../Logo/Logo";
-import { IIcon } from "@/models/IIcon";
-import { useUIStore } from "@/store/uiStore";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/userSlice";
+import { useEffect } from "react";
+import Logo from "../Logo/Logo";
+import "./Sidebar.scss";
 
 const Sidebar = () => {
-  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
-
-  if (!isAuthenticated) return null;
-
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const path = usePathname();
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+
+  useEffect(() => {
+    console.log("Sidebar Rendered. Authenticated:", isAuthenticated);
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     dispatch(logout());
-
-    document.cookie =
-      "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
     router.push("/auth/login");
   };
 
-  const path = usePathname();
-  const defaultIcon: IIcon = {
-    color: "#222831",
-    strokeWidth: 2,
-    size: 32,
-  };
-  const activeIcon: IIcon = {
-    color: "#00adb5",
-    strokeWidth: 4,
-    size: 32,
-  };
+  const defaultIcon = { color: "#222831", strokeWidth: 2, size: 32 };
+  const activeIcon = { color: "#00adb5", strokeWidth: 4, size: 32 };
+
   const tabs = [
     { icon: HomeIcon, path: "/", title: "Главная", is_active: path === "/" },
     {
@@ -77,10 +67,10 @@ const Sidebar = () => {
       is_active: path === "/about",
     },
   ];
-  return (
-    <aside className="sidebar">
-      <Logo />
 
+  return (
+    <aside className={`sidebar ${!isAuthenticated ? "hidden" : "open"}`}>
+      <Logo />
       <div className="sidebar_wrapper">
         <ul>
           {tabs.map((tab, index) => (

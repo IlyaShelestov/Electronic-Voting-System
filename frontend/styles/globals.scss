@@ -9,8 +9,18 @@
 body {
   color: $general_dark;
   font-family: "Montserrat", sans-serif;
+
   .content {
-    margin-left: 300px;
+    transition: margin-left 0.3s ease-in-out;
+
+    &.with-sidebar {
+      margin-left: 300px;
+    }
+
+    &.full-width {
+      margin-left: 0;
+    }
+
     & > header,
     main,
     footer {

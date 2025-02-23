@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Header from "@/components/Header/Header";
 import ReduxProvider from "../store/StoreProvider";
+import AuthChecker from "./auth/AuthChecker";
+import { useAppSelector } from "@/store/hooks";
+import LayoutContent from "./LayoutContent";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -17,13 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <ReduxProvider>
+      <AuthChecker />
       <html lang="ru">
         <body>
-          <Sidebar />
-          <div className="content">
-            <Header />
-            <main>{children}</main>
-          </div>
+          <LayoutContent>{children}</LayoutContent>
         </body>
       </html>
     </ReduxProvider>

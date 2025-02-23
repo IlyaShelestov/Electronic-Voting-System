@@ -1,13 +1,18 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const authToken = req.cookies.get("authToken")?.value;
+  const authToken = req.cookies.get("token")?.value;
+  const isAuthPage = req.nextUrl.pathname.startsWith("/auth");
+  const isProtectedRoute = !isAuthPage && req.nextUrl.pathname !== "/auth";
 
-  if (
-    (!authToken && !req.nextUrl.pathname.startsWith("/auth")) ||
-    req.nextUrl.pathname === "/auth"
-  ) {
+  if (!authToken && isProtectedRoute) {
+    console.log("Redirecting to /auth/login due to missing authToken");
     return NextResponse.redirect(new URL("/auth/login", req.url));
+  }
+
+  if (authToken && isAuthPage) {
+    console.log("User already authenticated, redirecting to /");
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
