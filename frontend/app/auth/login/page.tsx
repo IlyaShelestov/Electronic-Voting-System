@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authService } from "@/services/authService";
-import {userService} from "@/services/userService";
-import {useAppDispatch} from "@/store/hooks";
-import {login} from "@/store/slices/userSlice";
+import { userService } from "@/services/userService";
+import { useAppDispatch } from "@/store/hooks";
+import { login } from "@/store/slices/userSlice";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,10 +33,22 @@ export default function LoginPage() {
 
       router.push("/");
     } catch (err: any) {
-      if (err.response?.status === 403) {
-        setError("Вы уже вошли в систему.");
+      if (err.response) {
+        switch (err.response.status) {
+          case 401:
+            setError(err.response.data.message || "Неверные учетные данные.");
+            break;
+          case 403:
+            setError("Вы уже вошли в систему.");
+            break;
+          case 500:
+            setError("Ошибка сервера. Попробуйте позже.");
+            break;
+          default:
+            setError("Произошла неизвестная ошибка.");
+        }
       } else {
-        setError("Неверные учетные данные.");
+        setError("Ошибка сети. Проверьте подключение к интернету.");
       }
     }
   };
@@ -45,7 +57,7 @@ export default function LoginPage() {
       <div className="login-container">
         <h1 className="text-3xl font-bold text-center">Войдите в аккаунт</h1>
         <LoginForm onSubmit={handleOnSubmit} />
-        {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
         <p className="text-center">
           У вас нет аккаунта?{" "}
           <Link href="/auth/register" className="text-blue-500">
