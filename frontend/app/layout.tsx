@@ -1,9 +1,9 @@
 import "@/styles/globals.scss";
 
 import type { Metadata } from "next";
-import ReduxProvider from "../store/StoreProvider";
 import AuthChecker from "./auth/AuthChecker";
 import LayoutContent from "./LayoutContent";
+import MultiProvider from "@/providers/MultiProvider";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -20,13 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
+    <MultiProvider>
       <AuthChecker />
       <html lang="ru">
         <body>
           <LayoutContent>{children}</LayoutContent>
         </body>
       </html>
-    </ReduxProvider>
+    </MultiProvider>
   );
 }

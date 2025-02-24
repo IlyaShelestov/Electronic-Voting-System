@@ -50,7 +50,7 @@
       font-size: 24px;
       font-weight: 600;
       color: $selected;
-      margin-bottom: 60px;
+      margin-bottom: 30px;
     }
   }
 
@@ -61,4 +61,8 @@
   a {
     color: $button_light;
   }
+}
+
+form.register-form {
+  gap: 20px;
 }

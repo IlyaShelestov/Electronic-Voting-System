@@ -57,7 +57,6 @@ export default function LoginPage() {
       <div className="login-container">
         <h1 className="text-3xl font-bold text-center">Войдите в аккаунт</h1>
         <LoginForm onSubmit={handleOnSubmit} />
-        {error && <p className="error-message">{error}</p>}
         <p className="text-center">
           У вас нет аккаунта?{" "}
           <Link href="/auth/register" className="text-blue-500">

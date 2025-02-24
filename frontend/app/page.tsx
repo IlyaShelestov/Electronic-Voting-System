@@ -44,8 +44,6 @@ export default function Home() {
           alt="Election Banner"
           width={800}
           height={300}
-          layout="responsive"
-          objectFit="cover"
           className="banner-image"
         />
       </div>

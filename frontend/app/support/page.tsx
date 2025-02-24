@@ -8,7 +8,7 @@ export default function Support() {
         <br /> и наши специалисты свяжутся с Вами
       </p>
 
-      <form>
+      <form className="support-form">
         <div>
           <label htmlFor="question">Оставить свой вопрос</label>
           <textarea

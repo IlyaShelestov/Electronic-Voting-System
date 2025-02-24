@@ -11,7 +11,9 @@ const Header = () => {
   return (
     <header>
       {!user ? (
-        <Logo />
+          <Link href={"/"}>
+              <Logo />
+          </Link>
       ) : (
         <Link
           href="/profile"

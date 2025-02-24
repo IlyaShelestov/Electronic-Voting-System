@@ -2,8 +2,7 @@
 header {
   height: $header_height;
   width: 100%;
-  background: url("/images/ornament.png") repeat;
-  background-color: $navbar;
+  background: $navbar url("/images/ornament.png") repeat;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // ✅ Import for reading query params
+import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 import { electionService } from "@/services/electionService";
 import { voteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
@@ -25,6 +26,7 @@ export default function VotePage() {
                 const data = await electionService.getAll();
                 setElections(data);
             } catch (error) {
+                toast.error("Ошибка загрузки выборов.");
                 console.error("Error fetching elections:", error);
             }
         };
@@ -49,6 +51,7 @@ export default function VotePage() {
                         }
                     }
                 } catch (error) {
+                    toast.error("Ошибка загрузки кандидатов.");
                     console.error("Error fetching candidates:", error);
                 } finally {
                     setLoading(false);
@@ -71,23 +74,21 @@ export default function VotePage() {
     const handleElectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const electionId = e.target.value ? Number(e.target.value) : null;
         setSelectedElection(electionId);
-        setSelectedCandidate(null); // Reset candidate selection on election change
+        setSelectedCandidate(null);
     };
 
     const handleVote = async () => {
         if (!selectedCandidate) {
-            alert("Выберите кандидата перед голосованием!");
+            toast.warn("Выберите кандидата перед голосованием!");
             return;
         }
-
         try {
             await voteService.castVote(Number(selectedElection), selectedCandidate);
-            alert("Ваш голос успешно отправлен!");
         } catch (error) {
             console.error("Ошибка голосования:", error);
-            alert("Ошибка при голосовании: " + error);
         }
     };
+
 
     return (
         <div className="vote-container">
