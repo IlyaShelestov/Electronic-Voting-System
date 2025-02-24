@@ -59,7 +59,6 @@ select {
   font-weight: 500;
 }
 
-/* Radio button custom style */
 .candidate-list input[type="radio"] {
   appearance: none;
   width: 20px;
@@ -77,7 +76,6 @@ select {
   box-shadow: 0 0 0 2px #00adb5;
 }
 
-/* Hover effect */
 .candidate-list label:hover {
   background-color: #e0f7fa;
   border: 2px solid #00adb5;

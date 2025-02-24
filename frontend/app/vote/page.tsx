@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // ✅ Import for reading query params
 import { electionService } from "@/services/electionService";
 import { voteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
@@ -8,6 +9,10 @@ import { ICandidate } from "@/models/ICandidate";
 import "./Vote.scss";
 
 export default function VotePage() {
+    const searchParams = useSearchParams();
+    const queryElectionId = searchParams.get("electionId");
+    const queryCandidateId = searchParams.get("candidateId");
+
     const [elections, setElections] = useState<IElection[]>([]);
     const [selectedElection, setSelectedElection] = useState<number | null>(null);
     const [candidates, setCandidates] = useState<ICandidate[]>([]);
@@ -34,13 +39,21 @@ export default function VotePage() {
                     setLoading(true);
                     const data = await electionService.getCandidates(selectedElection);
                     setCandidates(data);
+
+                    if (queryCandidateId) {
+                        const candidateExists = data.some(
+                            (candidate: { candidate_id: number; }) => candidate.candidate_id === Number(queryCandidateId)
+                        );
+                        if (candidateExists) {
+                            setSelectedCandidate(Number(queryCandidateId));
+                        }
+                    }
                 } catch (error) {
                     console.error("Error fetching candidates:", error);
                 } finally {
                     setLoading(false);
                 }
             } else {
-                // ✅ Reset candidates when default option is selected
                 setCandidates([]);
                 setSelectedCandidate(null);
             }
@@ -49,9 +62,16 @@ export default function VotePage() {
         fetchCandidates();
     }, [selectedElection]);
 
+    useEffect(() => {
+        if (queryElectionId) {
+            setSelectedElection(Number(queryElectionId));
+        }
+    }, [queryElectionId]);
+
     const handleElectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const electionId = e.target.value ? Number(e.target.value) : null;
         setSelectedElection(electionId);
+        setSelectedCandidate(null); // Reset candidate selection on election change
     };
 
     const handleVote = async () => {
@@ -65,7 +85,7 @@ export default function VotePage() {
             alert("Ваш голос успешно отправлен!");
         } catch (error) {
             console.error("Ошибка голосования:", error);
-            alert("Ошибка при голосовании.");
+            alert("Ошибка при голосовании: " + error);
         }
     };
 
@@ -74,7 +94,11 @@ export default function VotePage() {
             <h1 className="vote-title">Отдать свой голос</h1>
             <div className="vote-box">
                 <label htmlFor="election-select">Выбрать категорию голосования</label>
-                <select id="election-select" value={selectedElection ?? ""} onChange={handleElectionChange}>
+                <select
+                    id="election-select"
+                    value={selectedElection ?? ""}
+                    onChange={handleElectionChange}
+                >
                     <option value="">Выберите выборы</option>
                     {elections.map((election) => (
                         <option key={election.election_id} value={election.election_id}>
