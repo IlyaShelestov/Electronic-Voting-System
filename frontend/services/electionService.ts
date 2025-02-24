@@ -1,10 +1,10 @@
 import { API_URL } from "@/config/env";
 
 export const electionService = {
-  api: API_URL + "/elections",
+  apiEndpoint: API_URL + "/elections",
   getAll: async () => {
     try {
-      const response = await fetch(`${electionService.api}`, {
+      const response = await fetch(`${electionService.apiEndpoint}`, {
         method: "GET",
         credentials: "include",
       });
@@ -18,7 +18,7 @@ export const electionService = {
 
   getAvailable: async () => {
     try {
-      const response = await fetch(`${electionService.api}/avaliable`, {
+      const response = await fetch(`${electionService.apiEndpoint}/avaliable`, {
         method: "GET",
         credentials: "include",
       });
@@ -32,7 +32,7 @@ export const electionService = {
 
   getAllLocations: async () => {
     try {
-      const response = await fetch(`${electionService.api}/locations`, {
+      const response = await fetch(`${electionService.apiEndpoint}/locations`, {
         method: "GET",
         credentials: "include",
       });
@@ -46,7 +46,7 @@ export const electionService = {
 
   getById: async (id: number) => {
     try {
-      const response = await fetch(`${electionService.api}/${id}`, {
+      const response = await fetch(`${electionService.apiEndpoint}/${id}`, {
         method: "GET",
         credentials: "include",
       });
@@ -61,7 +61,7 @@ export const electionService = {
   getCandidates: async (electionId: number) => {
     try {
       const response = await fetch(
-        `${electionService.api}/${electionId}/candidates`,
+        `${electionService.apiEndpoint}/${electionId}/candidates`,
         {
           method: "GET",
           credentials: "include",
@@ -84,7 +84,7 @@ export const electionService = {
   getReport: async (electionId: number) => {
     try {
       const response = await fetch(
-        `${electionService.api}/${electionId}/report`,
+        `${electionService.apiEndpoint}/${electionId}/report`,
         {
           method: "GET",
           credentials: "include",

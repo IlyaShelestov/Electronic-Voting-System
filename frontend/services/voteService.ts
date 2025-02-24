@@ -1,18 +1,14 @@
-import { API_URL } from "@/config/env";
+import { apiClient } from "@/services/apiClient";
 
 export const voteService = {
-  api: API_URL + "/vote",
+  apiEndpoint: "/vote",
   castVote: async (electionId: number, candidateId: number) => {
     try {
-      const response = await fetch(`${API_URL}/cast`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ electionId, candidateId }),
+      const { data } = await apiClient.post(`${voteService.apiEndpoint}/cast`, {
+        electionId,
+        candidateId,
       });
-
-      if (!response.ok) throw new Error("Failed to cast vote");
-      return await response.json();
+      return data;
     } catch (error) {
       console.error("Error casting vote:", error);
       throw error;
@@ -21,13 +17,8 @@ export const voteService = {
 
   checkVoted: async (electionId: number) => {
     try {
-      const response = await fetch(`${API_URL}/status/${electionId}`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!response.ok) throw new Error("Failed to check voting status");
-      return await response.json();
+      const { data } = await apiClient.get(`${voteService.apiEndpoint}/status/${electionId}`);
+      return data;
     } catch (error) {
       console.error("Error checking vote status:", error);
       throw error;
@@ -36,13 +27,8 @@ export const voteService = {
 
   checkVoteLocation: async (electionId: number) => {
     try {
-      const response = await fetch(`${API_URL}/location/${electionId}`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!response.ok) throw new Error("Failed to check voting location");
-      return await response.json();
+      const { data } = await apiClient.get(`${voteService.apiEndpoint}/location/${electionId}`);
+      return data;
     } catch (error) {
       console.error("Error checking vote location:", error);
       throw error;
@@ -51,15 +37,8 @@ export const voteService = {
 
   checkVoteToken: async (token: string) => {
     try {
-      const response = await fetch(`${API_URL}/token`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ token }),
-      });
-
-      if (!response.ok) throw new Error("Failed to validate vote token");
-      return await response.json();
+      const { data } = await apiClient.post(`${voteService.apiEndpoint}/token`, { token });
+      return data;
     } catch (error) {
       console.error("Error validating vote token:", error);
       throw error;

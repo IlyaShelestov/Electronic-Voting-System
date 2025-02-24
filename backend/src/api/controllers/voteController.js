@@ -4,7 +4,9 @@ const { generateOneTimeToken } = require("../../utils/voteToken");
 
 exports.castVote = async (req, res) => {
   try {
+
     const { electionId, candidateId } = req.body;
+    console.log(req.body);
     const { userId, region, city } = req.user;
 
     const candidate = await Candidate.getById(candidateId);

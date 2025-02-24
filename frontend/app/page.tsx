@@ -8,6 +8,7 @@ import { setElections } from "@/store/slices/electionSlice";
 import { IElection } from "@/models/IElection";
 import { useRouter } from "next/navigation";
 import "./Home.scss";
+import {RightArrowCircle} from "@/icons/RightArrowCircle";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -42,7 +43,9 @@ export default function Home() {
           src="/images/election-banner.png"
           alt="Election Banner"
           width={800}
-          height={400}
+          height={300}
+          layout="responsive"
+          objectFit="cover"
           className="banner-image"
         />
       </div>
@@ -57,7 +60,9 @@ export default function Home() {
             onClick={() => handleElectionClick(election.election_id)}
           >
             <span>{election.title}</span>
-            <button className="arrow-btn">➜</button>
+            <button className="arrow-btn">
+                <RightArrowCircle color={"black"} strokeWidth={4} size={32} />
+            </button>
           </div>
         ))}
       </div>

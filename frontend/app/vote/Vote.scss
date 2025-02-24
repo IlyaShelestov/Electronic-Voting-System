@@ -1,0 +1,100 @@
+.vote-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.vote-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.vote-box {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.candidate-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.candidate-list li {
+  margin: 8px 0;
+}
+
+.candidate-list label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Radio button custom style */
+.candidate-list input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00adb5;
+  border-radius: 50%;
+  outline: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.candidate-list input[type="radio"]:checked {
+  background-color: #00adb5;
+  border: 5px solid white;
+  box-shadow: 0 0 0 2px #00adb5;
+}
+
+/* Hover effect */
+.candidate-list label:hover {
+  background-color: #e0f7fa;
+  border: 2px solid #00adb5;
+  border-radius: 8px;
+}
+
+.vote-button {
+  background: #00adb5;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.vote-button:hover {
+  background: #008c9e;
+}
