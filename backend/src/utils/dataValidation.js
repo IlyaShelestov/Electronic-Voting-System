@@ -42,8 +42,12 @@ const isValidDate = (date) => {
   );
 };
 
-const isValidPhoneNumber = (phone, locale = "kz-KZ") => {
-  return typeof phone === "string" && validator.isMobilePhone(phone, locale);
+const isValidPhoneNumber = (phone) => {
+  return (
+    typeof phone === "string" &&
+    validator.isMobilePhone(phone, "kk-KZ") &&
+    (phone.startsWith("+7") || phone.startsWith("8")) // Проверка начинается ли номер с +7 или 
+  );
 };
 
 module.exports = {
@@ -53,5 +57,5 @@ module.exports = {
   isValidText,
   isValidEmail,
   isValidDate,
-  isValidNumber,
+  isValidPhoneNumber,
 };

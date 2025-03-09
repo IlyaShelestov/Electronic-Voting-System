@@ -7,14 +7,14 @@ describe("Auth API Integration Tests", () => {
     it("should register a new user and return user data", async () => {
       const newUser = {
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
       };
 
@@ -39,17 +39,17 @@ describe("Auth API Integration Tests", () => {
       expect(res.body).toHaveProperty("updated_at");
     });
 
-    it("should return 500 if user already exists", async () => {
+    it("should return 409 if user already exists", async () => {
       const existingUser = {
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
       };
 
@@ -58,21 +58,21 @@ describe("Auth API Integration Tests", () => {
         .post("/api/auth/register")
         .send(existingUser);
 
-      expect(res.status).toBe(500);
-      expect(res.body).toMatchObject({ message: "Error creating user" });
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({ message: "User with this IIN already exists" });
     });
 
     it("should return 403 if already logged in", async () => {
       const newUser = {
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
       };
 
@@ -99,14 +99,14 @@ describe("Auth API Integration Tests", () => {
     beforeEach(async () => {
       await request(app).post("/api/auth/register").send({
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
       });
     });
@@ -187,14 +187,14 @@ describe("Auth API Integration Tests", () => {
     beforeEach(async () => {
       await request(app).post("/api/auth/register").send({
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
       });
 

@@ -56,14 +56,14 @@ describe("Admin API Integration Tests", () => {
     it("should create a new user", async () => {
       const newUser = {
         iin: "123456789012",
-        first_name: "TestName",
-        last_name: "TestSurname",
-        patronymic: "TestPatronymic",
+        first_name: "Олег",
+        last_name: "Олегов",
+        patronymic: "Олегович",
         date_of_birth: "2021-01-01",
         region: "TestRegion",
         city: "TestCity",
-        phone_number: "1234567890",
-        email: "TestEmail",
+        phone_number: "87071234567",
+        email: "testemail@gmail.com",
         password: "TestPassword",
         role: "user",
       };
@@ -120,14 +120,14 @@ describe("Admin API Integration Tests", () => {
     it("should update a user", async () => {
       const user = await createStandardUser();
       const updatedData = {
-        first_name: "UpdatedName",
-        last_name: "UpdatedSurname",
-        patronymic: "UpdatedPatronymic",
+        first_name: "Александр",
+        last_name: "Александров",
+        patronymic: "Александрович",
         date_of_birth: "2021-01-02",
         region: "UpdatedRegion",
         city: "UpdatedCity",
-        phone_number: "0987654321",
-        email: "UpdatedEmail",
+        phone_number: "87071234568",
+        email: "testemail2@gmail.com",
         role: "user",
       };
 

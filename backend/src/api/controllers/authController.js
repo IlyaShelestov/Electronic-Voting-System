@@ -1,6 +1,15 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const {
+  isValidName,
+  isValidSurname,
+  isValidIIN,
+  isValidText,
+  isValidEmail,
+  isValidDate,
+  isValidPhoneNumber,
+} = require("../../utils/dataValidation");
 
 exports.register = async (req, res) => {
   try {
@@ -16,6 +25,49 @@ exports.register = async (req, res) => {
       email,
       password,
     } = req.body;
+
+    // Проверка обязательных полей
+    if (
+      !iin || !first_name || !last_name || !date_of_birth || 
+      !region || !city || !phone_number || !email || !password
+    ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Валидация данных
+    if (!isValidIIN(iin)) {
+      return res.status(400).json({ message: "Invalid IIN format" });
+    }
+    if (!isValidName(first_name)) {
+      return res.status(400).json({ message: "Invalid first name format" });
+    }
+    if (!isValidSurname(last_name)) {
+      return res.status(400).json({ message: "Invalid last name format" });
+    }
+    if (patronymic && !isValidName(patronymic)) {
+      return res.status(400).json({ message: "Invalid patronymic format" });
+    }
+    if (!isValidDate(date_of_birth)) {
+      return res.status(400).json({ message: "Invalid date format (YYYY-MM-DD expected)" });
+    }
+    if (!isValidText(region)) {
+      return res.status(400).json({ message: "Invalid region format" });
+    }
+    if (!isValidText(city)) {
+      return res.status(400).json({ message: "Invalid city format" });
+    }
+    if (!isValidPhoneNumber(phone_number)) {
+      return res.status(400).json({ message: "Invalid phone number format" });
+    }
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    // Проверка на существующего пользователя
+    const existingUser = await User.findByIIN(iin);
+    if (existingUser) {
+      return res.status(409).json({ message: "User with this IIN already exists" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -40,6 +92,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: "Error creating user" });
   }
 };
+
 
 exports.login = async (req, res) => {
   try {
