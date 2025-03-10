@@ -2,7 +2,6 @@ const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const {
   isValidName,
-  isValidSurname,
   isValidIIN,
   isValidText,
   isValidEmail,
@@ -55,7 +54,7 @@ exports.createUser = async (req, res) => {
     if (!isValidName(first_name)) {
       return res.status(400).json({ message: "Invalid first name format" });
     }
-    if (!isValidSurname(last_name)) {
+    if (!isValidName(last_name)) {
       return res.status(400).json({ message: "Invalid last name format" });
     }
     if (patronymic && !isValidName(patronymic)) {

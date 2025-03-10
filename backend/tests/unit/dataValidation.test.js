@@ -24,18 +24,6 @@ const {
       });
     });
   
-    describe("isValidSurname", () => {
-      it("should return true for valid surnames", () => {
-        expect(isValidSurname("Иванов")).toBe(true);
-      });
-  
-      it("should return false for invalid surnames", () => {
-        expect(isValidSurname("И")).toBe(false);
-        expect(isValidSurname("ИвановИвановИванов")).toBe(false);
-        expect(isValidSurname("иванов")).toBe(false);
-      });
-    });
-  
     describe("isValidIIN", () => {
       it("should return true for valid IIN", () => {
         expect(isValidIIN("123456789012")).toBe(true);
