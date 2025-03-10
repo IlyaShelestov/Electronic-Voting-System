@@ -9,6 +9,8 @@ async function dropTables(pool) {
     await pool.query(`DROP TABLE IF EXISTS candidates;`);
     await pool.query(`DROP TABLE IF EXISTS elections;`);
     await pool.query(`DROP TABLE IF EXISTS users;`);
+    await pool.query(`DROP TABLE IF EXISTS cities;`);
+    await pool.query(`DROP TABLE IF EXISTS regions;`);
 
     await pool.query("COMMIT");
     console.log("Tables deleted successfully.");

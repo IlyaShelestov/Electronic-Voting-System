@@ -10,7 +10,6 @@ const {
   isValidPhoneNumber,
 } = require("../../utils/dataValidation");
 
-
 exports.getAll = async (req, res) => {
   try {
     const users = await User.getAll();
@@ -28,8 +27,7 @@ exports.createUser = async (req, res) => {
       last_name,
       patronymic,
       date_of_birth,
-      region,
-      city,
+      city_id,
       phone_number,
       email,
       password,
@@ -42,8 +40,7 @@ exports.createUser = async (req, res) => {
       !first_name ||
       !last_name ||
       !date_of_birth ||
-      !region ||
-      !city ||
+      !city_id ||
       !phone_number ||
       !email ||
       !password
@@ -65,14 +62,13 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid patronymic format" });
     }
     if (!isValidDate(date_of_birth)) {
-      return res.status(400).json({ message: "Invalid date format (YYYY-MM-DD expected)" });
+      return res
+        .status(400)
+        .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
-    if (!isValidText(region)) {
-      return res.status(400).json({ message: "Invalid region format" });
-    }
-    if (!isValidText(city)) {
-      return res.status(400).json({ message: "Invalid city format" });
-    }
+    // if (!isValidText(city)) {
+    //   return res.status(400).json({ message: "Invalid city format" });
+    // }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
@@ -89,8 +85,7 @@ exports.createUser = async (req, res) => {
       last_name,
       patronymic,
       date_of_birth,
-      region,
-      city,
+      city_id,
       phone_number,
       email,
       password_hash: hashedPassword,
@@ -104,7 +99,6 @@ exports.createUser = async (req, res) => {
     res.status(500).json({ message: "Error creating user" });
   }
 };
-
 
 exports.deleteUser = async (req, res) => {
   try {

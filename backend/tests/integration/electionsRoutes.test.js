@@ -4,6 +4,8 @@ const {
   createElection,
   attachCandidate,
   castVote,
+  createCity,
+  createRegion,
 } = require("../helpers/entitiesHelper");
 const { getUserToken } = require("../helpers/tokenHelper");
 const {
@@ -14,9 +16,10 @@ const {
 describe("Elections API Integration Tests", () => {
   let election, electionWithCandidate, userToken, candidate, voter;
   beforeEach(async () => {
+    await createRegion();
+    await createCity();
     userToken = getUserToken({
-      region: "TestRegion",
-      city: "TestCity",
+      city: 1,
       userId: 2,
     });
 
@@ -32,24 +35,24 @@ describe("Elections API Integration Tests", () => {
       title: "Available Election",
       start_date,
       end_date,
-      region: "TestRegion",
-      city: "TestCity",
+      region: 1,
+      city: 1,
     });
 
     notAvaliableElection = await createElection({
       title: "Not Available Election",
       start_date: "2021-01-01",
       end_date: "2021-01-02",
-      region: "TestRegion2",
-      city: "TestCity2",
+      region: 1,
+      city: 1,
     });
 
     electionWithCandidate = await createElection({
       title: "Election with Candidate",
       start_date,
       end_date,
-      region: "TestRegion",
-      city: "TestCity",
+      region: 1,
+      city: 1,
     });
     candidate = await createCandidate();
     await attachCandidate(
@@ -78,20 +81,6 @@ describe("Elections API Integration Tests", () => {
         (e) => e.election_id === election.election_id
       );
       expect(found).toBeDefined();
-    });
-  });
-
-  describe("GET /api/elections/locations", () => {
-    it("should return 200 and an object with regions and cities arrays", async () => {
-      const res = await request(app)
-        .get("/api/elections/locations")
-        .set("Cookie", `token=${userToken}`);
-
-      expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("regions");
-      expect(res.body).toHaveProperty("cities");
-      expect(Array.isArray(res.body.regions)).toBe(true);
-      expect(Array.isArray(res.body.cities)).toBe(true);
     });
   });
 

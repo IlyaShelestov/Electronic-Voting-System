@@ -1,7 +1,12 @@
 const request = require("supertest");
 const app = require("../../src/index");
 const { getManagerToken } = require("../helpers/tokenHelper");
-const { createElection, createEvent } = require("../helpers/entitiesHelper");
+const {
+  createElection,
+  createEvent,
+  createCity,
+  createRegion,
+} = require("../helpers/entitiesHelper");
 const {
   createManager,
   createCandidate,
@@ -12,11 +17,15 @@ describe("Manager Routes Integration Tests", () => {
   let managerToken, election, candidate, event, user;
 
   beforeAll(async () => {
+    await createRegion();
+    await createCity();
     const manager = await createManager();
     managerToken = getManagerToken({ userId: manager.user_id });
   });
 
   beforeEach(async () => {
+    await createRegion();
+    await createCity();
     election = await createElection();
     candidate = await createCandidate({ election_id: election.election_id });
     user = await createStandardUser();
@@ -32,8 +41,8 @@ describe("Manager Routes Integration Tests", () => {
           title: "New Election",
           start_date: "2025-01-01",
           end_date: "2025-01-10",
-          region: "TestRegion",
-          city: "TestCity",
+          region_id: 1,
+          city_id: 1,
         });
       expect(res.status).toBe(201);
       expect(res.body.title).toBe("New Election");

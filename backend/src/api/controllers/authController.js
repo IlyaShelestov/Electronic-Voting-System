@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const City = require("../../models/City");
 const {
   isValidName,
   isValidSurname,
@@ -19,8 +20,7 @@ exports.register = async (req, res) => {
       last_name,
       patronymic,
       date_of_birth,
-      region,
-      city,
+      city_id,
       phone_number,
       email,
       password,
@@ -28,8 +28,14 @@ exports.register = async (req, res) => {
 
     // Проверка обязательных полей
     if (
-      !iin || !first_name || !last_name || !date_of_birth || 
-      !region || !city || !phone_number || !email || !password
+      !iin ||
+      !first_name ||
+      !last_name ||
+      !date_of_birth ||
+      !city_id ||
+      !phone_number ||
+      !email ||
+      !password
     ) {
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -48,14 +54,13 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Invalid patronymic format" });
     }
     if (!isValidDate(date_of_birth)) {
-      return res.status(400).json({ message: "Invalid date format (YYYY-MM-DD expected)" });
+      return res
+        .status(400)
+        .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
-    if (!isValidText(region)) {
-      return res.status(400).json({ message: "Invalid region format" });
-    }
-    if (!isValidText(city)) {
-      return res.status(400).json({ message: "Invalid city format" });
-    }
+    // if (!isValidText(city)) {
+    //   return res.status(400).json({ message: "Invalid city format" });
+    // }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
@@ -66,7 +71,9 @@ exports.register = async (req, res) => {
     // Проверка на существующего пользователя
     const existingUser = await User.findByIIN(iin);
     if (existingUser) {
-      return res.status(409).json({ message: "User with this IIN already exists" });
+      return res
+        .status(409)
+        .json({ message: "User with this IIN already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,8 +84,7 @@ exports.register = async (req, res) => {
       last_name,
       patronymic,
       date_of_birth,
-      region,
-      city,
+      city_id,
       phone_number,
       email,
       password_hash: hashedPassword,
@@ -93,7 +99,6 @@ exports.register = async (req, res) => {
   }
 };
 
-
 exports.login = async (req, res) => {
   try {
     const { iin, password } = req.body;
@@ -101,20 +106,20 @@ exports.login = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
+    const region_id = City.getById(user.city_id).region_id;
     const token = jwt.sign(
       {
         userId: user.user_id,
         role: user.role,
-        city: user.city,
-        region: user.region,
+        city: user.city_id,
+        region: region_id,
       },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
     );
-    res.cookie("token", token)
+    res.cookie("token", token);
     res.status(200).json({ message: "Logged in" });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });

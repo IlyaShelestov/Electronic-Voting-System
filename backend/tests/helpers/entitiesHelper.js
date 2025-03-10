@@ -2,6 +2,37 @@ const Event = require("../../src/models/Event");
 const Candidate = require("../../src/models/Candidate");
 const Election = require("../../src/models/Election");
 const Vote = require("../../src/models/Vote");
+const City = require("../../src/models/City");
+const Region = require("../../src/models/Region");
+
+const createRegion = async (overrides = {}) => {
+  try {
+    const data = {
+      name: "TestRegion",
+      ...overrides,
+    };
+    const region = await Region.create(data);
+    return region;
+  } catch (error) {
+    console.error("Error creating region:", error);
+    throw error;
+  }
+};
+
+const createCity = async (overrides = {}) => {
+  try {
+    const data = {
+      name: "TestCity",
+      region_id: 1,
+      ...overrides,
+    };
+    const city = await City.create(data);
+    return city;
+  } catch (error) {
+    console.error("Error creating city:", error);
+    throw error;
+  }
+};
 
 const createEvent = async (overrides = {}) => {
   try {
@@ -25,8 +56,8 @@ const createElection = async (overrides = {}) => {
       title: "TestTitle",
       start_date: "2021-01-01",
       end_date: "2021-01-08",
-      region: "TestRegion",
-      city: "TestCity",
+      region_id: 1,
+      city_id: 1,
       ...overrides,
     };
     const election = await Election.create(data);
@@ -82,6 +113,8 @@ const castVote = async (
 };
 
 module.exports = {
+  createRegion,
+  createCity,
   createEvent,
   createElection,
   attachCandidate,

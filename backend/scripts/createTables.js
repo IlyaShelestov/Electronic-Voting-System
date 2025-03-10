@@ -3,8 +3,24 @@ async function createTables(pool) {
     await pool.query("BEGIN");
 
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS regions (
+        region_id SERIAL PRIMARY KEY,
+        name VARCHAR(100) UNIQUE NOT NULL
+      );
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS cities (
+        city_id SERIAL PRIMARY KEY,
+        region_id INT NOT NULL REFERENCES regions(region_id) ON DELETE CASCADE,
+        name VARCHAR(100) UNIQUE NOT NULL
+      );
+    `);
+
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         user_id SERIAL PRIMARY KEY,
+        city_id INT NOT NULL REFERENCES cities(city_id) ON DELETE CASCADE,
         iin VARCHAR(12) UNIQUE NOT NULL,
         first_name VARCHAR(50) NOT NULL,
         last_name VARCHAR(50) NOT NULL,
@@ -12,8 +28,6 @@ async function createTables(pool) {
         phone_number VARCHAR(20) UNIQUE NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         date_of_birth DATE NOT NULL,
-        region VARCHAR(100) NOT NULL,
-        city VARCHAR(100) NOT NULL,
         password_hash TEXT NOT NULL,
         role VARCHAR(20) NOT NULL DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -24,11 +38,11 @@ async function createTables(pool) {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS elections (
         election_id SERIAL PRIMARY KEY,
+        city_id INT NOT NULL REFERENCES cities(city_id) ON DELETE CASCADE,
+        region_id INT NOT NULL REFERENCES regions(region_id) ON DELETE CASCADE,
         title VARCHAR(255) NOT NULL,
         start_date TIMESTAMP NOT NULL,
         end_date TIMESTAMP NOT NULL,
-        region VARCHAR(100) NOT NULL,
-        city VARCHAR(100) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);

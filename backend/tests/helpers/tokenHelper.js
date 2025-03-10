@@ -11,8 +11,8 @@ const getAdminToken = (overrides = {}) => {
   const payload = {
     userId: 1,
     role: "admin",
-    city: "TestCity",
-    region: "TestRegion",
+    city: 1,
+    region: 1,
     ...overrides,
   };
   return generateToken(payload);
@@ -22,8 +22,8 @@ const getManagerToken = (overrides = {}) => {
   const payload = {
     userId: 2,
     role: "manager",
-    city: "TestCity",
-    region: "TestRegion",
+    city: 1,
+    region: 1,
     ...overrides,
   };
   return generateToken(payload);
@@ -33,8 +33,8 @@ const getUserToken = (overrides = {}) => {
   const payload = {
     userId: 3,
     role: "user",
-    city: "TestCity",
-    region: "TestRegion",
+    city: 1,
+    region: 1,
     ...overrides,
   };
   return generateToken(payload);

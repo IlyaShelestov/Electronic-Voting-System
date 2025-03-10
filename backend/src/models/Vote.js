@@ -13,7 +13,7 @@ class Vote {
     const query = `
       SELECT * FROM elections 
       WHERE election_id = $1 
-      AND (region = $2 OR city = $3)
+      AND (region_id = $2 OR city_id = $3)
     `;
     const values = [electionId, userRegion, userCity];
     const result = await pool.query(query, values);

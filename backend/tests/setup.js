@@ -3,6 +3,8 @@ const pool = require("../src/config/db");
 
 truncateAllTables = async () => {
   const tables = [
+    "regions",
+    "cities",
     "users",
     "voters",
     "candidates",

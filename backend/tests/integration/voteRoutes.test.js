@@ -8,8 +8,9 @@ const { getUserToken } = require("../helpers/tokenHelper");
 const {
   createElection,
   attachCandidate,
+  createCity,
+  createRegion,
 } = require("../helpers/entitiesHelper");
-const { create } = require("../../src/models/User");
 
 describe("Vote API Integration Tests", () => {
   let userToken;
@@ -18,22 +19,24 @@ describe("Vote API Integration Tests", () => {
   let candidate;
   let attachedCandidate;
   beforeEach(async () => {
+    await createRegion();
+    await createCity();
     userToken = getUserToken({
-      region: "TestRegion",
-      city: "TestCity",
+      region: 1,
+      city: 1,
       userId: 2,
     });
     wrongLocationToken = getUserToken({
-      region: "WrongRegion",
-      city: "WrongCity",
+      region: 2,
+      city: 2,
       userId: 2,
     });
     candidateToken = getUserToken({
-      region: "TestRegion",
-      city: "TestCity",
+      region: 1,
+      city: 1,
       userId: 1,
     });
-    election = await createElection({ region: "TestRegion", city: "TestCity" });
+    election = await createElection({ region: 1, city: 1 });
     candidate = await createCandidate();
     voter = await createStandardUser();
     attachedCandidate = await attachCandidate(

@@ -7,8 +7,7 @@ const generalData = {
   last_name: "TestSurname",
   patronymic: "TestPatronymic",
   date_of_birth: "2021-01-01",
-  region: "TestRegion",
-  city: "TestCity",
+  city_id: 1,
   password: "TestPassword",
 };
 

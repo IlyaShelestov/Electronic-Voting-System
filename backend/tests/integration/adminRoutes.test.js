@@ -1,6 +1,7 @@
 const request = require("supertest");
 const { getAdminToken, getUserToken } = require("../helpers/tokenHelper");
 const { createStandardUser } = require("../helpers/usersHelper");
+const { createCity, createRegion } = require("../helpers/entitiesHelper");
 const app = require("../../src/index");
 
 describe("Admin API Integration Tests", () => {
@@ -9,6 +10,12 @@ describe("Admin API Integration Tests", () => {
   beforeAll(async () => {
     adminToken = getAdminToken();
     userToken = getUserToken();
+  });
+  beforeEach(async () => {
+    await createRegion();
+    await createRegion({ name: "TestRegion2" });
+    await createCity();
+    await createCity({ region_id: 2, name: "TestCity2" });
   });
 
   describe("GET /api/admin/users", () => {
@@ -60,8 +67,7 @@ describe("Admin API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",
@@ -80,8 +86,7 @@ describe("Admin API Integration Tests", () => {
         last_name: newUser.last_name,
         patronymic: newUser.patronymic,
         date_of_birth: newUser.date_of_birth,
-        region: newUser.region,
-        city: newUser.city,
+        city_id: newUser.city_id,
         phone_number: newUser.phone_number,
         email: newUser.email,
         role: newUser.role,
@@ -124,8 +129,7 @@ describe("Admin API Integration Tests", () => {
         last_name: "Александров",
         patronymic: "Александрович",
         date_of_birth: "2021-01-02",
-        region: "UpdatedRegion",
-        city: "UpdatedCity",
+        city_id: 2,
         phone_number: "87071234568",
         email: "testemail2@gmail.com",
         role: "user",

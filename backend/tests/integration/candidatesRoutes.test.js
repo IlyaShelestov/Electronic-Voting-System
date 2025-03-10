@@ -1,12 +1,17 @@
 const request = require("supertest");
 const app = require("../../src/index");
 const { createCandidate } = require("../helpers/usersHelper");
+const { createCity, createRegion } = require("../helpers/entitiesHelper");
 const { getUserToken } = require("../helpers/tokenHelper");
 
 describe("Candidates API Integration Tests", () => {
   let userToken;
   beforeAll(() => {
     userToken = getUserToken();
+  });
+  beforeEach(async () => {
+    await createRegion();
+    await createCity();
   });
 
   describe("GET /candidates", () => {

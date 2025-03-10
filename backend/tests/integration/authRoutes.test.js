@@ -1,8 +1,14 @@
 const request = require("supertest");
 const app = require("../../src/index");
 const User = require("../../src/models/User");
+const { createRegion, createCity } = require("../helpers/entitiesHelper");
 
 describe("Auth API Integration Tests", () => {
+  beforeEach(async () => {
+    await createRegion();
+    await createCity();
+  });
+
   describe("POST /api/auth/register", () => {
     it("should register a new user and return user data", async () => {
       const newUser = {
@@ -11,8 +17,7 @@ describe("Auth API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",
@@ -27,8 +32,7 @@ describe("Auth API Integration Tests", () => {
         last_name: newUser.last_name,
         patronymic: newUser.patronymic,
         date_of_birth: newUser.date_of_birth,
-        region: newUser.region,
-        city: newUser.city,
+        city_id: newUser.city_id,
         phone_number: newUser.phone_number,
         email: newUser.email,
         role: "user",
@@ -46,8 +50,7 @@ describe("Auth API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",
@@ -59,7 +62,9 @@ describe("Auth API Integration Tests", () => {
         .send(existingUser);
 
       expect(res.status).toBe(409);
-      expect(res.body).toMatchObject({ message: "User with this IIN already exists" });
+      expect(res.body).toMatchObject({
+        message: "User with this IIN already exists",
+      });
     });
 
     it("should return 403 if already logged in", async () => {
@@ -69,8 +74,7 @@ describe("Auth API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",
@@ -103,8 +107,7 @@ describe("Auth API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",
@@ -191,8 +194,7 @@ describe("Auth API Integration Tests", () => {
         last_name: "Олегов",
         patronymic: "Олегович",
         date_of_birth: "2021-01-01",
-        region: "TestRegion",
-        city: "TestCity",
+        city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
         password: "TestPassword",

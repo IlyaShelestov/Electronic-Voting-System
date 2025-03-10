@@ -4,13 +4,13 @@ const Event = require("../../models/Event");
 
 exports.createElection = async (req, res) => {
   try {
-    const { title, start_date, end_date, region, city } = req.body;
+    const { title, start_date, end_date, region_id, city_id } = req.body;
     const election = await Election.create({
       title,
       start_date,
       end_date,
-      region,
-      city,
+      region_id,
+      city_id,
     });
     res.status(201).json(election);
   } catch (err) {

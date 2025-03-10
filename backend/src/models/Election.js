@@ -4,13 +4,13 @@ const { formatLocalDate } = require("../utils/dateHelper");
 class Election {
   static async create(data) {
     const query =
-      "INSERT INTO elections (title, start_date, end_date, region, city) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+      "INSERT INTO elections (title, start_date, end_date, region_id, city_id) VALUES ($1, $2, $3, $4, $5) RETURNING *";
     const values = [
       data.title,
       data.start_date,
       data.end_date,
-      data.region,
-      data.city,
+      data.region_id,
+      data.city_id,
     ];
 
     const result = await pool.query(query, values);
@@ -49,20 +49,6 @@ class Election {
     return result.rows;
   }
 
-  static async getAllRegions() {
-    const query = "SELECT DISTINCT region FROM elections";
-
-    const result = await pool.query(query);
-    return result.rows;
-  }
-
-  static async getAllCities() {
-    const query = "SELECT DISTINCT city FROM elections";
-
-    const result = await pool.query(query);
-    return result.rows;
-  }
-
   static async getDailyVotes(electionId) {
     const query = `
       SELECT 
@@ -84,7 +70,7 @@ class Election {
 
   static async getAvailable(data) {
     const query =
-      "SELECT * FROM elections WHERE (region = $1 OR city = $2) AND start_date <= $3 AND end_date >= $3";
+      "SELECT * FROM elections WHERE (region_id = $1 OR city_id = $2) AND start_date <= $3 AND end_date >= $3";
     const values = [data.region, data.city, data.date];
 
     const result = await pool.query(query, values);
