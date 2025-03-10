@@ -57,6 +57,15 @@ app.use(
   })
 );
 
+const limiterOptions = {
+  windowMs: 15 * 60 * 1000, // Период времени (15 минут)
+  max: 100,                 // Максимальное число запросов за период
+  standardHeaders: true,    // Стандартные заголовки с информацией о лимите
+  legacyHeaders: false,     // Отключение устаревших заголовков
+  message: "Превышен лимит запросов, пожалуйста, повторите позже.",
+};
+app.use("/api", rateLimit(limiterOptions));
+
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
