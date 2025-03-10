@@ -4,6 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
 
 const {
   verifyToken,
@@ -24,13 +25,12 @@ const app = express();
 const corsOptions = {
   origin: process.env.FRONTEND_URL || "http://localhost:3000",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"], 
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-  exposedHeaders: ["Authorization"],
+  exposedHeaders: ["Authorization", "RateLimit-Limit", "RateLimit-Remaining", "RateLimit-Reset"],
   optionsSuccessStatus: 204,
-  maxAge: 600 // Кэширование Preflight-запросов
+  maxAge: 600, // 10 минут
 };
-
 app.use(cors(corsOptions));
 
 app.use(
