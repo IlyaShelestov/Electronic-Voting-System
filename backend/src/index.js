@@ -23,13 +23,13 @@ const adminRoutes = require("./api/routes/adminRoutes");
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-  exposedHeaders: ["Authorization", "RateLimit-Limit", "RateLimit-Remaining", "RateLimit-Reset"],
-  optionsSuccessStatus: 204,
-  maxAge: 600, // 10 минут
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",  // Разрешённый источник для запросов
+  credentials: true, // Разрешает передачу cookie и заголовков авторизации (Authorization) между фронтендом и сервером
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],  // Указывает, какие HTTP-методы разрешены для кросс-доменных запросов 
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],    // Разрешённые заголовки, которые клиент может отправлять на сервер.
+  exposedHeaders: ["Authorization", "RateLimit-Limit", "RateLimit-Remaining", "RateLimit-Reset"],   // Указывает, какие заголовки сервер позволяет клиенту читать в ответе.
+  optionsSuccessStatus: 204,  // Указывает HTTP-статус для успешных preflight-запросов (OPTIONS).
+  maxAge: 600, // Указывает, сколько секунд браузер может кэшировать preflight-запрос (10 минут)
 };
 app.use(cors(corsOptions));
 
@@ -37,23 +37,23 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", "data:"],
-        connectSrc: ["'self'"],
-        frameAncestors: ["'none'"],
+        defaultSrc: ["'self'"], // Разрешает контент только с текущего домена
+        scriptSrc: ["'self'"], // Разрешает выполнение скриптов только с текущего домена
+        styleSrc: ["'self'", "'unsafe-inline'"], // Разрешает стили с текущего домена + встроенные стили
+        imgSrc: ["'self'", "data:"], // Разрешает изображения только с текущего домена и data URL
+        connectSrc: ["'self'"], // Разрешает сетевые запросы только к текущему домену
+        frameAncestors: ["'none'"], // Запрещает встраивание в iframe (защита от Clickjacking)
       },
     },
-    crossOriginOpenerPolicy: { policy: "same-origin" },
-    crossOriginResourcePolicy: { policy: "same-origin" },
-    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
-    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
-    xFrameOptions: { action: "deny" },
-    xContentTypeOptions: true,
-    xDnsPrefetchControl: { allow: false },
-    permittedCrossDomainPolicies: { policy: "none" },
-    hidePoweredBy: true,
+    crossOriginOpenerPolicy: { policy: "same-origin" }, // Защита от атак межсайтового доступа
+    crossOriginResourcePolicy: { policy: "same-origin" }, // Запрещает загрузку ресурсов с других доменов
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" }, // Ограничивает передачу реферера на сторонние сайты
+    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true }, // Принудительное использование HTTPS (1 год)
+    xFrameOptions: { action: "deny" }, // Запрещает встраивание сайта в iframe
+    xContentTypeOptions: true, // Защита от MIME-тип атак
+    xDnsPrefetchControl: { allow: false }, // Запрещает предзагрузку DNS-запросов
+    permittedCrossDomainPolicies: { policy: "none" }, // Запрещает использование кросс-доменных политик
+    hidePoweredBy: true, // Скрывает заголовок X-Powered-By (уменьшает риск атак)
   })
 );
 
