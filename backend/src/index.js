@@ -19,6 +19,7 @@ const usersRoutes = require("./api/routes/usersRoutes");
 const eventsRoutes = require("./api/routes/eventsRoutes");
 const managerRoutes = require("./api/routes/managerRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
+const locationsRoutes = require("./api/routes/locationsRoutes");
 
 const app = express();
 
@@ -84,6 +85,7 @@ app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/events", verifyToken, eventsRoutes);
 app.use("/api/manager", verifyToken, isManager, managerRoutes);
 app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
+app.use("/api/admin", verifyToken, locationsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
