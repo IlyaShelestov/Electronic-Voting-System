@@ -24,8 +24,11 @@ const app = express();
 const corsOptions = {
   origin: process.env.FRONTEND_URL || "http://localhost:3000",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+  exposedHeaders: ["Authorization"],
+  optionsSuccessStatus: 204,
+  maxAge: 600 // Кэширование Preflight-запросов
 };
 
 app.use(cors(corsOptions));
