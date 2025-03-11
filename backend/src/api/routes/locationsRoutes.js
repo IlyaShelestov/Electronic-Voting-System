@@ -9,7 +9,7 @@ const {
 
 router.get("/cities", getAllCities);
 router.get("/regions", getAllRegions);
-router.get("/city/:id", getCityById);
-router.get("/region/:id", getRegionById);
+router.get("/cities/:id", getCityById);
+router.get("/regions/:id", getRegionById);
 
 module.exports = router;

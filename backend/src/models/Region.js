@@ -1,9 +1,9 @@
 const pool = require("../config/db");
 
 class Region {
-  static async create(name) {
+  static async create(data) {
     const query = "INSERT INTO regions (name) VALUES ($1) RETURNING *";
-    const values = [name];
+    const values = [data.name];
 
     const result = await pool.query(query, values);
     return result.rows[0];

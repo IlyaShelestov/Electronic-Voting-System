@@ -85,7 +85,7 @@ app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/events", verifyToken, eventsRoutes);
 app.use("/api/manager", verifyToken, isManager, managerRoutes);
 app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
-app.use("/api/admin", verifyToken, locationsRoutes);
+app.use("/api/locations", verifyToken, locationsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
