@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const ProfileChangeRequest = require("../../models/ProfileChangeRequest");
 const bcrypt = require("bcrypt");
 const {
   isValidName,
@@ -140,12 +141,87 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// Complete Later
-exports.approveRequest = async (req, res) => {
-  res.status(200).json({ message: "Request Approved" });
+exports.getAllRequests = async (req, res) => {
+  try {
+    const requests = await ProfileChangeRequest.getAll();
+    res.status(200).json(requests);
+  } catch (err) {
+    res.status(500).json({ message: "Error getting change requests" });
+  }
 };
 
-// Complete Later
+exports.getRequestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await ProfileChangeRequest.getById(id);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    res.status(200).json(request);
+  } catch (err) {
+    res.status(500).json({ message: "Error getting change request" });
+  }
+};
+
+exports.approveRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const request = await ProfileChangeRequest.getById(id);
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    if (request.status !== "pending") {
+      return res.status(400).json({ message: "Request already processed" });
+    }
+
+    const updateData = {};
+    updateData[request.field_name] = request.new_value;
+
+    await User.update(request.user_id, updateData);
+
+    const updatedRequest = await ProfileChangeRequest.updateStatus(
+      id,
+      "approved"
+    );
+
+    res.status(200).json({
+      message: "Request approved successfully",
+      request: updatedRequest,
+    });
+  } catch (err) {
+    console.error("Error approving request:", err);
+    res.status(500).json({ message: "Error approving request" });
+  }
+};
+
 exports.rejectRequest = async (req, res) => {
-  res.status(200).json({ message: "Request Rejected" });
+  try {
+    const { id } = req.params;
+
+    const request = await ProfileChangeRequest.getById(id);
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    if (request.status !== "pending") {
+      return res.status(400).json({ message: "Request already processed" });
+    }
+
+    const updatedRequest = await ProfileChangeRequest.updateStatus(
+      id,
+      "rejected"
+    );
+
+    res.status(200).json({
+      message: "Request rejected successfully",
+      request: updatedRequest,
+    });
+  } catch (err) {
+    console.error("Error rejecting request:", err);
+    res.status(500).json({ message: "Error rejecting request" });
+  }
 };

@@ -37,14 +37,6 @@ class User {
     return result.rows[0];
   }
 
-  static async findByEmail(email) {
-    const result = await pool.query(
-      "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE email = $1",
-      [email]
-    );
-    return result.rows[0];
-  }
-
   static async findbyId(id) {
     const result = await pool.query(
       "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users where user_id = $1",
