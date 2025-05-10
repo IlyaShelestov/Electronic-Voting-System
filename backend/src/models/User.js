@@ -37,7 +37,7 @@ class User {
     return result.rows[0];
   }
 
-  static async findbyId(id) {
+  static async findById(id) {
     const result = await pool.query(
       "SELECT *, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users where user_id = $1",
       [id]
