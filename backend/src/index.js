@@ -79,7 +79,9 @@ app.get("/", (req, res) => {
   res.send({ message: "eVote.kz API Running!" });
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+if (process.env.NODE_ENV === 'development') {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+}
 
 app.use("/api/auth", authRoutes);
 app.use("/api/elections", verifyToken, electionsRoutes);
