@@ -6,8 +6,126 @@ const {
   getUserRequests,
 } = require("../controllers/usersController");
 
+/**
+ * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: Get current user profile information
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: integer
+ *                 iin:
+ *                   type: string
+ *                 first_name:
+ *                   type: string
+ *                 last_name:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
 router.get("/me", getProfileInfo);
+
+/**
+ * @swagger
+ * /api/users/me/request-change:
+ *   post:
+ *     summary: Request a change to user profile field
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - field_name
+ *               - new_value
+ *             properties:
+ *               field_name:
+ *                 type: string
+ *                 enum: [phone_number, email, city_id, first_name, last_name, patronymic]
+ *                 description: The field to be changed
+ *               new_value:
+ *                 type: string
+ *                 description: The new value for the field
+ *     responses:
+ *       201:
+ *         description: Change request submitted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 request:
+ *                   type: object
+ *       400:
+ *         description: Bad request - validation error
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Field cannot be changed
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
 router.post("/me/request-change", requestChange);
+
+/**
+ * @swagger
+ * /api/users/me/requests:
+ *   get:
+ *     summary: Get all profile change requests for the current user
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: List of user's change requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   request_id:
+ *                     type: integer
+ *                   user_id:
+ *                     type: integer
+ *                   field_name:
+ *                     type: string
+ *                   old_value:
+ *                     type: string
+ *                   new_value:
+ *                     type: string
+ *                   status:
+ *                     type: string
+ *                     enum: [pending, approved, rejected]
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
 router.get("/me/requests", getUserRequests);
 
 module.exports = router;

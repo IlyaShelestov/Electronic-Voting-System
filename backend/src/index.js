@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./config/swagger');
 
 const {
   verifyToken,
@@ -76,6 +78,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send({ message: "eVote.kz API Running!" });
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/elections", verifyToken, electionsRoutes);
