@@ -30,37 +30,86 @@ async function populateData() {
       hashedPasswords[key] = await bcrypt.hash(plainPasswords[key], 10);
     }
 
-    console.log("Inserting regions and cities...");
-    const regionRes = await pool.query(
-      "INSERT INTO regions (name) VALUES ('Астана') RETURNING region_id;"
-    );
-    const regionId = regionRes.rows[0].region_id;
+    console.log("Inserting regions...");
+    const regions = [
+      "Астана",
+      "Алматы",
+      "Шымкент",
+      "Актюбинская область",
+      "Атырауская область",
+      "Мангистауская область",
+      "Карагандинская область",
+      "Павлодарская область",
+      "Северо-Казахстанская область",
+      "Костанайская область",
+      "Западно-Казахстанская область",
+      "Восточно-Казахстанская область",
+      "Акмолинская область",
+      "Кызылординская область",
+      "Жамбылская область",
+      "Туркестанская область",
+    ];
 
-    const cityRes = await pool.query(
-      "INSERT INTO cities (name, region_id) VALUES ('Астана', $1) RETURNING city_id;",
-      [regionId]
-    );
-    const cityId = cityRes.rows[0].city_id;
+    const regionsMap = {};
+    for (const region of regions) {
+      const result = await pool.query(
+        "INSERT INTO regions (name) VALUES ($1) RETURNING region_id;",
+        [region]
+      );
+      regionsMap[region] = result.rows[0].region_id;
+    }
+
+    console.log("Inserting cities...");
+    const cities = [
+      { name: "Алматы", region: "Алматы" },
+      { name: "Астана", region: "Астана" },
+      { name: "Шымкент", region: "Шымкент" },
+      { name: "Актобе", region: "Актюбинская область" },
+      { name: "Атырау", region: "Атырауская область" },
+      { name: "Актау", region: "Мангистауская область" },
+      { name: "Караганда", region: "Карагандинская область" },
+      { name: "Павлодар", region: "Павлодарская область" },
+      { name: "Петропавловск", region: "Северо-Казахстанская область" },
+      { name: "Костанай", region: "Костанайская область" },
+      { name: "Уральск", region: "Западно-Казахстанская область" },
+      { name: "Усть-Каменогорск", region: "Восточно-Казахстанская область" },
+      { name: "Кокшетау", region: "Акмолинская область" },
+      { name: "Кызылорда", region: "Кызылординская область" },
+      { name: "Тараз", region: "Жамбылская область" },
+      { name: "Туркестан", region: "Туркестанская область" },
+    ];
+
+    const citiesMap = {};
+    for (const city of cities) {
+      const result = await pool.query(
+        "INSERT INTO cities (name, region_id) VALUES ($1, $2) RETURNING city_id;",
+        [city.name, regionsMap[city.region]]
+      );
+      citiesMap[city.name] = result.rows[0].city_id;
+    }
+
+    const defaultCityId = citiesMap["Астана"];
+    const defaultRegionId = regionsMap["Астана"];
 
     console.log("Populating users...");
     const userRes = await pool.query(`
       INSERT INTO users (iin, first_name, last_name, patronymic, phone_number, email, date_of_birth, city_id, password_hash, role)
       VALUES 
-      ('111111111111', 'Админ', 'Пользователь', NULL, '+77010000000', 'admin@example.com', '1980-01-01', ${cityId}, '${hashedPasswords.admin}', 'admin'),
-      ('222222222222', 'Менеджер', 'Пользователь', NULL, '+77010000001', 'manager@example.com', '1985-01-01', ${cityId}, '${hashedPasswords.manager}', 'manager'),
-      ('333333333333', 'Иван', 'Кандидат', NULL, '+77010000002', 'ivan@example.com', '1990-02-15', ${cityId}, '${hashedPasswords.candidate1}', 'user'),
-      ('444444444444', 'Алексей', 'Кандидат', NULL, '+77010000003', 'alexey@example.com', '1985-03-20', ${cityId}, '${hashedPasswords.candidate2}', 'user'),
-      ('555555555555', 'Мария', 'Кандидат', NULL, '+77010000004', 'maria@example.com', '1988-07-25', ${cityId}, '${hashedPasswords.candidate3}', 'user'),
-      ('666666666666', 'Сергей', 'Пользователь', NULL, '+77010000005', 'sergey@example.com', '1992-05-10', ${cityId}, '${hashedPasswords.user1}', 'user'),
-      ('777777777777', 'Николай', 'Пользователь', NULL, '+77010000006', 'nikolay@example.com', '1993-03-10', ${cityId}, '${hashedPasswords.user2}', 'user'),
-      ('888888888888', 'Петр', 'Пользователь', NULL, '+77010000007', 'petr@example.com', '1994-02-11', ${cityId}, '${hashedPasswords.user3}', 'user'),
-      ('999999999999', 'Дмитрий', 'Пользователь', NULL, '+77010000008', 'dmitry@example.com', '1995-01-12', ${cityId}, '${hashedPasswords.user4}', 'user'),
-      ('121212121212', 'Андрей', 'Пользователь', NULL, '+77010000009', 'andrey@example.com', '1986-08-13', ${cityId}, '${hashedPasswords.user5}', 'user'),
-      ('131313131313', 'Константин', 'Пользователь', NULL, '+77010000010', 'konstantin@example.com', '1987-07-14', ${cityId}, '${hashedPasswords.user6}', 'user'),
-      ('141414141414', 'Ольга', 'Пользователь', NULL, '+77010000011', 'olga@example.com', '1982-02-15', ${cityId}, '${hashedPasswords.user7}', 'user'),
-      ('151515151515', 'Екатерина', 'Пользователь', NULL, '+77010000012', 'ekaterina@example.com', '1983-01-16', ${cityId}, '${hashedPasswords.user8}', 'user'),
-      ('161616161616', 'Василий', 'Пользователь', NULL, '+77010000013', 'vasiliy@example.com', '1984-03-17', ${cityId}, '${hashedPasswords.user9}', 'user'),
-      ('171717171717', 'Татьяна', 'Пользователь', NULL, '+77010000014', 'tatiana@example.com', '1985-02-18', ${cityId}, '${hashedPasswords.user10}', 'user')
+      ('111111111111', 'Админ', 'Пользователь', NULL, '+77010000000', 'admin@example.com', '1980-01-01', ${defaultCityId}, '${hashedPasswords.admin}', 'admin'),
+      ('222222222222', 'Менеджер', 'Пользователь', NULL, '+77010000001', 'manager@example.com', '1985-01-01', ${defaultCityId}, '${hashedPasswords.manager}', 'manager'),
+      ('333333333333', 'Иван', 'Кандидат', NULL, '+77010000002', 'ivan@example.com', '1990-02-15', ${defaultCityId}, '${hashedPasswords.candidate1}', 'user'),
+      ('444444444444', 'Алексей', 'Кандидат', NULL, '+77010000003', 'alexey@example.com', '1985-03-20', ${defaultCityId}, '${hashedPasswords.candidate2}', 'user'),
+      ('555555555555', 'Мария', 'Кандидат', NULL, '+77010000004', 'maria@example.com', '1988-07-25', ${defaultCityId}, '${hashedPasswords.candidate3}', 'user'),
+      ('666666666666', 'Сергей', 'Пользователь', NULL, '+77010000005', 'sergey@example.com', '1992-05-10', ${defaultCityId}, '${hashedPasswords.user1}', 'user'),
+      ('777777777777', 'Николай', 'Пользователь', NULL, '+77010000006', 'nikolay@example.com', '1993-03-10', ${defaultCityId}, '${hashedPasswords.user2}', 'user'),
+      ('888888888888', 'Петр', 'Пользователь', NULL, '+77010000007', 'petr@example.com', '1994-02-11', ${defaultCityId}, '${hashedPasswords.user3}', 'user'),
+      ('999999999999', 'Дмитрий', 'Пользователь', NULL, '+77010000008', 'dmitry@example.com', '1995-01-12', ${defaultCityId}, '${hashedPasswords.user4}', 'user'),
+      ('121212121212', 'Андрей', 'Пользователь', NULL, '+77010000009', 'andrey@example.com', '1986-08-13', ${defaultCityId}, '${hashedPasswords.user5}', 'user'),
+      ('131313131313', 'Константин', 'Пользователь', NULL, '+77010000010', 'konstantin@example.com', '1987-07-14', ${defaultCityId}, '${hashedPasswords.user6}', 'user'),
+      ('141414141414', 'Ольга', 'Пользователь', NULL, '+77010000011', 'olga@example.com', '1982-02-15', ${defaultCityId}, '${hashedPasswords.user7}', 'user'),
+      ('151515151515', 'Екатерина', 'Пользователь', NULL, '+77010000012', 'ekaterina@example.com', '1983-01-16', ${defaultCityId}, '${hashedPasswords.user8}', 'user'),
+      ('161616161616', 'Василий', 'Пользователь', NULL, '+77010000013', 'vasiliy@example.com', '1984-03-17', ${defaultCityId}, '${hashedPasswords.user9}', 'user'),
+      ('171717171717', 'Татьяна', 'Пользователь', NULL, '+77010000014', 'tatiana@example.com', '1985-02-18', ${defaultCityId}, '${hashedPasswords.user10}', 'user')
       RETURNING user_id;
     `);
 
@@ -71,7 +120,7 @@ async function populateData() {
     console.log("Populating election...");
     const electionRes = await pool.query(`
       INSERT INTO elections (title, start_date, end_date, region_id, city_id)
-      VALUES ('Presidential Election', '2025-03-01 08:00:00', '2025-03-01 20:00:00', ${regionId}, ${cityId})
+      VALUES ('Presidential Election', '2025-03-01 08:00:00', '2025-03-01 20:00:00', ${defaultRegionId}, ${defaultCityId})
       RETURNING election_id;
     `);
 
