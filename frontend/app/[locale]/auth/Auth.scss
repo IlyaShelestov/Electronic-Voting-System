@@ -1,11 +1,12 @@
-@use "../../styles/variables.scss" as *;
+@use "../../../styles/variables.scss" as *;
 
 .auth {
   display: flex;
   flex-direction: column;
-  justify-self: center;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
-  padding: 45px 60px;
+  padding: 28px 36px;
   background-color: $selected;
 
   h1 {

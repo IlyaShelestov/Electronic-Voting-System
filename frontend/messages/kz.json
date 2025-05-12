@@ -1,0 +1,28 @@
+{
+  "header": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "profile": "Профиль",
+    "logout": "Выйти"
+  },
+  "login": {
+    "title": "Вход",
+    "username": "Логин",
+    "password": "Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "submit": "Войти"
+  },
+  "register": {
+    "title": "Регистрация",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "patronymic": "Отчество",
+    "dateOfBirth": "Дата рождения",
+    "region": "Область",
+    "city": "Город",
+    "phoneNumber": "Номер телефона",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "submit": "Зарегистрироваться"
+  }
+}
