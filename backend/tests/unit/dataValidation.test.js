@@ -6,6 +6,7 @@ const {
     isValidEmail,
     isValidDate,
     isValidPhoneNumber,
+    isStrongPassword
   } = require("../../src/utils/dataValidation.js"); 
 
   
@@ -82,5 +83,19 @@ const {
         expect(isValidPhoneNumber("+7700123456a")).toBe(false);
       });
     });
-  });
+
+    describe("isStrongPassword", () => {
+      it("should return true for strong password", () => {
+        expect(isStrongPassword("StrongP@ssw0rd")).toBe(true);
+      });
   
+      it("should return false for weak password", () => {
+        expect(isStrongPassword("weakpass")).toBe(false);
+        expect(isStrongPassword("12345678")).toBe(false);
+        expect(isStrongPassword("password")).toBe(false);
+        expect(isStrongPassword("1")).toBe(false);
+        expect(isStrongPassword("!@@2a2d")).toBe(false);
+      });
+    });
+  }
+);

@@ -70,7 +70,7 @@ describe("Admin API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
         role: "user",
       };
 

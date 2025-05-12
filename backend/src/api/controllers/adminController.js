@@ -8,6 +8,7 @@ const {
   isValidEmail,
   isValidDate,
   isValidPhoneNumber,
+  isStrongPassword
 } = require("../../utils/dataValidation");
 
 exports.getAll = async (req, res) => {
@@ -67,7 +68,7 @@ exports.createUser = async (req, res) => {
         .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
     // if (!isValidText(city)) {
-    //   return res.status(400).json({ message: "Invalid city format" });
+    //   return res.status(400).json({ message: "Invalid city format" }); TODO!: check if city_id is valid
     // }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
@@ -75,6 +76,12 @@ exports.createUser = async (req, res) => {
     if (!isValidEmail(email)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
+    if (!isStrongPassword(password)) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters long" });
+    }
+
 
     // Хеширование пароля
     const hashedPassword = await bcrypt.hash(password, 10);

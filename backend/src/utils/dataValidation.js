@@ -50,6 +50,16 @@ const isValidPhoneNumber = (phone) => {
   );
 };
 
+const isStrongPassword = (password) => {
+  return (
+    typeof password === "string" &&
+    password.length >= 9 &&
+    /[A-Za-z]/.test(password) &&
+    /\d/.test(password) &&
+    /[@$!%*?&]/.test(password)
+  );
+};
+
 module.exports = {
   isValidName,
   isValidSurname,
@@ -58,4 +68,5 @@ module.exports = {
   isValidEmail,
   isValidDate,
   isValidPhoneNumber,
+  isStrongPassword
 };

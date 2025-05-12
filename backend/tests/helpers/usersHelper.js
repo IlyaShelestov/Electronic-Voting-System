@@ -8,7 +8,7 @@ const generalData = {
   patronymic: "TestPatronymic",
   date_of_birth: "2021-01-01",
   city_id: 1,
-  password: "TestPassword",
+  password: "!W152Sdsbx",
 };
 
 const randomizeNumber = (length) => {

@@ -9,6 +9,7 @@ const {
   isValidEmail,
   isValidDate,
   isValidPhoneNumber,
+  isStrongPassword
 } = require("../../utils/dataValidation");
 
 exports.register = async (req, res) => {
@@ -52,19 +53,24 @@ exports.register = async (req, res) => {
     if (patronymic && !isValidName(patronymic)) {
       return res.status(400).json({ message: "Invalid patronymic format" });
     }
-    if (!isValidDate(date_of_birth)) {
+    if (!isValidDate(date_of_birth)) { // !TODO: Age should be 18+
       return res
         .status(400)
         .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
     // if (!isValidText(city)) {
-    //   return res.status(400).json({ message: "Invalid city format" });
+    //   return res.status(400).json({ message: "Invalid city format" }); !TODO: check if city_id is valid
     // }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
     if (!isValidEmail(email)) {
       return res.status(400).json({ message: "Invalid email format" });
+    }
+    if (!isStrongPassword(password)) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 9 characters long and contain at least one letter, one number, and one special character" });
     }
 
     // Проверка на существующего пользователя
@@ -118,7 +124,11 @@ exports.login = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // только по HTTPS в проде
+      sameSite: "Strict", // защита от CSRF
+    });
     res.status(200).json({ message: "Logged in" });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });

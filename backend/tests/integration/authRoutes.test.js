@@ -20,7 +20,7 @@ describe("Auth API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       };
 
       const res = await request(app).post("/api/auth/register").send(newUser);
@@ -53,7 +53,7 @@ describe("Auth API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       };
 
       await request(app).post("/api/auth/register").send(existingUser);
@@ -77,7 +77,7 @@ describe("Auth API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       };
 
       await request(app).post("/api/auth/register").send(newUser);
@@ -110,14 +110,14 @@ describe("Auth API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
     });
 
     it("should login a user, set a cookie and return a message", async () => {
       const res = await request(app).post("/api/auth/login").send({
         iin: "123456789012",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
 
       const token = res.headers["set-cookie"][0].split(";")[0].split("=")[1];
@@ -129,7 +129,7 @@ describe("Auth API Integration Tests", () => {
     it("should return 401 if invalid credentials", async () => {
       const res = await request(app).post("/api/auth/login").send({
         iin: "123456789012",
-        password: "InvalidPassword",
+        password: "wrongpassword",
       });
 
       expect(res.status).toBe(401);
@@ -139,7 +139,7 @@ describe("Auth API Integration Tests", () => {
     it("should return 401 if user not found", async () => {
       const res = await request(app).post("/api/auth/login").send({
         iin: "InvalidIIN",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
 
       expect(res.status).toBe(401);
@@ -160,7 +160,7 @@ describe("Auth API Integration Tests", () => {
 
       const res = await request(app).post("/api/auth/login").send({
         iin: "123456789012",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
 
       expect(res.status).toBe(500);
@@ -172,7 +172,7 @@ describe("Auth API Integration Tests", () => {
     it("should return 403 if user already logged in", async () => {
       const loginRes = await request(app).post("/api/auth/login").send({
         iin: "123456789012",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
       const token = loginRes.headers["set-cookie"][0]
         .split(";")[0]
@@ -197,12 +197,12 @@ describe("Auth API Integration Tests", () => {
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
-        password: "TestPassword",
+        password: "!W152Sdsbx",
       });
 
       const loginRes = await request(app)
         .post("/api/auth/login")
-        .send({ iin: "123456789012", password: "TestPassword" });
+        .send({ iin: "123456789012", password: "!W152Sdsbx" });
 
       token = loginRes.headers["set-cookie"][0].split(";")[0].split("=")[1];
     });
