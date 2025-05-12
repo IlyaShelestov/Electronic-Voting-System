@@ -1,26 +1,34 @@
 import { NextResponse, type NextRequest } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
-export function middleware(req: NextRequest) {
+const intlMiddleware = createMiddleware(routing);
+
+export async function middleware(req: NextRequest) {
   const authToken = req.cookies.get("token")?.value;
-  const isAuthPage = req.nextUrl.pathname.startsWith("/auth");
+  const pathname = req.nextUrl.pathname;
 
-  if (req.nextUrl.pathname === "/auth") {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+  const locale = req.nextUrl.locale || routing.defaultLocale || "ru";
+  const isAuthPage = pathname.startsWith(`/${locale}/auth`);
+
+  if (pathname === `/${locale}/auth`) {
+    return NextResponse.redirect(new URL(`/${locale}/auth/login`, req.url));
   }
 
   if (!authToken && !isAuthPage) {
-    console.log("Redirecting to /auth/login due to missing authToken");
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    console.log("Redirecting to auth/login due to missing token");
+    return NextResponse.redirect(new URL(`/${locale}/auth/login`, req.url));
   }
 
   if (authToken && isAuthPage) {
-    console.log("User already authenticated, redirecting to /");
-    return NextResponse.redirect(new URL("/", req.url));
+    console.log("User authenticated, redirecting to home");
+    return NextResponse.redirect(new URL(`/${locale}/`, req.url));
   }
 
-  return NextResponse.next();
+  // Apply next-intl locale middleware after auth checks
+  return intlMiddleware(req);
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|static|fonts|images|favicon.ico).*)"],
+  matcher: ["/((?!_next|api|static|fonts|images|favicon\\.ico).*)"],
 };

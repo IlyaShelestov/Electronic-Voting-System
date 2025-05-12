@@ -5,7 +5,7 @@ export interface IUser {
   patronymic?: string | null;
   date_of_birth: string;
   region: string;
-  city: string;
+  city_id: number;
   phone_number: string;
   email: string;
   role: "user" | "admin" | "manager";

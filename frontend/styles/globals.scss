@@ -14,7 +14,7 @@ body {
     transition: margin-left 0.3s ease-in-out;
 
     &.with-sidebar {
-      margin-left: 300px;
+      margin-left: $sidebar_width;
     }
 
     &.full-width {
