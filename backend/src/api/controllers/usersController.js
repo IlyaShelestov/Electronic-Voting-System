@@ -26,7 +26,7 @@ exports.requestChange = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId); // Нужно убедиться, что данные, которые хочет изменить пользователь уникальные
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

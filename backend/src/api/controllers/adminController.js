@@ -49,7 +49,7 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Валидация
+    // Валидация TODO: Проверять на дупликацию
     if (!isValidIIN(iin)) {
       return res.status(400).json({ message: "Invalid IIN format" });
     }
@@ -82,6 +82,13 @@ exports.createUser = async (req, res) => {
         .json({ message: "Password must be at least 8 characters long" });
     }
 
+        // Проверка на существующего пользователя
+    const existingUser = await User.findByIIN(iin);
+    if (existingUser) {
+      return res
+        .status(409)
+        .json({ message: "User with this IIN already exists" });
+    }
 
     // Хеширование пароля
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -107,12 +114,12 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => { // TODO: Добавить проверку на существование пользователя
   try {
     const { id } = req.params;
     const lastId = await User.getLastId();
 
-    if (lastId < id) {
+    if (lastId < id) { // TODO: убрать lastid и проверять напрямую 
       return res.status(404).json({ message: "User not found" });
     }
     const response = await User.delete(id);
@@ -125,7 +132,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {  // TODO: Добавить проверку на существование пользователя
   try {
     const { id } = req.params;
     const data = req.body;
