@@ -1,14 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
+import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const authToken = req.cookies.get("token")?.value;
+  const token = req.cookies.get("token")?.value;
 
-  const ignoredPaths = [
+  const ignored = [
     "/_next",
     "/api",
     "/static",
@@ -16,11 +16,11 @@ export async function middleware(req: NextRequest) {
     "/images",
     "/favicon.ico",
   ];
-  if (ignoredPaths.some((path) => pathname.startsWith(path))) {
+  if (ignored.some((prefix) => pathname.startsWith(prefix))) {
     return NextResponse.next();
   }
 
-  const locale = req.nextUrl.locale || routing.defaultLocale || "ru";
+  const locale = req.nextUrl.locale || routing.defaultLocale;
   const isAuthPage = pathname.startsWith(`/${locale}/auth`);
 
   const redirectTo = (path: string) => {
@@ -29,17 +29,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   };
 
-  if (pathname === `/${locale}/auth`) {
+  if (!token && !isAuthPage) {
     return redirectTo(`/${locale}/auth/login`);
   }
 
-  if (!authToken && !isAuthPage) {
-    console.log("Redirecting to auth/login due to missing token");
-    return redirectTo(`/${locale}/auth/login`);
-  }
-
-  if (authToken && isAuthPage) {
-    console.log("User authenticated, redirecting to home");
+  if (token && isAuthPage) {
     return redirectTo(`/${locale}/`);
   }
 
@@ -47,5 +41,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/:locale(ru|en|de)/:path*"],
+  matcher: ["/:locale(en|ru|de)/:path*"],
 };
