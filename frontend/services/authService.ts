@@ -1,16 +1,19 @@
-import {AuthResponse} from "@/models/IAuthResponse";
-import {apiClient} from "@/services/apiClient";
-import {removeAuthToken} from "@/utils/tokenHelper";
-import {IUser} from "@/models/IUser";
+import { AuthResponse } from "@/models/IAuthResponse";
+import { apiClient } from "@/services/apiClient";
+import { removeAuthToken } from "@/utils/tokenHelper";
+import { IUser } from "@/models/IUser";
 
 export const authService = {
   apiEndpoint: "/auth",
 
-  login: async (iin: string, password: string): Promise<AuthResponse | null> => {
+  login: async (
+    iin: string,
+    password: string
+  ): Promise<AuthResponse | null> => {
     try {
       const response = await apiClient.post<AuthResponse>(
-          `${authService.apiEndpoint}/login`,
-          { iin, password }
+        `${authService.apiEndpoint}/login`,
+        { iin, password }
       );
 
       if (response.status === 403) {
@@ -43,8 +46,12 @@ export const authService = {
     try {
       await apiClient.post(`${authService.apiEndpoint}/logout`);
       removeAuthToken();
+
+      console.info("User successfully logged out.");
     } catch (error) {
       console.error("Logout Error:", error);
+      removeAuthToken();
+
       throw error;
     }
   },

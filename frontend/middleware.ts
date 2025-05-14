@@ -9,6 +9,7 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   const ignored = [
+    "/",
     "/_next",
     "/api",
     "/static",

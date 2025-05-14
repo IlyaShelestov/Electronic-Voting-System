@@ -24,5 +24,51 @@
     "email": "Email",
     "password": "Password",
     "submit": "Register"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "deleteAccount": "Delete Account",
+    "saveChanges": "Save Changes"
+  },
+  "passwordChange": {
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "submit": "Change Password"
+  },
+  "error": {
+    "invalidCredentials": "Invalid username or password",
+    "userNotFound": "User not found",
+    "emailAlreadyExists": "Email already exists",
+    "passwordMismatch": "Passwords do not match",
+    "serverError": "Server error, please try again later"
+  },
+  "success": {
+    "registrationSuccess": "Registration successful, please login",
+    "profileUpdated": "Profile updated successfully",
+    "passwordChanged": "Password changed successfully",
+    "accountDeleted": "Account deleted successfully"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email address",
+    "phoneNumber": "Invalid phone number",
+    "passwordLength": "Password must be at least 6 characters long",
+    "passwordMatch": "Passwords do not match"
+  },
+  "home": {
+    "title": "Главная страница"
+  },
+  "sidebar": {
+    "title": "Навигация",
+    "home": "Главная",
+    "vote": "Проголосовать",
+    "instructions": "Инструкция",
+    "profile": "Профиль",
+    "support": "Тех. поддержка",
+    "about": "О нас",
+    "logout": "Выход"
   }
 }
