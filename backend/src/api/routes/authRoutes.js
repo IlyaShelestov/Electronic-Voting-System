@@ -141,7 +141,7 @@ router.post("/register", preventLoggedIn, register);
  *               type: string
  *               description: Authentication token set as a cookie
  *       400:
- *         description: Bad request - missing credentials
+ *         description: Bad request - missing credentials/user under 18 years old
  *       401:
  *         description: Unauthorized - invalid credentials
  *       403:

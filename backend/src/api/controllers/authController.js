@@ -5,11 +5,10 @@ const City = require("../../models/City");
 const {
   isValidName,
   isValidIIN,
-  isValidText,
   isValidEmail,
   isValidDate,
   isValidPhoneNumber,
-  isStrongPassword
+  isStrongPassword,
 } = require("../../utils/dataValidation");
 
 exports.register = async (req, res) => {
@@ -53,14 +52,22 @@ exports.register = async (req, res) => {
     if (patronymic && !isValidName(patronymic)) {
       return res.status(400).json({ message: "Invalid patronymic format" });
     }
-    if (!isValidDate(date_of_birth)) { // !TODO: Age should be 18+
+    if (!isValidDate(date_of_birth)) {
       return res
         .status(400)
         .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
-    // if (!isValidText(city)) {
-    //   return res.status(400).json({ message: "Invalid city format" }); !TODO: check if city_id is valid
-    // }
+    const dob = new Date(date_of_birth);
+    const eighteenYearsAgo = new Date(Date.now() - 567648000000);
+    if (isNaN(dob.getTime()) || dob > eighteenYearsAgo) {
+      return res
+        .status(400)
+        .json({ message: "User must be at least 18 years old" });
+    }
+    const city = await City.getById(city_id);
+    if (!city) {
+      return res.status(400).json({ message: "City not found" });
+    }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
@@ -68,9 +75,10 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Invalid email format" });
     }
     if (!isStrongPassword(password)) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 9 characters long and contain at least one letter, one number, and one special character" });
+      return res.status(400).json({
+        message:
+          "Password must be at least 9 characters long and contain at least one letter, one number, and one special character",
+      });
     }
 
     // Проверка на существующего пользователя

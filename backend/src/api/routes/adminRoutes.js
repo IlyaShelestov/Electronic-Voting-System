@@ -178,7 +178,7 @@ router.get("/users", getAll);
  *       403:
  *         description: Forbidden - not an admin
  *       409:
- *         description: Conflict - user already exists
+ *         description: Conflict - IIN, phone number, or email already exists
  *       500:
  *         description: Server error
  */
@@ -276,8 +276,10 @@ router.post("/users", createUser);
  *         description: Unauthorized - not logged in
  *       403:
  *         description: Forbidden - not an admin
+ *       404:
+ *         description: User not found
  *       409:
- *         description: Conflict - email, phone number, or IIN already exists
+ *         description: Conflict - IIN, phone number, or email already exists
  *       500:
  *         description: Server error
  */

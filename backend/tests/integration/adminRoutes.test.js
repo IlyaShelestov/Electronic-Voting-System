@@ -119,6 +119,99 @@ describe("Admin API Integration Tests", () => {
       expect(res.status).toBe(403);
       expect(res.body).toMatchObject({ message: "Forbidden" });
     });
+
+    it("should return 409 if IIN already exists", async () => {
+      const existingUser = await createStandardUser();
+      const newUser = {
+        iin: existingUser.iin,
+        first_name: "Тест",
+        last_name: "Пользователь",
+        patronymic: "Тестович",
+        date_of_birth: "2021-01-01",
+        city_id: 1,
+        phone_number: "87070000000",
+        email: "uniqueemail@gmail.com",
+        password: "!W152Sdsbx",
+        role: "user",
+      };
+      const res = await request(app)
+        .post("/api/admin/users")
+        .set("Cookie", `token=${adminToken}`)
+        .send(newUser);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({
+        message: "User with this IIN already exists",
+      });
+    });
+
+    it("should return 409 if phone number already exists", async () => {
+      const existingUser = await createStandardUser();
+      const newUser = {
+        iin: "123451234512",
+        first_name: "Тест",
+        last_name: "Пользователь",
+        patronymic: "Тестович",
+        date_of_birth: "2021-01-01",
+        city_id: 1,
+        phone_number: existingUser.phone_number,
+        email: "uniqueemail2@gmail.com",
+        password: "!W152Sdsbx",
+        role: "user",
+      };
+      const res = await request(app)
+        .post("/api/admin/users")
+        .set("Cookie", `token=${adminToken}`)
+        .send(newUser);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({
+        message: "User with this phone number already exists",
+      });
+    });
+
+    it("should return 409 if email already exists", async () => {
+      const existingUser = await createStandardUser();
+      const newUser = {
+        iin: "123451234513",
+        first_name: "Тест",
+        last_name: "Пользователь",
+        patronymic: "Тестович",
+        date_of_birth: "2021-01-01",
+        city_id: 1,
+        phone_number: "87070000001",
+        email: existingUser.email,
+        password: "!W152Sdsbx",
+        role: "user",
+      };
+      const res = await request(app)
+        .post("/api/admin/users")
+        .set("Cookie", `token=${adminToken}`)
+        .send(newUser);
+      expect(res.status).toBe(409);
+      expect(res.body).toMatchObject({
+        message: "User with this email already exists",
+      });
+    });
+
+    it("should return 400 if city not found", async () => {
+      const newUser = {
+        iin: "123451234514",
+        first_name: "Тест",
+        last_name: "Пользователь",
+        patronymic: "Тестович",
+        date_of_birth: "2021-01-01",
+        city_id: 9999,
+        phone_number: "87070000002",
+        email: "newemail@gmail.com",
+        password: "!W152Sdsbx",
+        role: "user",
+      };
+      const res = await request(app)
+        .post("/api/admin/users")
+        .set("Cookie", `token=${adminToken}`)
+        .send(newUser);
+      expect(res.status).toBe(400);
+      expect(res.body).toMatchObject({ message: "City not found" });
+    });
   });
 
   describe("PUT /api/admin/users/:id", () => {
@@ -193,6 +286,16 @@ describe("Admin API Integration Tests", () => {
       expect(res.body).toMatchObject({ message: "IIN already exists" });
     });
 
+    it("should return 404 if user not found", async () => {
+      const updatedData = { first_name: "НеСуществующий" };
+      const res = await request(app)
+        .put(`/api/admin/users/999999`)
+        .set("Cookie", `token=${adminToken}`)
+        .send(updatedData);
+      expect(res.status).toBe(404);
+      expect(res.body).toMatchObject({ message: "User not found" });
+    });
+
     it("should return 401 if not logged in", async () => {
       const res = await request(app).put(`/api/admin/users/0`).send({});
       expect(res.status).toBe(401);
@@ -232,7 +335,7 @@ describe("Admin API Integration Tests", () => {
       expect(res.body).toMatchObject({ message: "User not found" });
     });
 
-    it("should return 410 if user already deleted", async () => {
+    it("should return 404 if user already deleted", async () => {
       const user = await createStandardUser();
       await createStandardUser();
       await request(app)
@@ -241,8 +344,8 @@ describe("Admin API Integration Tests", () => {
       const res = await request(app)
         .delete(`/api/admin/users/${user.user_id}`)
         .set("Cookie", `token=${adminToken}`);
-      expect(res.status).toBe(410);
-      expect(res.body).toMatchObject({ message: "User already deleted" });
+      expect(res.status).toBe(404);
+      expect(res.body).toMatchObject({ message: "User not found" });
     });
 
     it("should return 401 if not logged in", async () => {

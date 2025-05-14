@@ -16,7 +16,7 @@ describe("Auth API Integration Tests", () => {
         first_name: "Олег",
         last_name: "Олегов",
         patronymic: "Олегович",
-        date_of_birth: "2021-01-01",
+        date_of_birth: "2004-01-01",
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
@@ -49,7 +49,7 @@ describe("Auth API Integration Tests", () => {
         first_name: "Олег",
         last_name: "Олегов",
         patronymic: "Олегович",
-        date_of_birth: "2021-01-01",
+        date_of_birth: "2004-01-01",
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
@@ -73,7 +73,7 @@ describe("Auth API Integration Tests", () => {
         first_name: "Олег",
         last_name: "Олегов",
         patronymic: "Олегович",
-        date_of_birth: "2021-01-01",
+        date_of_birth: "2004-01-01",
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
@@ -97,6 +97,48 @@ describe("Auth API Integration Tests", () => {
       expect(res.status).toBe(403);
       expect(res.body).toMatchObject({ message: "Already logged in" });
     });
+
+    it("should return 400 if user is under 18 years old", async () => {
+      const underage = {
+        iin: "123456789013",
+        first_name: "Иван",
+        last_name: "Иванов",
+        patronymic: "Иванович",
+        date_of_birth: new Date(Date.now() - 17 * 365 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0],
+        city_id: 1,
+        phone_number: "87071234567",
+        email: "underage@example.com",
+        password: "!StrongPass1",
+      };
+
+      const res = await request(app).post("/api/auth/register").send(underage);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toMatchObject({
+        message: "User must be at least 18 years old",
+      });
+    });
+
+    it("should return 400 if city not found", async () => {
+      const noCity = {
+        iin: "123456789014",
+        first_name: "Петр",
+        last_name: "Петров",
+        patronymic: "Петрович",
+        date_of_birth: "1990-01-01",
+        city_id: 99999,
+        phone_number: "87071234568",
+        email: "nocity@example.com",
+        password: "!StrongPass1",
+      };
+
+      const res = await request(app).post("/api/auth/register").send(noCity);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toMatchObject({ message: "City not found" });
+    });
   });
 
   describe("POST /api/auth/login", () => {
@@ -106,7 +148,7 @@ describe("Auth API Integration Tests", () => {
         first_name: "Олег",
         last_name: "Олегов",
         patronymic: "Олегович",
-        date_of_birth: "2021-01-01",
+        date_of_birth: "2004-01-01",
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",
@@ -193,7 +235,7 @@ describe("Auth API Integration Tests", () => {
         first_name: "Олег",
         last_name: "Олегов",
         patronymic: "Олегович",
-        date_of_birth: "2021-01-01",
+        date_of_birth: "2004-01-01",
         city_id: 1,
         phone_number: "87071234567",
         email: "testemail@gmail.com",

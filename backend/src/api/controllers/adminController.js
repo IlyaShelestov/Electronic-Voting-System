@@ -1,14 +1,14 @@
 const User = require("../../models/User");
+const City = require("../../models/City");
 const ProfileChangeRequest = require("../../models/ProfileChangeRequest");
 const bcrypt = require("bcrypt");
 const {
   isValidName,
   isValidIIN,
-  isValidText,
   isValidEmail,
   isValidDate,
   isValidPhoneNumber,
-  isStrongPassword
+  isStrongPassword,
 } = require("../../utils/dataValidation");
 
 exports.getAll = async (req, res) => {
@@ -49,7 +49,24 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Валидация TODO: Проверять на дупликацию
+    const userByIIN = await User.findByIIN(iin);
+    if (userByIIN) {
+      return res
+        .status(409)
+        .json({ message: "User with this IIN already exists" });
+    }
+    const userByPhoneNumber = await User.findByPhoneNumber(phone_number);
+    if (userByPhoneNumber) {
+      return res
+        .status(409)
+        .json({ message: "User with this phone number already exists" });
+    }
+    const userByEmail = await User.findByEmail(email);
+    if (userByEmail) {
+      return res
+        .status(409)
+        .json({ message: "User with this email already exists" });
+    }
     if (!isValidIIN(iin)) {
       return res.status(400).json({ message: "Invalid IIN format" });
     }
@@ -67,9 +84,10 @@ exports.createUser = async (req, res) => {
         .status(400)
         .json({ message: "Invalid date format (YYYY-MM-DD expected)" });
     }
-    // if (!isValidText(city)) {
-    //   return res.status(400).json({ message: "Invalid city format" }); TODO!: check if city_id is valid
-    // }
+    const city = await City.getById(city_id);
+    if (!city) {
+      return res.status(400).json({ message: "City not found" });
+    }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
@@ -80,14 +98,6 @@ exports.createUser = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Password must be at least 8 characters long" });
-    }
-
-        // Проверка на существующего пользователя
-    const existingUser = await User.findByIIN(iin);
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ message: "User with this IIN already exists" });
     }
 
     // Хеширование пароля
@@ -114,28 +124,28 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => { // TODO: Добавить проверку на существование пользователя
+exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const lastId = await User.getLastId();
-
-    if (lastId < id) { // TODO: убрать lastid и проверять напрямую 
+    const user = await User.findById(id);
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     const response = await User.delete(id);
-    if (response === undefined) {
-      return res.status(410).json({ message: "User already deleted" });
-    }
     res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: "Error deleting user" });
   }
 };
 
-exports.updateUser = async (req, res) => {  // TODO: Добавить проверку на существование пользователя
+exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     foundByIIn = await User.findByIIN(data.iin);
     foundByPhoneNumber = await User.findByPhoneNumber(data.phone_number);
     foundByEmail = await User.findByEmail(data.email);

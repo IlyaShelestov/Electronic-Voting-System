@@ -6,7 +6,7 @@ const generalData = {
   first_name: "TestName",
   last_name: "TestSurname",
   patronymic: "TestPatronymic",
-  date_of_birth: "2021-01-01",
+  date_of_birth: "2004-01-01",
   city_id: 1,
   password: "!W152Sdsbx",
 };
