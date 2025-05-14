@@ -90,6 +90,9 @@ const {
  *                 created_at:
  *                   type: string
  *                   format: date-time
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
  *       400:
  *         description: Bad request - validation error
  *       409:
@@ -141,7 +144,7 @@ router.post("/register", preventLoggedIn, register);
  *               type: string
  *               description: Authentication token set as a cookie
  *       400:
- *         description: Bad request - missing credentials/user under 18 years old
+ *         description: Bad request - missing credentials
  *       401:
  *         description: Unauthorized - invalid credentials
  *       403:

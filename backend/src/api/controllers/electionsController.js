@@ -9,7 +9,7 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.getAvaliable = async (req, res) => {
+exports.getAvailable = async (req, res) => {
   try {
     const { region, city } = req.user;
     const date = new Date().toISOString().split("T")[0];

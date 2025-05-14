@@ -44,6 +44,14 @@ const { getById, getAll } = require("../controllers/candidatesController");
  *                   additional_url_2:
  *                     type: string
  *                     description: Additional URL for candidate materials
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Record creation timestamp
+ *                   updated_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Record last update timestamp
  *                   first_name:
  *                     type: string
  *                     description: Candidate's first name
@@ -53,19 +61,18 @@ const { getById, getAll } = require("../controllers/candidatesController");
  *                   patronymic:
  *                     type: string
  *                     description: Candidate's patronymic
- *                   iin:
- *                     type: string
- *                     description: Candidate's individual identification number
- *                   date_of_birth:
- *                     type: string
- *                     format: date
- *                     description: Candidate's date of birth
- *                   email:
- *                     type: string
- *                     description: Candidate's email address
+ *                   city_id:
+ *                     type: integer
+ *                     description: Candidate's city ID
  *                   phone_number:
  *                     type: string
  *                     description: Candidate's phone number
+ *                   email:
+ *                     type: string
+ *                     description: Candidate's email address
+ *                   role:
+ *                     type: string
+ *                     description: User role
  *       401:
  *         description: Unauthorized
  *       500:
@@ -120,6 +127,14 @@ router.get("/", getAll);
  *                 additional_url_2:
  *                   type: string
  *                   description: Additional URL for candidate materials
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Record creation timestamp
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Record last update timestamp
  *                 first_name:
  *                   type: string
  *                   description: Candidate's first name
@@ -129,19 +144,18 @@ router.get("/", getAll);
  *                 patronymic:
  *                   type: string
  *                   description: Candidate's patronymic
- *                 iin:
- *                   type: string
- *                   description: Candidate's individual identification number
- *                 date_of_birth:
- *                   type: string
- *                   format: date
- *                   description: Candidate's date of birth
- *                 email:
- *                   type: string
- *                   description: Candidate's email address
+ *                 city_id:
+ *                   type: integer
+ *                   description: Candidate's city ID
  *                 phone_number:
  *                   type: string
  *                   description: Candidate's phone number
+ *                 email:
+ *                   type: string
+ *                   description: Candidate's email address
+ *                 role:
+ *                   type: string
+ *                   description: User role
  *       401:
  *         description: Unauthorized
  *       404:

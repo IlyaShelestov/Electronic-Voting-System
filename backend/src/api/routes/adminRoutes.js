@@ -341,8 +341,6 @@ router.put("/users/:id", updateUser);
  *         description: Forbidden - not an admin
  *       404:
  *         description: User not found
- *       410:
- *         description: User already deleted
  *       500:
  *         description: Server error
  */

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAll,
-  getAvaliable,
+  getAvailable,
   getById,
   getReport,
   getCandidates,
@@ -33,11 +33,11 @@ const { verifyToken } = require("../middlewares/authMiddleware");
  *                     description: Title of the election
  *                   start_date:
  *                     type: string
- *                     format: date
+ *                     format: date-time
  *                     description: Start date of the election
  *                   end_date:
  *                     type: string
- *                     format: date
+ *                     format: date-time
  *                     description: End date of the election
  *                   region_id:
  *                     type: integer
@@ -56,7 +56,7 @@ router.get("/", getAll);
 
 /**
  * @swagger
- * /api/elections/avaliable:
+ * /api/elections/available:
  *   get:
  *     summary: Get elections available for the current user
  *     description: Returns elections available for the user based on their location and current date
@@ -75,34 +75,27 @@ router.get("/", getAll);
  *                 properties:
  *                   election_id:
  *                     type: integer
- *                     description: Unique identifier for the election
  *                   title:
  *                     type: string
- *                     description: Title of the election
  *                   start_date:
  *                     type: string
- *                     format: date
- *                     description: Start date of the election
+ *                     format: date-time
  *                   end_date:
  *                     type: string
- *                     format: date
- *                     description: End date of the election
+ *                     format: date-time
  *                   region_id:
  *                     type: integer
- *                     description: ID of the region where the election takes place
  *                   city_id:
  *                     type: integer
- *                     description: ID of the city where the election takes place
  *                   created_at:
  *                     type: string
  *                     format: date-time
- *                     description: Timestamp when the election was created
  *       401:
  *         description: Unauthorized
  *       500:
  *         description: Server error
  */
-router.get("/avaliable", verifyToken, getAvaliable);
+router.get("/available", verifyToken, getAvailable);
 
 /**
  * @swagger
@@ -242,11 +235,11 @@ router.get("/:id/candidates", getCandidates);
  *                   description: Title of the election
  *                 start_date:
  *                   type: string
- *                   format: date
+ *                   format: date-time
  *                   description: Start date of the election
  *                 end_date:
  *                   type: string
- *                   format: date
+ *                   format: date-time
  *                   description: End date of the election
  *                 region_id:
  *                   type: integer
