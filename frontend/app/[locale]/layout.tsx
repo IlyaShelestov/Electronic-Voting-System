@@ -1,7 +1,7 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import ContentLayout from "./ContentLayout";
+import ContentLayout from "../ui/ContentLayout";
 
 export default async function LocaleLayout({
   children,
@@ -16,7 +16,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = (await import(`@/messages/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
 
   return (
     <html lang={locale}>
