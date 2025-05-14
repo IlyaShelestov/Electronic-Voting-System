@@ -6,9 +6,10 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { electionService } from "@/services/electionService";
 import { setElections } from "@/store/slices/electionSlice";
 import { IElection } from "@/models/IElection";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import "./Home.scss";
-import {RightArrowCircle} from "@/icons/RightArrowCircle";
+import { RightArrowCircle } from "@/icons/RightArrowCircle";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -16,6 +17,8 @@ export default function Home() {
     (state) => state.election.elections
   );
   const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations("home");
 
   useEffect(() => {
     const fetchElections = async () => {
@@ -30,25 +33,27 @@ export default function Home() {
     fetchElections();
   }, [dispatch]);
 
+  const locale = useLocale();
+
   const handleElectionClick = (electionId: number) => {
-    router.push(`/elections/${electionId}/candidates`);
+    router.push(`/${locale}/elections/${electionId}/candidates`);
   };
 
   return (
     <div className="home-container">
-      <h1 className="home-title">Главная</h1>
+      <h1 className="home-title">{t("title")}</h1>
 
       <div className="banner">
         <Image
           src="/images/election-banner.png"
-          alt="Election Banner"
+          alt={t("bannerAlt")}
           width={800}
           height={300}
           className="banner-image"
         />
       </div>
 
-      <h2>Актуальное</h2>
+      <h2>{t("currentElections")}</h2>
 
       <div className="elections-list">
         {elections.map((election) => (
@@ -58,8 +63,15 @@ export default function Home() {
             onClick={() => handleElectionClick(election.election_id)}
           >
             <span>{election.title}</span>
-            <button className="arrow-btn">
-                <RightArrowCircle color={"black"} strokeWidth={4} size={32} />
+            <button
+              className="arrow-btn"
+              aria-label={t("viewCandidates")}
+            >
+              <RightArrowCircle
+                color="black"
+                strokeWidth={4}
+                size={32}
+              />
             </button>
           </div>
         ))}
