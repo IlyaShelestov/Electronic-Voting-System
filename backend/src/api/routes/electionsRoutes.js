@@ -7,6 +7,7 @@ const {
   getReport,
   getCandidates,
 } = require("../controllers/electionsController");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
 /**
  * @swagger
@@ -14,8 +15,6 @@ const {
  *   get:
  *     summary: Get all elections
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: List of all elections
@@ -50,8 +49,6 @@ const {
  *                     type: string
  *                     format: date-time
  *                     description: Timestamp when the election was created
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -105,7 +102,7 @@ router.get("/", getAll);
  *       500:
  *         description: Server error
  */
-router.get("/avaliable", getAvaliable);
+router.get("/avaliable", verifyToken, getAvaliable);
 
 /**
  * @swagger
@@ -114,8 +111,6 @@ router.get("/avaliable", getAvaliable);
  *     summary: Get daily vote report for an election
  *     description: Returns a report showing the number of votes per day for each candidate in the election
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -152,8 +147,6 @@ router.get("/avaliable", getAvaliable);
  *                   vote_count:
  *                     type: integer
  *                     description: Number of votes received on that day
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -165,8 +158,6 @@ router.get("/:id/report", getReport);
  *   get:
  *     summary: Get all candidates for an election
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -217,8 +208,6 @@ router.get("/:id/report", getReport);
  *                   patronymic:
  *                     type: string
  *                     description: Candidate's patronymic
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -230,8 +219,6 @@ router.get("/:id/candidates", getCandidates);
  *   get:
  *     summary: Get election by ID
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -271,8 +258,6 @@ router.get("/:id/candidates", getCandidates);
  *                   type: string
  *                   format: date-time
  *                   description: Timestamp when the election was created
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
