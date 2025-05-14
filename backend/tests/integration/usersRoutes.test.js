@@ -16,6 +16,7 @@ describe("Users API Integration Tests", () => {
         .set("Cookie", `token=${userToken}`);
 
       expect(res.status).toBe(200);
+      delete user.password_hash;
       expect(res.body).toMatchObject({
         ...user,
         created_at: expect.any(String),

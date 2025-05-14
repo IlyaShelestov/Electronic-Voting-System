@@ -116,7 +116,11 @@ exports.login = async (req, res) => {
   try {
     const { iin, password } = req.body;
     const user = await User.findByIIN(iin);
-    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+    const passwordHash = await User.getPasswordHash(iin);
+    if (
+      !user ||
+      !(await bcrypt.compare(password, passwordHash.password_hash))
+    ) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const region_id = City.getById(user.city_id).region_id;

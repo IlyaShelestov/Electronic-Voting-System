@@ -38,7 +38,6 @@ describe("Auth API Integration Tests", () => {
         role: "user",
       });
       expect(res.body).toHaveProperty("user_id");
-      expect(res.body).toHaveProperty("password_hash");
       expect(res.body).toHaveProperty("created_at");
       expect(res.body).toHaveProperty("updated_at");
     });
