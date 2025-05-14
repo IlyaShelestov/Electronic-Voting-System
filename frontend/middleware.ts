@@ -5,23 +5,31 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(req: NextRequest) {
-  const authToken = req.cookies.get("token")?.value;
   const { pathname } = req.nextUrl;
+  const authToken = req.cookies.get("token")?.value;
+
+  const ignoredPaths = [
+    "/_next",
+    "/api",
+    "/static",
+    "/fonts",
+    "/images",
+    "/favicon.ico",
+  ];
+  if (ignoredPaths.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next();
+  }
 
   const locale = req.nextUrl.locale || routing.defaultLocale || "ru";
   const isAuthPage = pathname.startsWith(`/${locale}/auth`);
 
-  // Create a mutable URL object for redirection
   const redirectTo = (path: string) => {
     const url = req.nextUrl.clone();
     url.pathname = path;
     return NextResponse.redirect(url);
   };
 
-  if (
-    pathname.startsWith(`/${locale}/auth`) &&
-    pathname === `/${locale}/auth`
-  ) {
+  if (pathname === `/${locale}/auth`) {
     return redirectTo(`/${locale}/auth/login`);
   }
 
@@ -39,7 +47,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/:locale((ru|en|de))/((?!_next|api|static|fonts|images|favicon\\.ico).*)",
-  ],
+  matcher: ["/:locale(ru|en|de)/:path*"],
 };
