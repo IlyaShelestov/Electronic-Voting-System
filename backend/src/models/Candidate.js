@@ -28,19 +28,57 @@ class Candidate {
   }
 
   static async getAll() {
-    const query =
-      "SELECT * FROM candidates JOIN users ON candidates.user_id = users.user_id";
-
+    const query = `
+      SELECT
+        c.candidate_id,
+        c.user_id,
+        c.election_id,
+        c.bio,
+        c.party,
+        c.avatar_url,
+        c.additional_url_1,
+        c.additional_url_2,
+        c.created_at   AS created_at,
+        c.updated_at   AS updated_at,
+        u.first_name,
+        u.last_name,
+        u.patronymic,
+        u.city_id,
+        u.phone_number,
+        u.email,
+        u.role
+      FROM candidates c
+      JOIN users u ON c.user_id = u.user_id;
+    `;
     const result = await pool.query(query);
     return result.rows;
   }
 
   static async getById(id) {
-    const query =
-      "SELECT * FROM candidates JOIN users ON candidates.user_id = users.user_id WHERE candidate_id = $1";
-    const values = [id];
-
-    const result = await pool.query(query, values);
+    const query = `
+      SELECT
+        c.candidate_id,
+        c.user_id,
+        c.election_id,
+        c.bio,
+        c.party,
+        c.avatar_url,
+        c.additional_url_1,
+        c.additional_url_2,
+        c.created_at   AS created_at,
+        c.updated_at   AS updated_at,
+        u.first_name,
+        u.last_name,
+        u.patronymic,
+        u.city_id,
+        u.phone_number,
+        u.email,
+        u.role
+      FROM candidates c
+      JOIN users u ON c.user_id = u.user_id
+      WHERE c.candidate_id = $1;
+    `;
+    const result = await pool.query(query, [id]);
     return result.rows[0];
   }
 

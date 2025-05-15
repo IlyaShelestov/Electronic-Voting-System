@@ -28,6 +28,8 @@ describe("Admin API Integration Tests", () => {
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveLength(2);
+      delete user1.password_hash;
+      delete user2.password_hash;
       expect(res.body).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -320,6 +322,7 @@ describe("Admin API Integration Tests", () => {
         .set("Cookie", `token=${adminToken}`);
 
       expect(res.status).toBe(200);
+      delete user.password_hash;
       expect(res.body).toMatchObject({
         ...user,
         created_at: expect.any(String),

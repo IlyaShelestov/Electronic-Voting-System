@@ -84,10 +84,10 @@ describe("Elections API Integration Tests", () => {
     });
   });
 
-  describe("GET /api/elections/avaliable", () => {
+  describe("GET /api/elections/available", () => {
     it("should return 200 and available elections based on user's location and current date", async () => {
       const res = await request(app)
-        .get("/api/elections/avaliable")
+        .get("/api/elections/available")
         .set("Cookie", `token=${userToken}`);
 
       expect(res.status).toBe(200);

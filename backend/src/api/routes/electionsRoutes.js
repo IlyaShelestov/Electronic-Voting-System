@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const {
   getAll,
-  getAvaliable,
+  getAvailable,
   getById,
   getReport,
   getCandidates,
 } = require("../controllers/electionsController");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
 /**
  * @swagger
@@ -14,8 +15,6 @@ const {
  *   get:
  *     summary: Get all elections
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: List of all elections
@@ -34,11 +33,11 @@ const {
  *                     description: Title of the election
  *                   start_date:
  *                     type: string
- *                     format: date
+ *                     format: date-time
  *                     description: Start date of the election
  *                   end_date:
  *                     type: string
- *                     format: date
+ *                     format: date-time
  *                     description: End date of the election
  *                   region_id:
  *                     type: integer
@@ -50,8 +49,6 @@ const {
  *                     type: string
  *                     format: date-time
  *                     description: Timestamp when the election was created
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -59,7 +56,7 @@ router.get("/", getAll);
 
 /**
  * @swagger
- * /api/elections/avaliable:
+ * /api/elections/available:
  *   get:
  *     summary: Get elections available for the current user
  *     description: Returns elections available for the user based on their location and current date
@@ -78,34 +75,27 @@ router.get("/", getAll);
  *                 properties:
  *                   election_id:
  *                     type: integer
- *                     description: Unique identifier for the election
  *                   title:
  *                     type: string
- *                     description: Title of the election
  *                   start_date:
  *                     type: string
- *                     format: date
- *                     description: Start date of the election
+ *                     format: date-time
  *                   end_date:
  *                     type: string
- *                     format: date
- *                     description: End date of the election
+ *                     format: date-time
  *                   region_id:
  *                     type: integer
- *                     description: ID of the region where the election takes place
  *                   city_id:
  *                     type: integer
- *                     description: ID of the city where the election takes place
  *                   created_at:
  *                     type: string
  *                     format: date-time
- *                     description: Timestamp when the election was created
  *       401:
  *         description: Unauthorized
  *       500:
  *         description: Server error
  */
-router.get("/avaliable", getAvaliable);
+router.get("/available", verifyToken, getAvailable);
 
 /**
  * @swagger
@@ -114,8 +104,6 @@ router.get("/avaliable", getAvaliable);
  *     summary: Get daily vote report for an election
  *     description: Returns a report showing the number of votes per day for each candidate in the election
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -152,8 +140,6 @@ router.get("/avaliable", getAvaliable);
  *                   vote_count:
  *                     type: integer
  *                     description: Number of votes received on that day
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -165,8 +151,6 @@ router.get("/:id/report", getReport);
  *   get:
  *     summary: Get all candidates for an election
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -217,8 +201,6 @@ router.get("/:id/report", getReport);
  *                   patronymic:
  *                     type: string
  *                     description: Candidate's patronymic
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -230,8 +212,6 @@ router.get("/:id/candidates", getCandidates);
  *   get:
  *     summary: Get election by ID
  *     tags: [Elections]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -255,11 +235,11 @@ router.get("/:id/candidates", getCandidates);
  *                   description: Title of the election
  *                 start_date:
  *                   type: string
- *                   format: date
+ *                   format: date-time
  *                   description: Start date of the election
  *                 end_date:
  *                   type: string
- *                   format: date
+ *                   format: date-time
  *                   description: End date of the election
  *                 region_id:
  *                   type: integer
@@ -271,8 +251,6 @@ router.get("/:id/candidates", getCandidates);
  *                   type: string
  *                   format: date-time
  *                   description: Timestamp when the election was created
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */

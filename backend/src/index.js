@@ -84,7 +84,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use("/api/auth", authRoutes);
-app.use("/api/elections", verifyToken, electionsRoutes);
+app.use("/api/elections", electionsRoutes);
 app.use("/api/candidates", verifyToken, candidatesRoutes);
 app.use("/api/vote", verifyToken, voteRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
