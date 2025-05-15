@@ -6,19 +6,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authService } from "@/services/authService";
+import { useLocale } from "next-intl";
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const locale = useLocale();
   const handleOnSubmit = async (loginData: ILogin) => {
-    console.log("Login form submitted", loginData);
-
     try {
       const auth = await authService.login(loginData.iin, loginData.password);
-
-      document.cookie = `token=${auth?.token}; path=/; Secure; SameSite=Strict;`;
-
-      router.push("/");
+      router.push(`/${locale}/`);
     } catch (err) {
       setError("Invalid credentials");
     }
