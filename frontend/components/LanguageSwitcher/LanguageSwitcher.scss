@@ -1,0 +1,88 @@
+.language-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.current-language {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: #222831;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover,
+  &:focus {
+    background-color: #f0f0f0;
+    outline: none;
+  }
+
+  &:active {
+    background-color: #e0e0e0;
+  }
+}
+
+.language-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  list-style: none;
+  padding: 0;
+  width: 100px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.language-option {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 4px;
+
+  &:hover,
+  &:focus {
+    background-color: #f0f0f0;
+    color: #00adb5;
+    outline: none;
+  }
+
+  &:active {
+    background-color: #e0e0e0;
+  }
+}
+
+.language-option.active {
+  font-weight: bold;
+  color: #00adb5;
+}
+
+.login-button {
+  background-color: #00adb5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover,
+  &:focus {
+    background-color: #009ba4;
+    outline: none;
+  }
+
+  &:active {
+    background-color: #008c95;
+    transform: scale(0.98);
+  }
+}

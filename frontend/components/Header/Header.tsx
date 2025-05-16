@@ -5,19 +5,18 @@ import "./Header.scss";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter, usePathname } from "next/navigation";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import { useTranslations, useLocale } from "use-intl";
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);
+
   const t = useTranslations("header");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  // Function to handle language change
   const handleLocaleChange = (newLocale: string) => {
-    // Extract the path without the locale prefix
     let pathWithoutLocale = pathname;
     const pathParts = pathname.split("/");
 
@@ -31,7 +30,9 @@ const Header = () => {
   return (
     <header>
       {!user ? (
-        <Logo />
+        <Link href={`/${locale}`}>
+          <Logo />
+        </Link>
       ) : (
         <Link
           href={`/${locale}/profile`}

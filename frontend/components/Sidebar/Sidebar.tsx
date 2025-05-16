@@ -16,6 +16,7 @@ import { AboutUsIcon } from "@/icons/AboutUsIcon";
 import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
 import { useLocale } from "next-intl";
 import { useTranslations } from "use-intl";
+import { authService } from "@/services/authService";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
+      await authService.logout();
       dispatch(logout());
       router.push(`/${locale}/`);
     } catch (error) {
@@ -61,7 +63,6 @@ const Sidebar = () => {
           {tabs.map(({ icon: Icon, path, title }, index) => {
             const fullPath = `/${locale}${path}`;
             const isActive = pathname === fullPath;
-            console.log("isActive", isActive, pathname, fullPath);
             return (
               <li
                 key={index}
