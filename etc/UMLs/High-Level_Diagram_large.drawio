@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.4">
+  <diagram name="Page-1" id="EaMaKlZ6IuhpKkO5Laee">
+    <mxGraphModel dx="1426" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dseZsXC_z1m94-qXrX80-14" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="2" y="185" width="845.27" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-9" value="Cache" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" edge="1" parent="dseZsXC_z1m94-qXrX80-14" source="dseZsXC_z1m94-qXrX80-1" target="dseZsXC_z1m94-qXrX80-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730.0059090909091" y="288.1578947368421" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-11" value="Verification" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=16;" edge="1" parent="dseZsXC_z1m94-qXrX80-14" source="dseZsXC_z1m94-qXrX80-1" target="dseZsXC_z1m94-qXrX80-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-13" value="Cache miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" edge="1" parent="dseZsXC_z1m94-qXrX80-14" source="dseZsXC_z1m94-qXrX80-1" target="dseZsXC_z1m94-qXrX80-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-1" value="Backend&lt;div&gt;(Express.js)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;labelBorderColor=none;fontStyle=1;fontSize=18;" vertex="1" parent="dseZsXC_z1m94-qXrX80-14">
+          <mxGeometry x="384.2136363636364" y="230.5263157894737" width="230.52818181818182" height="115.26315789473685" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-5" value="HTTPS/HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" edge="1" parent="dseZsXC_z1m94-qXrX80-14" source="dseZsXC_z1m94-qXrX80-2" target="dseZsXC_z1m94-qXrX80-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-2" value="Frontend&lt;div&gt;(React.js)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;labelBorderColor=none;fontStyle=1;fontSize=18;" vertex="1" parent="dseZsXC_z1m94-qXrX80-14">
+          <mxGeometry x="384.2136363636364" width="230.52818181818182" height="115.26315789473685" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-3" value="Database&lt;div&gt;(PostgreSQL)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;labelBorderColor=none;fontStyle=1;fontSize=18;" vertex="1" parent="dseZsXC_z1m94-qXrX80-14">
+          <mxGeometry x="230.52818181818182" y="614.7368421052631" width="230.52818181818182" height="115.26315789473685" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-12" value="Cache hit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=16;" edge="1" parent="dseZsXC_z1m94-qXrX80-14" source="dseZsXC_z1m94-qXrX80-4" target="dseZsXC_z1m94-qXrX80-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="499.47772727272724" y="518.6842105263157" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-4" value="Cache&lt;br&gt;&lt;div&gt;(Redis)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;labelBorderColor=none;fontStyle=1;fontSize=18;" vertex="1" parent="dseZsXC_z1m94-qXrX80-14">
+          <mxGeometry x="614.7418181818182" y="461.0526315789474" width="230.52818181818182" height="115.26315789473685" as="geometry" />
+        </mxCell>
+        <mxCell id="dseZsXC_z1m94-qXrX80-10" value="OTP Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;labelBorderColor=none;fontStyle=1;fontSize=18;" vertex="1" parent="dseZsXC_z1m94-qXrX80-14">
+          <mxGeometry y="230.5263157894737" width="230.52818181818182" height="115.26315789473685" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
