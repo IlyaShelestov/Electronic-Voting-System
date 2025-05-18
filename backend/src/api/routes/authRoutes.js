@@ -5,6 +5,7 @@ const {
   preventLoggedIn,
   verifyToken,
 } = require("../middlewares/authMiddleware");
+const checkCitizenCorrect = require("../middlewares/citizenMiddleware");
 
 /**
  * @swagger
@@ -101,8 +102,14 @@ const {
  *         description: Forbidden - already logged in
  *       500:
  *         description: Server error
+ *       502:
+ *         description: Bad Gateway - unable to verify eGov citizen
  */
-router.post("/register", preventLoggedIn, register);
+if (process.env.NODE_ENV === "test") {
+  router.post("/register", preventLoggedIn, register);
+} else {
+  router.post("/register", preventLoggedIn, checkCitizenCorrect, register);
+}
 
 /**
  * @swagger
