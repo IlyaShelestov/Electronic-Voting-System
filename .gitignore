@@ -2,3 +2,6 @@
 /backend/.env.test
 /backend/node_modules/
 /backend/coverage/
+
+/services/**/node_modules/
+/services/**/.env
