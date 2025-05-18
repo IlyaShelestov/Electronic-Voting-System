@@ -34,6 +34,7 @@ const Sidebar = () => {
       router.push(`/${locale}/`);
     } catch (error) {
       console.error("Failed to logout cleanly:", error);
+      dispatch(logout());
       router.push(`/${locale}/`);
     }
   };
