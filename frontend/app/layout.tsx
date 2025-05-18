@@ -15,8 +15,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <MultiProvider>
+      <AuthChecker />
+
       <ApiProvider>
-        <AuthChecker />
         {children}
       </ApiProvider>
     </MultiProvider>

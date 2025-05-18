@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_URL } from "@/config/env";
 import { getAuthToken, removeAuthToken } from "@/utils/tokenHelper";
 import { toast } from "react-toastify";
+import { userService } from "./userService";
 
 export const apiClient = axios.create({
   baseURL: API_URL,

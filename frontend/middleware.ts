@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -27,7 +28,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const locale = req.nextUrl.locale || routing.defaultLocale;
+  const locale = getLocale();
   const isAuthPage = pathname.startsWith(`/${locale}/auth`);
 
   const redirectTo = (path: string) => {

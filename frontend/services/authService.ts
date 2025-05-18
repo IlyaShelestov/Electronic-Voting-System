@@ -16,11 +16,6 @@ export const authService = {
         { iin, password }
       );
 
-      if (response.status === 403) {
-        console.warn("User is already logged in.");
-        return null;
-      }
-
       return response.data;
     } catch (error: any) {
       if (error.response?.status === 403) {
