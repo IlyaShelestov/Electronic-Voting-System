@@ -25,8 +25,19 @@ const locationsRoutes = require("./api/routes/locationsRoutes");
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "http://localhost:3000",
+  process.env.BACKEND_URL  || "http://localhost:5000"
+];
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",  // Разрешённый источник для запросов
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy: denied access from ${origin}`));
+    }
+  },  // Разрешённый источник для запросов
   credentials: true, // Разрешает передачу cookie и заголовков авторизации (Authorization) между фронтендом и сервером
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],  // Указывает, какие HTTP-методы разрешены для кросс-доменных запросов 
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],    // Разрешённые заголовки, которые клиент может отправлять на сервер.

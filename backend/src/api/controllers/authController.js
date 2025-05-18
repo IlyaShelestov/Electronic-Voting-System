@@ -64,10 +64,6 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ message: "User must be at least 18 years old" });
     }
-    const city = await City.getById(city_id);
-    if (!city) {
-      return res.status(400).json({ message: "City not found" });
-    }
     if (!isValidPhoneNumber(phone_number)) {
       return res.status(400).json({ message: "Invalid phone number format" });
     }
@@ -79,6 +75,10 @@ exports.register = async (req, res) => {
         message:
           "Password must be at least 9 characters long and contain at least one letter, one number, and one special character",
       });
+    }
+    const city = await City.getById(city_id);
+    if (!city) {
+      return res.status(400).json({ message: "City not found" });
     }
 
     // Проверка на существующего пользователя

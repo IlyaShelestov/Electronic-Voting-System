@@ -132,7 +132,7 @@ async function populateData() {
       VALUES 
         (${candidateUserIds[0]}, ${electionId}, 'Опытный политик.', 'Партия  А', 'https://example.com/avatar1.jpg'),
         (${candidateUserIds[1]}, ${electionId}, 'Борец за правосудие.', 'Партия Б', 'https://example.com/avatar2.jpg'),
-        (${candidateUserIds[2]}, ${electionId}, 'Новый вгляд на мир.', 'Партия В', 'https://example.com/avatar3.jpg')
+        (${candidateUserIds[2]}, ${electionId}, 'Новый взгляд на мир.', 'Партия В', 'https://example.com/avatar3.jpg')
       RETURNING candidate_id;
     `);
 
