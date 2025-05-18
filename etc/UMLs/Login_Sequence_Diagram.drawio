@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" version="26.0.12">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.4">
   <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
-    <mxGraphModel dx="1595" dy="848" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -58,7 +58,7 @@
             <mxPoint x="670" y="160" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="F4sd7CnOWZ5qCEoItEzf-38" value="Return Phone Number" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
+        <mxCell id="F4sd7CnOWZ5qCEoItEzf-38" value="Return Email" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="530" y="180" as="sourcePoint" />
             <mxPoint x="670" y="180" as="targetPoint" />
@@ -89,13 +89,13 @@
             <mxPoint x="370" y="410" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="F4sd7CnOWZ5qCEoItEzf-55" value="Get Phone Number" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;" parent="1" edge="1">
+        <mxCell id="F4sd7CnOWZ5qCEoItEzf-55" value="Get Email" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="670" y="430" as="sourcePoint" />
             <mxPoint x="530" y="430" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="F4sd7CnOWZ5qCEoItEzf-56" value="Return Phone Number" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
+        <mxCell id="F4sd7CnOWZ5qCEoItEzf-56" value="Return Email" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="530" y="450" as="sourcePoint" />
             <mxPoint x="670" y="450" as="targetPoint" />
@@ -206,34 +206,34 @@
         <mxCell id="F4sd7CnOWZ5qCEoItEzf-105" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="670" y="150" width="20" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-1" value="SMS/OTP Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-1" value="OTP Service" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="800" y="40" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" edge="1" parent="1" source="dBP3PC5nFZbCUI9GzV9c-8">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" parent="1" source="dBP3PC5nFZbCUI9GzV9c-8" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="839.6600000000001" y="80" as="sourcePoint" />
             <mxPoint x="840" y="680" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="F4sd7CnOWZ5qCEoItEzf-45" value="SMS+OTP Request" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+        <mxCell id="F4sd7CnOWZ5qCEoItEzf-45" value="OTP Request" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="530" y="200" as="sourcePoint" />
             <mxPoint x="830" y="200" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-3" value="Send SMS With OTP" style="endArrow=classic;html=1;rounded=0;dashed=1;dashPattern=8 8;" edge="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-3" value="Send Message With OTP" style="endArrow=classic;html=1;rounded=0;dashed=1;dashPattern=8 8;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="830" y="220" as="sourcePoint" />
             <mxPoint x="200" y="220" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-5" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" edge="1" parent="1" target="dBP3PC5nFZbCUI9GzV9c-4">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-5" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" parent="1" target="dBP3PC5nFZbCUI9GzV9c-4" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="839.6600000000001" y="80" as="sourcePoint" />
             <mxPoint x="840" y="680" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="830" y="160" width="20" height="220" as="geometry" />
         </mxCell>
         <mxCell id="F4sd7CnOWZ5qCEoItEzf-58" value="Check OTP" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;" parent="1" edge="1">
@@ -242,22 +242,22 @@
             <mxPoint x="530" y="470" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-7" value="OTP is Verified" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" edge="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-7" value="OTP is Verified" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="530" y="490" as="sourcePoint" />
             <mxPoint x="830" y="490" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" edge="1" parent="1" source="dBP3PC5nFZbCUI9GzV9c-4" target="dBP3PC5nFZbCUI9GzV9c-8">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashPattern=8 8;" parent="1" source="dBP3PC5nFZbCUI9GzV9c-4" target="dBP3PC5nFZbCUI9GzV9c-8" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="840" y="380" as="sourcePoint" />
             <mxPoint x="840" y="680" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-8" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-8" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="830" y="460" width="20" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="dBP3PC5nFZbCUI9GzV9c-11" value="User if Verified" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" edge="1" parent="1">
+        <mxCell id="dBP3PC5nFZbCUI9GzV9c-11" value="User if Verified" style="endArrow=none;html=1;rounded=0;startArrow=block;startFill=1;dashed=1;dashPattern=8 8;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="370" y="510" as="sourcePoint" />
             <mxPoint x="510" y="510" as="targetPoint" />
