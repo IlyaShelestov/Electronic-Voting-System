@@ -1,6 +1,5 @@
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
-import AuthChecker from "./[locale]/auth/AuthChecker";
 import MultiProvider from "@/providers/MultiProvider";
 import { ApiProvider } from "@/providers/ApiProvider";
 
@@ -15,11 +14,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <MultiProvider>
-      <AuthChecker />
-
-      <ApiProvider>
-        {children}
-      </ApiProvider>
+      <ApiProvider>{children}</ApiProvider>
     </MultiProvider>
   );
 }

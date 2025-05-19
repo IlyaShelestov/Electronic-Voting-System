@@ -2,9 +2,6 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import ContentLayout from "@/ui/layouts/ContentLayout";
-import { userService } from "@/services/userService";
-import { login } from "@/store/slices/userSlice";
-import { useAppDispatch } from "@/store/hooks";
 
 export default async function LocaleLayout({
   children,
