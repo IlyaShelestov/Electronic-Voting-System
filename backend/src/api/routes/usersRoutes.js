@@ -8,66 +8,6 @@ const {
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       properties:
- *         user_id:
- *           type: integer
- *         iin:
- *           type: string
- *         first_name:
- *           type: string
- *         last_name:
- *           type: string
- *         patronymic:
- *           type: string
- *           nullable: true
- *         city_id:
- *           type: integer
- *         phone_number:
- *           type: string
- *         email:
- *           type: string
- *         role:
- *           type: string
- *         date_of_birth:
- *           type: string
- *           format: date
- *         created_at:
- *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
- *     ProfileChangeRequest:
- *       type: object
- *       properties:
- *         request_id:
- *           type: integer
- *         user_id:
- *           type: integer
- *         field_name:
- *           type: string
- *         old_value:
- *           type: string
- *           nullable: true
- *         new_value:
- *           type: string
- *         status:
- *           type: string
- *           enum: [pending, approved, rejected]
- *         created_at:
- *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
- */
-
-/**
- * @swagger
  * /api/users/me:
  *   get:
  *     summary: Get current user profile information
@@ -80,7 +20,36 @@ const {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: integer
+ *                 iin:
+ *                   type: string
+ *                 first_name:
+ *                   type: string
+ *                 last_name:
+ *                   type: string
+ *                 patronymic:
+ *                   type: string
+ *                   nullable: true
+ *                 city_id:
+ *                   type: integer
+ *                 phone_number:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ *                 date_of_birth:
+ *                   type: string
+ *                   format: date
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
  *       401:
  *         description: Unauthorized
  *       500:
@@ -108,7 +77,13 @@ router.get("/me", getProfileInfo);
  *             properties:
  *               field_name:
  *                 type: string
- *                 enum: [phone_number, email, city_id, first_name, last_name, patronymic]
+ *                 enum:
+ *                   - phone_number
+ *                   - email
+ *                   - city_id
+ *                   - first_name
+ *                   - last_name
+ *                   - patronymic
  *               new_value:
  *                 type: string
  *     responses:
@@ -122,9 +97,33 @@ router.get("/me", getProfileInfo);
  *                 message:
  *                   type: string
  *                 request:
- *                   $ref: '#/components/schemas/ProfileChangeRequest'
+ *                   type: object
+ *                   properties:
+ *                     request_id:
+ *                       type: integer
+ *                     user_id:
+ *                       type: integer
+ *                     field_name:
+ *                       type: string
+ *                     old_value:
+ *                       type: string
+ *                       nullable: true
+ *                     new_value:
+ *                       type: string
+ *                     status:
+ *                       type: string
+ *                       enum:
+ *                         - pending
+ *                         - approved
+ *                         - rejected
+ *                     created_at:
+ *                       type: string
+ *                       format: date-time
+ *                     updated_at:
+ *                       type: string
+ *                       format: date-time
  *       400:
- *         description: Bad request - validation error
+ *         description: Bad request – validation error
  *       401:
  *         description: Unauthorized
  *       403:
@@ -152,7 +151,31 @@ router.post("/me/request-change", requestChange);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/ProfileChangeRequest'
+ *                 type: object
+ *                 properties:
+ *                   request_id:
+ *                     type: integer
+ *                   user_id:
+ *                     type: integer
+ *                   field_name:
+ *                     type: string
+ *                   old_value:
+ *                     type: string
+ *                     nullable: true
+ *                   new_value:
+ *                     type: string
+ *                   status:
+ *                     type: string
+ *                     enum:
+ *                       - pending
+ *                       - approved
+ *                       - rejected
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                   updated_at:
+ *                     type: string
+ *                     format: date-time
  *       401:
  *         description: Unauthorized
  *       500:

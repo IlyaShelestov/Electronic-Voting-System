@@ -22,6 +22,7 @@ const eventsRoutes = require("./api/routes/eventsRoutes");
 const managerRoutes = require("./api/routes/managerRoutes");
 const adminRoutes = require("./api/routes/adminRoutes");
 const locationsRoutes = require("./api/routes/locationsRoutes");
+const otpRoutes = require("./api/routes/otpRoutes");
 
 const app = express();
 
@@ -95,11 +96,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use("/api/auth", authRoutes);
+app.use("/api/otp", otpRoutes);
 app.use("/api/elections", electionsRoutes);
 app.use("/api/candidates", verifyToken, candidatesRoutes);
 app.use("/api/vote", verifyToken, voteRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
-app.use("/api/events", verifyToken, eventsRoutes);
+app.use("/api/events", eventsRoutes);
 app.use("/api/manager", verifyToken, isManager, managerRoutes);
 app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
 app.use("/api/locations", verifyToken, locationsRoutes);

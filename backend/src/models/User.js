@@ -23,7 +23,7 @@ class User {
 
   static async findByIIN(iin) {
     const result = await pool.query(
-      "SELECT iin, first_name, last_name, patronymic, city_id, phone_number, email, role, created_at, updated_at, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users users WHERE iin = $1",
+      "SELECT user_id, iin, first_name, last_name, patronymic, city_id, phone_number, email, role, created_at, updated_at, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users users WHERE iin = $1",
       [iin]
     );
     return result.rows[0];
@@ -39,7 +39,7 @@ class User {
 
   static async findByPhoneNumber(phone_number) {
     const result = await pool.query(
-      "SELECT iin, first_name, last_name, patronymic, city_id, phone_number, email, role, created_at, updated_at, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE phone_number = $1",
+      "SELECT user_id, iin, first_name, last_name, patronymic, city_id, phone_number, email, role, created_at, updated_at, to_char(date_of_birth, 'YYYY-MM-DD') as date_of_birth FROM users WHERE phone_number = $1",
       [phone_number]
     );
     return result.rows[0];

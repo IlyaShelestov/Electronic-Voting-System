@@ -1,10 +1,11 @@
 const Vote = require("../../models/Vote");
 const Candidate = require("../../models/Candidate");
 const { generateOneTimeToken } = require("../../utils/voteToken");
+const { verifyOtp } = require("../../services/otpService");
 
 exports.castVote = async (req, res) => {
   try {
-    const { electionId, candidateId } = req.body;
+    const { electionId, candidateId, otp } = req.body;
     const { userId, region, city } = req.user;
 
     const candidate = await Candidate.getById(candidateId);
@@ -26,6 +27,16 @@ exports.castVote = async (req, res) => {
       return res
         .status(403)
         .json({ message: "User cannot vote in this election" });
+    }
+
+    if (process.env.NODE_ENV !== "test") {
+      if (!otp) {
+        return res.status(400).json({ message: "OTP is required" });
+      }
+      const otpValid = await verifyOtp(email, otp);
+      if (otpValid.status == false) {
+        return res.status(400).json({ message: otpValid.message });
+      }
     }
 
     const token = await generateOneTimeToken();

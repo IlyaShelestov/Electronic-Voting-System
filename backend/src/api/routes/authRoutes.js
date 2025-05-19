@@ -28,6 +28,7 @@ const checkCitizenCorrect = require("../middlewares/citizenMiddleware");
  *               - phone_number
  *               - email
  *               - password
+ *               - otp
  *             properties:
  *               iin:
  *                 type: string
@@ -58,6 +59,9 @@ const checkCitizenCorrect = require("../middlewares/citizenMiddleware");
  *                 type: string
  *                 format: password
  *                 description: User's password
+ *               otp:
+ *                 type: string
+ *                 description: One-time password sent to the user's email
  *     responses:
  *       201:
  *         description: User successfully registered
@@ -95,17 +99,17 @@ const checkCitizenCorrect = require("../middlewares/citizenMiddleware");
  *                   type: string
  *                   format: date-time
  *       400:
- *         description: Bad request - validation error
- *       409:
- *         description: Conflict - user already exists
+ *         description: Bad request - validation error or missing fields
  *       403:
  *         description: Forbidden - already logged in
+ *       409:
+ *         description: Conflict - user already exists
  *       500:
  *         description: Server error
  *       502:
  *         description: Bad Gateway - unable to verify eGov citizen
  */
-if (process.env.NODE_ENV === "test") {
+if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
   router.post("/register", preventLoggedIn, register);
 } else {
   router.post("/register", preventLoggedIn, checkCitizenCorrect, register);

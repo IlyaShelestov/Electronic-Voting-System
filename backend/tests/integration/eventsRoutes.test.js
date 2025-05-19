@@ -30,11 +30,5 @@ describe("Events API Integration Tests", () => {
         ])
       );
     });
-
-    it("should return 401 if not logged in", async () => {
-      const res = await request(app).get(`/api/events`);
-      expect(res.status).toBe(401);
-      expect(res.body).toMatchObject({ message: "Unauthorized" });
-    });
   });
 });
