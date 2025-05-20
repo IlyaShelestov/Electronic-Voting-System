@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 const City = require("../../models/City");
+const { verifyOtp } = require("../../services/otpService");
 const {
   isValidName,
   isValidIIN,
@@ -23,6 +24,7 @@ exports.register = async (req, res) => {
       phone_number,
       email,
       password,
+      otp,
     } = req.body;
 
     // Проверка обязательных полей
@@ -87,6 +89,16 @@ exports.register = async (req, res) => {
       return res
         .status(409)
         .json({ message: "User with this IIN already exists" });
+    }
+
+    if (process.env.NODE_ENV !== "test") {
+      if (!otp) {
+        return res.status(400).json({ message: "OTP is required" });
+      }
+      const otpValid = await verifyOtp(email, otp);
+      if (otpValid.status == false) {
+        return res.status(400).json({ message: otpValid.message });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

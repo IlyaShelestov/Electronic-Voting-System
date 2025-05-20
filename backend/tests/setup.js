@@ -1,5 +1,6 @@
 require("../src/config/environment");
 const pool = require("../src/config/db");
+const redisClient = require("../src/config/redis");
 
 truncateAllTables = async () => {
   const tables = [
@@ -21,12 +22,16 @@ truncateAllTables = async () => {
 
 beforeEach(async () => {
   await truncateAllTables();
+  await redisClient.flushDb();
 });
 
 afterEach(async () => {
   await truncateAllTables();
+  await redisClient.flushDb();
 });
 
 afterAll(async () => {
   await pool.end();
+  await redisClient.flushDb();
+  await redisClient.quit();
 });

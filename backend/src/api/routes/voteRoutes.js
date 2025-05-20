@@ -24,6 +24,7 @@ const {
  *             required:
  *               - electionId
  *               - candidateId
+ *               - otp
  *             properties:
  *               electionId:
  *                 type: integer
@@ -31,6 +32,9 @@ const {
  *               candidateId:
  *                 type: integer
  *                 description: ID of the candidate
+ *               otp:
+ *                 type: string
+ *                 description: One-time password for verification
  *     responses:
  *       201:
  *         description: Vote successfully cast, returns token
@@ -38,6 +42,8 @@ const {
  *           application/json:
  *             schema:
  *               type: string
+ *       400:
+ *         description: Bad request - invalid OTP
  *       401:
  *         description: Unauthorized - user not logged in
  *       403:
