@@ -5,10 +5,11 @@ import { IElection } from "@/models/IElection";
 import ElectionCard from "@/components/ElectionCard/ElectionCard";
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export default async function Home({ params: { locale } }: PageProps) {
+export default async function Home(props: PageProps) {
+  let { locale } = await props.params;
   const t = await getTranslations("home");
   const elections: IElection[] = await electionService.getAll();
 
