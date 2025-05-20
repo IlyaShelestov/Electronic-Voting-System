@@ -38,6 +38,7 @@ async function fetchWithCache(url: string) {
     });
 
     if (!response.ok) {
+      console.error(`Error fetching ${url}:`, response.statusText);
       throw new Error(`Failed to fetch from ${url}: ${response.status}`);
     }
 
