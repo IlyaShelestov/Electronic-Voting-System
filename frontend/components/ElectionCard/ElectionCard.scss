@@ -1,0 +1,52 @@
+.election-card {
+  cursor: pointer;
+  background: #e0e0e0;
+  border-radius: 5px;
+  font-size: 22px;
+  overflow: hidden;
+
+  .election-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .arrow-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+
+  .election-chart {
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    animation: slideDown 0.3s ease-out forwards;
+
+    canvas {
+      max-height: 300px;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

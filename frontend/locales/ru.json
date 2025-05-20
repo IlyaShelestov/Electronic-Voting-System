@@ -30,7 +30,9 @@
     "title": "Главная",
     "bannerAlt": "Баннер выборов",
     "currentElections": "Актуальное",
-    "viewCandidates": "Посмотреть кандидатов"
+    "viewCandidates": "Посмотреть кандидатов",
+    "date": "Дата",
+    "votes": "Голоса"
   },
   "sidebar": {
     "title": "Навигация",

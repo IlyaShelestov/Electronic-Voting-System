@@ -8,12 +8,11 @@ const intlMiddleware = createMiddleware(routing);
 const PUBLIC_ROUTES = ["/auth/login", "/auth/register", "/"];
 const ROLE_BASED_ROUTES = {
   "/admin": ["admin"],
-  "/manager": ["admin", "manager"],
+  "/manager": ["manager"],
 };
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("token")?.value;
 
   const ignored = [
     "/",
@@ -36,37 +35,6 @@ export async function middleware(req: NextRequest) {
     url.pathname = path;
     return NextResponse.redirect(url);
   };
-
-  if (!token && !isAuthPage) {
-    return redirectTo(`/${locale}/auth/login`);
-  }
-
-  if (token) {
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const userRole = payload.role;
-      const exp = payload.exp;
-
-      if (!exp || Date.now() >= exp * 1000) {
-        return redirectTo(`/${locale}/auth/login`);
-      }
-
-      for (const [route, allowedRoles] of Object.entries(ROLE_BASED_ROUTES)) {
-        if (
-          pathname.startsWith(`/${locale}${route}`) &&
-          !allowedRoles.includes(userRole)
-        ) {
-          return redirectTo(`/${locale}/`);
-        }
-      }
-
-      if (isAuthPage) {
-        return redirectTo(`/${locale}/`);
-      }
-    } catch {
-      return redirectTo(`/${locale}/auth/login`);
-    }
-  }
 
   return intlMiddleware(req);
 }
