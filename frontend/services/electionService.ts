@@ -1,100 +1,49 @@
 import { API_URL } from "@/config/env";
 
+const apiEndpoint = `${API_URL}/elections`;
+
 export const electionService = {
-  apiEndpoint: API_URL + "/elections",
   getAll: async () => {
-    try {
-      const response = await fetch(`${electionService.apiEndpoint}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching elections:", error);
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}`);
   },
 
   getAvailable: async () => {
-    try {
-      const response = await fetch(`${electionService.apiEndpoint}/avaliable`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch available elections");
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching available elections:", error);
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}/avaliable`);
   },
 
   getAllLocations: async () => {
-    try {
-      const response = await fetch(`${electionService.apiEndpoint}/locations`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch locations");
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching locations:", error);
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}/locations`);
   },
 
   getById: async (id: number) => {
-    try {
-      const response = await fetch(`${electionService.apiEndpoint}/${id}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error(`Failed to fetch election ${id}`);
-      return await response.json();
-    } catch (error) {
-      console.error(`Error fetching election ${id}:`, error);
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}/${id}`);
   },
 
   getCandidates: async (electionId: number) => {
-    try {
-      const response = await fetch(
-        `${electionService.apiEndpoint}/${electionId}/candidates`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      if (!response.ok)
-        throw new Error(
-          `Failed to fetch candidates for election ${electionId}`
-        );
-      return await response.json();
-    } catch (error) {
-      console.error(
-        `Error fetching candidates for election ${electionId}:`,
-        error
-      );
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}/${electionId}/candidates`);
   },
 
   getReport: async (electionId: number) => {
-    try {
-      const response = await fetch(
-        `${electionService.apiEndpoint}/${electionId}/report`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      if (!response.ok)
-        throw new Error(`Failed to fetch report for election ${electionId}`);
-      return await response.json();
-    } catch (error) {
-      console.error(`Error fetching report for election ${electionId}:`, error);
-      throw error;
-    }
+    return fetchWithCache(`${apiEndpoint}/${electionId}/report`);
   },
 };
+
+async function fetchWithCache(url: string) {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+      cache: "force-cache",
+      next: { revalidate: 60 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch from ${url}: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error(`Error fetching from ${url}:`, error);
+    throw error;
+  }
+}

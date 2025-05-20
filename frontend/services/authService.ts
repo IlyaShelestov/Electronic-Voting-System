@@ -1,53 +1,22 @@
-import { AuthResponse } from "@/models/IAuthResponse";
 import { apiClient } from "@/services/apiClient";
-import { removeAuthToken } from "@/utils/tokenHelper";
+import { AuthResponse } from "@/models/IAuthResponse";
 import { IUser } from "@/models/IUser";
 
 export const authService = {
-  apiEndpoint: "/auth",
-
-  login: async (
-    iin: string,
-    password: string
-  ): Promise<AuthResponse | null> => {
-    try {
-      const response = await apiClient.post<AuthResponse>(
-        `${authService.apiEndpoint}/login`,
-        { iin, password }
-      );
-
-      return response.data;
-    } catch (error: any) {
-      if (error.response?.status === 403) {
-        console.warn("403 Forbidden: User is already logged in.");
-        return null;
-      }
-      console.error("Login Error:", error);
-      throw error;
-    }
+  login: async (iin: string, password: string): Promise<AuthResponse> => {
+    const { data } = await apiClient.post<AuthResponse>("/auth/login", {
+      iin,
+      password,
+    });
+    return data;
   },
 
   register: async (userData: IUser): Promise<IUser> => {
-    try {
-      const { data } = await apiClient.post<IUser>("/auth/register", userData);
-      return data;
-    } catch (error) {
-      console.error("Registration Error:", error);
-      throw error;
-    }
+    const { data } = await apiClient.post<IUser>("/auth/register", userData);
+    return data;
   },
 
   logout: async (): Promise<void> => {
-    try {
-      await apiClient.post(`${authService.apiEndpoint}/logout`);
-      removeAuthToken();
-
-      console.info("User successfully logged out.");
-    } catch (error) {
-      console.error("Logout Error:", error);
-      removeAuthToken();
-
-      throw error;
-    }
+    await apiClient.post("/auth/logout");
   },
 };

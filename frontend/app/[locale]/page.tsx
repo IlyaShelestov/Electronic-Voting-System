@@ -20,7 +20,7 @@ export default async function Home({ params: { locale } }: PageProps) {
         <Image
           src="/images/election-banner.png"
           alt={t("bannerAlt")}
-          width={800}
+          width={1200}
           height={300}
           className="banner-image"
         />
