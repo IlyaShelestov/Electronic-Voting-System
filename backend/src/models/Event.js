@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const redisClient = require("../config/redis");
 
 class Event {
   static async create(data) {
@@ -7,24 +8,44 @@ class Event {
     const values = [data.title, data.description, data.event_date];
 
     const result = await pool.query(query, values);
-    return result.rows[0];
+    const event = result.rows[0];
+
+    await redisClient.del("events:all");
+    return event;
   }
 
   static async getAll() {
+    const cacheKey = "events:all";
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const query =
       "SELECT *, to_char(event_date, 'YYYY-MM-DD') as event_date FROM system_events";
-
     const result = await pool.query(query);
-    return result.rows;
+    const events = result.rows;
+
+    await redisClient.set(cacheKey, JSON.stringify(events), { EX: 86400 });
+    return events;
   }
 
   static async getById(id) {
+    const cacheKey = `events:id:${id}`;
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const query =
       "SELECT *, to_char(event_date, 'YYYY-MM-DD') as event_date FROM system_events WHERE event_id = $1";
-    const values = [id];
+    const result = await pool.query(query, [id]);
+    const event = result.rows[0];
 
-    const result = await pool.query(query, values);
-    return result.rows[0];
+    if (event) {
+      await redisClient.set(cacheKey, JSON.stringify(event), { EX: 86400 });
+    }
+    return event;
   }
 
   static async delete(id) {
@@ -32,19 +53,27 @@ class Event {
       "DELETE FROM system_events WHERE event_id = $1 RETURNING *, to_char(event_date, 'YYYY-MM-DD') as event_date",
       [id]
     );
-    return result.rows[0];
+    const deleted = result.rows[0];
+
+    await redisClient.del("events:all");
+    await redisClient.del(`events:id:${id}`);
+    return deleted;
   }
 
   static async update(id, data) {
     const keys = Object.keys(data);
     const values = Object.values(data);
-    const set = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");
+    const set = keys.map((key, i) => `${key} = $${i + 1}`).join(", ");
     const query = `UPDATE system_events SET ${set} WHERE event_id = $${
       keys.length + 1
     } RETURNING *, to_char(event_date, 'YYYY-MM-DD') as event_date`;
 
     const result = await pool.query(query, [...values, id]);
-    return result.rows[0];
+    const updated = result.rows[0];
+
+    await redisClient.del("events:all");
+    await redisClient.del(`events:id:${id}`);
+    return updated;
   }
 }
 

@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const redisClient = require("../config/redis");
 
 class Candidate {
   static async create(data) {
@@ -15,7 +16,10 @@ class Candidate {
     ];
 
     const result = await pool.query(query, values);
-    return result.rows[0];
+    const candidate = result.rows[0];
+
+    await redisClient.del("candidates:all");
+    return candidate;
   }
 
   static async attachToElection(candidateId, electionId) {
@@ -24,10 +28,20 @@ class Candidate {
     const values = [electionId, candidateId];
 
     const result = await pool.query(query, values);
-    return result.rows[0];
+    const updated = result.rows[0];
+
+    await redisClient.del("candidates:all");
+    await redisClient.del(`candidates:id:${candidateId}`);
+    return updated;
   }
 
   static async getAll() {
+    const cacheKey = "candidates:all";
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const query = `
       SELECT
         c.candidate_id,
@@ -51,10 +65,19 @@ class Candidate {
       JOIN users u ON c.user_id = u.user_id;
     `;
     const result = await pool.query(query);
-    return result.rows;
+    const candidates = result.rows;
+
+    await redisClient.set(cacheKey, JSON.stringify(candidates), { EX: 86400 });
+    return candidates;
   }
 
   static async getById(id) {
+    const cacheKey = `candidates:id:${id}`;
+    const cached = await redisClient.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const query = `
       SELECT
         c.candidate_id,
@@ -79,7 +102,12 @@ class Candidate {
       WHERE c.candidate_id = $1;
     `;
     const result = await pool.query(query, [id]);
-    return result.rows[0];
+    const candidate = result.rows[0];
+
+    if (candidate) {
+      await redisClient.set(cacheKey, JSON.stringify(candidate), { EX: 86400 });
+    }
+    return candidate;
   }
 
   static async delete(id) {
@@ -87,7 +115,11 @@ class Candidate {
       "DELETE FROM candidates WHERE candidate_id = $1 RETURNING *",
       [id]
     );
-    return result.rows[0];
+    const deleted = result.rows[0];
+
+    await redisClient.del("candidates:all");
+    await redisClient.del(`candidates:id:${id}`);
+    return deleted;
   }
 
   static async update(id, data) {
@@ -99,7 +131,11 @@ class Candidate {
     } RETURNING *`;
 
     const result = await pool.query(query, [...values, id]);
-    return result.rows[0];
+    const updated = result.rows[0];
+
+    await redisClient.del("candidates:all");
+    await redisClient.del(`candidates:id:${id}`);
+    return updated;
   }
 }
 
