@@ -2,44 +2,26 @@
 
 import React, { useState } from "react";
 import { IUser } from "@/models/IUser";
-
-// City data
-const cities = [
-  { id: 1, name: "Алматы" },
-  { id: 2, name: "Астана" },
-  { id: 3, name: "Шымкент" },
-  { id: 4, name: "Актобе" },
-  { id: 5, name: "Атырау" },
-  { id: 6, name: "Актау" },
-  { id: 7, name: "Караганда" },
-  { id: 8, name: "Павлодар" },
-  { id: 9, name: "Петропавловск" },
-  { id: 10, name: "Костанай" },
-  { id: 11, name: "Уральск" },
-  { id: 12, name: "Усть-Каменогорск" },
-  { id: 13, name: "Кокшетау" },
-  { id: 14, name: "Кызылорда" },
-  { id: 15, name: "Тараз" },
-  { id: 16, name: "Туркестан" },
-];
+import { get } from "http";
+import { locationsService } from "@/services/locationsService";
 
 interface RegisterFormProps {
   onSubmit: (userData: IUser & { password: string }) => Promise<void>;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
+const RegisterForm: React.FC<RegisterFormProps> = async ({ onSubmit }) => {
+  const cities = await locationsService.getCities();
   const [formData, setFormData] = useState<IUser & { password: string }>({
     iin: "",
     first_name: "",
     last_name: "",
     patronymic: "",
     date_of_birth: "",
-    region: "",
-    city_id: 1, // Initialize with a default value
+    city_id: 1,
     phone_number: "",
     email: "",
     role: "user",
-    password: "", // Add password field
+    password: "",
   });
 
   const handleChange = (
@@ -108,16 +90,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           name="date_of_birth"
           placeholder="Date of Birth"
           value={formData.date_of_birth}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="region">Область</label>
-        <input
-          type="text"
-          name="region"
-          placeholder="Region"
-          value={formData.region}
           onChange={handleChange}
         />
       </div>

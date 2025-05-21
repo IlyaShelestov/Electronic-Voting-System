@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/userSlice";
 import Logo from "../Logo/Logo";
 import "./Sidebar.scss";
-
 import { HomeIcon } from "@/icons/HomeIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
 import { InstructionsIcon } from "@/icons/InstructionsIcon";
@@ -23,6 +22,10 @@ const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const locale = useLocale();
   const t = useTranslations("sidebar");

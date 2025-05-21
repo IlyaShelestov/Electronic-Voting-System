@@ -3,7 +3,12 @@ import "./Logo.scss";
 const Logo = () => {
   return (
     <div className="logo">
-      <div className="oval"></div>
+      <img
+        src="/images/logo.png"
+        alt="eVote"
+        width={50}
+        height={50}
+      />
     </div>
   );
 };

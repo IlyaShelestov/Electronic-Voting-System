@@ -7,10 +7,14 @@
   },
   "login": {
     "title": "Вход",
-    "username": "Логин",
-    "password": "Пароль",
-    "forgotPassword": "Забыли пароль?",
-    "submit": "Войти"
+    "Do you have an account?": "У вас уже есть аккаунт?",
+    "IIN": "ИИН",
+    "Password": "Пароль",
+    "Your IIN": "Ваш ИИН",
+    "Your password": "Ваш пароль",
+    "Forgot password?": "Забыли пароль?",
+    "Login": "Войти",
+    "Register": "Зарегистрироваться"
   },
   "register": {
     "title": "Регистрация",
@@ -25,7 +29,6 @@
     "password": "Пароль",
     "submit": "Зарегистрироваться"
   },
-
   "home": {
     "title": "Главная",
     "bannerAlt": "Баннер выборов",
