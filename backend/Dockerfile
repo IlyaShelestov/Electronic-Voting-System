@@ -8,6 +8,7 @@ FROM deps AS release
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN chmod +x scripts/docker-entrypoint.sh
 # ENV NODE_ENV=production
 ENV NODE_ENV=development
 EXPOSE 7000
