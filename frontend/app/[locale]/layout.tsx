@@ -1,14 +1,17 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import ContentLayout from "@/ui/layouts/ContentLayout";
+
+import { ToastContainer } from "react-toastify";
+import Header from "@/components/Header/Header";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string } | Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>;
 }) {
   const resolvedParams = await params;
   const { locale } = resolvedParams;
@@ -21,7 +24,6 @@ export default async function LocaleLayout({
   try {
     messages = (await import(`@/locales/${locale}.json`)).default;
   } catch (error) {
-    console.error(`Missing locale file for ${locale}`, error);
     notFound();
   }
 
@@ -32,8 +34,26 @@ export default async function LocaleLayout({
           locale={locale}
           messages={messages}
         >
-          <ContentLayout>{children}</ContentLayout>
+          <div className="app-container">
+            <Sidebar />
+            <div className="content-container">
+              <Header />
+              <main>{children}</main>
+            </div>
+          </div>
         </NextIntlClientProvider>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );

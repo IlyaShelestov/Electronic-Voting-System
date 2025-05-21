@@ -10,23 +10,11 @@ body {
   color: $general_dark;
   font-family: "Montserrat", sans-serif;
 
-  .content {
-    transition: margin-left 0.3s ease-in-out;
-
-    &.with-sidebar {
-      margin-left: $sidebar_width;
-    }
-
-    &.full-width {
-      margin-left: 0;
-    }
-
-    & > header,
-    main,
-    footer {
-      padding-left: 80px;
-      padding-right: 80px;
-    }
+  & > header,
+  main,
+  footer {
+    padding-left: 80px;
+    padding-right: 80px;
   }
 }
 
