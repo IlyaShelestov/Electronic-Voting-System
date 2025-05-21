@@ -149,7 +149,7 @@ exports.login = async (req, res) => {
       }
     );
     res.cookie("token", token, {
-      httpOnly: true,
+      httpOnly: false, // Сервер фронтенда его добавит
       secure: process.env.NODE_ENV === "production", // только по HTTPS в проде
       sameSite: "Strict", // защита от CSRF
     });
