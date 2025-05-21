@@ -28,7 +28,7 @@ export default function LoginPage() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <p>
         У вас нет аккаунта?{" "}
-        <Link href="/auth/register">Зарегистрироваться</Link>{" "}
+        <Link href={`/${locale}/auth/register`}>Зарегистрироваться</Link>{" "}
       </p>
     </>
   );
