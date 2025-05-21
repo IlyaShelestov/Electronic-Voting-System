@@ -9,6 +9,7 @@ services:
       POSTGRES_DB: evote_kz
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./db/init-create-dbs.sql:/docker-entrypoint-initdb.d/init-create-dbs.sql
     ports:
       - "5432:5432"
 
@@ -31,5 +32,28 @@ services:
     ports:
       - "7000:7000"
 
+  egov:
+    build:
+      context: ./services/egov
+      dockerfile: Dockerfile
+    container_name: evote-egov
+    env_file:
+      - ./services/egov/.env
+    depends_on:
+      - db
+    ports:
+      - "7002:7002"
+
+  otp:
+    build:
+      context: ./services/otp
+      dockerfile: Dockerfile
+    container_name: evote-otp
+    env_file:
+      - ./services/otp/.env
+    depends_on:
+      - db
+    ports:
+      - "7001:7001"
 volumes:
   pgdata:
