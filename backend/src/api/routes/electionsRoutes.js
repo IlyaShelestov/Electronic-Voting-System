@@ -90,8 +90,6 @@ router.get("/", getAll);
  *                   created_at:
  *                     type: string
  *                     format: date-time
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */

@@ -37,8 +37,6 @@ const { getAll } = require("../controllers/eventsController");
  *                     type: string
  *                     format: date-time
  *                     description: Timestamp when the event was created
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */

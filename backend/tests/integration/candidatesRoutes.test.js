@@ -38,12 +38,6 @@ describe("Candidates API Integration Tests", () => {
         ])
       );
     });
-
-    it("should return 401 if not logged in", async () => {
-      const res = await request(app).get("/api/candidates");
-      expect(res.status).toBe(401);
-      expect(res.body).toMatchObject({ message: "Unauthorized" });
-    });
   });
 
   describe("GET /candidates/:id", () => {
@@ -58,12 +52,6 @@ describe("Candidates API Integration Tests", () => {
         created_at: expect.any(String),
         updated_at: expect.any(String),
       });
-    });
-
-    it("should return 401 if not logged in", async () => {
-      const res = await request(app).get("/api/candidates/1");
-      expect(res.status).toBe(401);
-      expect(res.body).toMatchObject({ message: "Unauthorized" });
     });
   });
 });

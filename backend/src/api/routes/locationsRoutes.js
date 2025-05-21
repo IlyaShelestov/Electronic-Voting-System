@@ -34,8 +34,6 @@ const {
  *                   region_id:
  *                     type: integer
  *                     description: ID of the region this city belongs to
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -65,8 +63,6 @@ router.get("/cities", getAllCities);
  *                   name:
  *                     type: string
  *                     description: Name of the region
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -104,8 +100,6 @@ router.get("/regions", getAllRegions);
  *                 region_id:
  *                   type: integer
  *                   description: ID of the region this city belongs to
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -140,8 +134,6 @@ router.get("/cities/:id", getCityById);
  *                 name:
  *                   type: string
  *                   description: Name of the region
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
