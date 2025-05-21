@@ -5,6 +5,5 @@ until nc -z "$DB_HOST" "$DB_PORT"; do
 done
 
 npm run migrate
-npm run migrate:populate
 
 exec npm start
