@@ -1,28 +1,43 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IUser } from "@/models/IUser";
-import { get } from "http";
 import { locationsService } from "@/services/locationsService";
+import { ICity } from "@/models/ICity";
+import { useTranslations } from "next-intl";
 
 interface RegisterFormProps {
   onSubmit: (userData: IUser & { password: string }) => Promise<void>;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = async ({ onSubmit }) => {
-  const cities = await locationsService.getCities();
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
+  const [cities, setCities] = useState<ICity[]>([]);
   const [formData, setFormData] = useState<IUser & { password: string }>({
     iin: "",
     first_name: "",
     last_name: "",
     patronymic: "",
     date_of_birth: "",
-    city_id: 1,
+    city_id: 0,
     phone_number: "",
     email: "",
-    role: "user",
     password: "",
   });
+
+  const t = useTranslations("register");
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const citiesData = await locationsService.getCities();
+      console.log(citiesData);
+      setCities(citiesData);
+      if (citiesData.length > 0) {
+        setFormData((prev) => ({ ...prev, city_id: citiesData[0].city_id }));
+      }
+    };
+
+    fetchCities();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,57 +59,57 @@ const RegisterForm: React.FC<RegisterFormProps> = async ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="iin">ИИН</label>
+        <label htmlFor="iin">{t("iin")}</label>
         <input
           type="text"
           name="iin"
-          placeholder="IIN"
+          placeholder={t("iin")}
           value={formData.iin}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="first_name">Имя</label>
+        <label htmlFor="first_name">{t("firstName")}</label>
         <input
           type="text"
           name="first_name"
-          placeholder="First Name"
+          placeholder={t("firstName")}
           value={formData.first_name}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="last_name">Фамилия</label>
+        <label htmlFor="last_name">{t("lastName")}</label>
         <input
           type="text"
           name="last_name"
-          placeholder="Last Name"
+          placeholder={t("lastName")}
           value={formData.last_name}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="patronymic">Отчество</label>
+        <label htmlFor="patronymic">{t("patronymic")}</label>
         <input
           type="text"
           name="patronymic"
-          placeholder="Patronymic"
+          placeholder={t("patronymic")}
           value={formData.patronymic || ""}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="date_of_birth">Дата рождения</label>
+        <label htmlFor="date_of_birth">{t("dateOfBirth")}</label>
         <input
           type="date"
           name="date_of_birth"
-          placeholder="Date of Birth"
+          placeholder={t("dateOfBirth")}
           value={formData.date_of_birth}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="city_id">Город</label>
+        <label htmlFor="city_id">{t("city")}</label>
         <select
           name="city_id"
           value={formData.city_id}
@@ -102,8 +117,8 @@ const RegisterForm: React.FC<RegisterFormProps> = async ({ onSubmit }) => {
         >
           {cities.map((city) => (
             <option
-              key={city.id}
-              value={city.id}
+              key={city.city_id}
+              value={city.city_id}
             >
               {city.name}
             </option>
@@ -111,36 +126,36 @@ const RegisterForm: React.FC<RegisterFormProps> = async ({ onSubmit }) => {
         </select>
       </div>
       <div className="form-group">
-        <label htmlFor="phone_number">Номер телефона</label>
+        <label htmlFor="phone_number">{t("phoneNumber")}</label>
         <input
           type="text"
           name="phone_number"
-          placeholder="Phone Number"
+          placeholder={t("phoneNumber")}
           value={formData.phone_number}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">{t("email")}</label>
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder={t("email")}
           value={formData.email}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password">Пароль</label>
+        <label htmlFor="password">{t("password")}</label>
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder={t("password")}
           value={formData.password}
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Зарегистрироваться</button>
+      <button type="submit">{t("register")}</button>
     </form>
   );
 };

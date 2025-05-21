@@ -1,4 +1,4 @@
-export async function fetchWithCache(url: string) {
+export async function fetchWithCache<T>(url: string): Promise<T> {
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -12,7 +12,7 @@ export async function fetchWithCache(url: string) {
       throw new Error(`Failed to fetch from ${url}: ${response.status}`);
     }
 
-    return response.json();
+    return response.json() as Promise<T>;
   } catch (error) {
     console.error(`Error fetching from ${url}:`, error);
     throw error;

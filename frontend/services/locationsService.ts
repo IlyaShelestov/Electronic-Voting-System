@@ -1,22 +1,24 @@
 import { API_URL } from "@/config/env";
+import { ICity } from "@/models/ICity";
+import { IRegion } from "@/models/IRegion";
 import { fetchWithCache } from "@/utils/fetchWithCache";
 
 const apiEndpoint = `${API_URL}/locations`;
 
 export const locationsService = {
-  getCities: async () => {
-    return fetchWithCache(`${apiEndpoint}/cities`);
+  getCities: async (): Promise<ICity[]> => {
+    return fetchWithCache<ICity[]>(`${apiEndpoint}/cities`);
   },
 
-  getCityById: async (id: number) => {
-    return fetchWithCache(`${apiEndpoint}/cities/${id}`);
+  getCityById: async (id: number): Promise<ICity> => {
+    return fetchWithCache<ICity>(`${apiEndpoint}/cities/${id}`);
   },
 
-  getRegions: async () => {
-    return fetchWithCache(`${apiEndpoint}/regions`);
+  getRegions: async (): Promise<IRegion[]> => {
+    return fetchWithCache<IRegion[]>(`${apiEndpoint}/regions`);
   },
 
-  getRegionById: async (id: number) => {
-    return fetchWithCache(`${apiEndpoint}/regions/${id}`);
+  getRegionById: async (id: number): Promise<IRegion> => {
+    return fetchWithCache<IRegion>(`${apiEndpoint}/regions/${id}`);
   },
 };

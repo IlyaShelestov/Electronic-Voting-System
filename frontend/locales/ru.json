@@ -5,6 +5,9 @@
     "profile": "Профиль",
     "logout": "Выйти"
   },
+  "languageSwitcher": {
+    "login": "Войти"
+  },
   "login": {
     "title": "Вход",
     "Do you have an account?": "У вас уже есть аккаунт?",
@@ -18,6 +21,7 @@
   },
   "register": {
     "title": "Регистрация",
+    "iin": "ИИН",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "patronymic": "Отчество",
@@ -27,7 +31,9 @@
     "phoneNumber": "Номер телефона",
     "email": "Электронная почта",
     "password": "Пароль",
-    "submit": "Зарегистрироваться"
+    "register": "Зарегистрироваться",
+    "alreadyHaveAccount": "У вас уже есть аккаунт?",
+    "login": "Войти"
   },
   "home": {
     "title": "Главная",

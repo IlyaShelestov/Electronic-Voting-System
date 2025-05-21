@@ -1,4 +1,5 @@
 export interface ICity {
-  id: number;
+  city_id: number;
   name: string;
+  region_id: number;
 }
