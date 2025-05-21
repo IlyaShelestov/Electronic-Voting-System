@@ -98,13 +98,13 @@ if (process.env.NODE_ENV === 'development') {
 app.use("/api/auth", authRoutes);
 app.use("/api/otp", otpRoutes);
 app.use("/api/elections", electionsRoutes);
-app.use("/api/candidates", verifyToken, candidatesRoutes);
+app.use("/api/candidates", candidatesRoutes);
 app.use("/api/vote", verifyToken, voteRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/events", eventsRoutes);
 app.use("/api/manager", verifyToken, isManager, managerRoutes);
 app.use("/api/admin", verifyToken, isAdmin, adminRoutes);
-app.use("/api/locations", verifyToken, locationsRoutes);
+app.use("/api/locations", locationsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
