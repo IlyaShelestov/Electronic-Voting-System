@@ -8,7 +8,5 @@
 
 ## Start
 ```
-chmod +x backend/scripts/docker-entrypoint.sh
-
 docker compose up --build -d
 ```

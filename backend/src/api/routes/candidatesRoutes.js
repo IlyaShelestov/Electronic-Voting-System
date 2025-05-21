@@ -73,8 +73,6 @@ const { getById, getAll } = require("../controllers/candidatesController");
  *                   role:
  *                     type: string
  *                     description: User role
- *       401:
- *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -156,8 +154,6 @@ router.get("/", getAll);
  *                 role:
  *                   type: string
  *                   description: User role
- *       401:
- *         description: Unauthorized
  *       404:
  *         description: Candidate not found
  *       500:
