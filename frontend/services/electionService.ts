@@ -1,50 +1,32 @@
 import { API_URL } from "@/config/env";
+import { fetchWithCache } from "@/utils/fetchWithCache";
+import { ICity } from "@/models/ICity";
+import { IElection } from "@/models/IElection";
+import { ICandidate } from "@/models/ICandidate";
+import { IReport } from "@/models/IReport";
 
 const apiEndpoint = `${API_URL}/elections`;
 
 export const electionService = {
-  getAll: async () => {
-    return fetchWithCache(`${apiEndpoint}`);
+  getAll: async (): Promise<IElection[]> => {
+    return fetchWithCache<IElection[]>(`${apiEndpoint}`);
   },
 
-  getAvailable: async () => {
-    return fetchWithCache(`${apiEndpoint}/avaliable`);
+  getAvailable: async (): Promise<IElection[]> => {
+    return fetchWithCache<IElection[]>(`${apiEndpoint}/avaliable`);
   },
 
-  getAllLocations: async () => {
-    return fetchWithCache(`${apiEndpoint}/locations`);
+  getById: async (id: number): Promise<IElection> => {
+    return fetchWithCache<IElection>(`${apiEndpoint}/${id}`);
   },
 
-  getById: async (id: number) => {
-    return fetchWithCache(`${apiEndpoint}/${id}`);
+  getCandidates: async (electionId: number): Promise<ICandidate[]> => {
+    return fetchWithCache<ICandidate[]>(
+      `${apiEndpoint}/${electionId}/candidates`
+    );
   },
 
-  getCandidates: async (electionId: number) => {
-    return fetchWithCache(`${apiEndpoint}/${electionId}/candidates`);
-  },
-
-  getReport: async (electionId: number) => {
-    return fetchWithCache(`${apiEndpoint}/${electionId}/report`);
+  getReport: async (electionId: number): Promise<IReport[]> => {
+    return fetchWithCache<IReport[]>(`${apiEndpoint}/${electionId}/report`);
   },
 };
-
-async function fetchWithCache(url: string) {
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-      cache: "force-cache",
-      next: { revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      console.error(`Error fetching ${url}:`, response.statusText);
-      throw new Error(`Failed to fetch from ${url}: ${response.status}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error(`Error fetching from ${url}:`, error);
-    throw error;
-  }
-}

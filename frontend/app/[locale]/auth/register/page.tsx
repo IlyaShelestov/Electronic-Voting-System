@@ -2,7 +2,7 @@
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import { IUser } from "@/models/IUser";
 import { authService } from "@/services/authService";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -20,17 +20,19 @@ export default function RegisterPage() {
     }
   };
 
+  const t = useTranslations("register");
+
   return (
     <div className="register-container">
-      <h1 className="text-3xl font-bold text-center">Регистрация</h1>
+      <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
       <RegisterForm onSubmit={handleOnSubmit} />
       <p className="text-center">
-        У вас уже есть аккаунт?{" "}
+        {t("alreadyHaveAccount")}{" "}
         <Link
           href={`/${locale}/auth/login`}
           className="text-blue-500"
         >
-          Войти
+          {t("login")}
         </Link>
       </p>
     </div>

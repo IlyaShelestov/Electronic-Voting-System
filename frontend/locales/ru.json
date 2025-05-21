@@ -5,15 +5,23 @@
     "profile": "Профиль",
     "logout": "Выйти"
   },
+  "languageSwitcher": {
+    "login": "Войти"
+  },
   "login": {
     "title": "Вход",
-    "username": "Логин",
-    "password": "Пароль",
-    "forgotPassword": "Забыли пароль?",
-    "submit": "Войти"
+    "Do you have an account?": "У вас уже есть аккаунт?",
+    "IIN": "ИИН",
+    "Password": "Пароль",
+    "Your IIN": "Ваш ИИН",
+    "Your password": "Ваш пароль",
+    "Forgot password?": "Забыли пароль?",
+    "Login": "Войти",
+    "Register": "Зарегистрироваться"
   },
   "register": {
     "title": "Регистрация",
+    "iin": "ИИН",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "patronymic": "Отчество",
@@ -23,9 +31,10 @@
     "phoneNumber": "Номер телефона",
     "email": "Электронная почта",
     "password": "Пароль",
-    "submit": "Зарегистрироваться"
+    "register": "Зарегистрироваться",
+    "alreadyHaveAccount": "У вас уже есть аккаунт?",
+    "login": "Войти"
   },
-
   "home": {
     "title": "Главная",
     "bannerAlt": "Баннер выборов",

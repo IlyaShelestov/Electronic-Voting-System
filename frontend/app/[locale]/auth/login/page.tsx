@@ -4,31 +4,27 @@ import { ILogin } from "@/models/ILogin";
 import "./Login.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { authService } from "@/services/authService";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [error, setError] = useState("");
   const locale = useLocale();
+  const t = useTranslations("login");
   const handleOnSubmit = async (loginData: ILogin) => {
     try {
       const auth = await authService.login(loginData.iin, loginData.password);
       router.push(`/${locale}/`);
-    } catch (err) {
-      setError("Invalid credentials");
-    }
+    } catch (err) {}
   };
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center">Войдите в аккаунт</h1>
+      <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
       <LoginForm onSubmit={handleOnSubmit} />
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <p>
-        У вас нет аккаунта?{" "}
-        <Link href={`/${locale}/auth/register`}>Зарегистрироваться</Link>{" "}
+        {t("Do you have an account?")}{" "}
+        <Link href={`/${locale}/auth/register`}>{t("Register")}</Link>
       </p>
     </>
   );

@@ -1,4 +1,5 @@
 export interface IUser {
+  user_id?: number;
   iin: string;
   first_name: string;
   last_name: string;
@@ -7,5 +8,5 @@ export interface IUser {
   city_id: number;
   phone_number: string;
   email: string;
-  role: "user" | "admin" | "manager";
+  role?: "user" | "admin" | "manager";
 }

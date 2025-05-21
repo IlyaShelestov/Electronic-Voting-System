@@ -1,10 +1,10 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-
 import { ToastContainer } from "react-toastify";
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import "./Home.scss";
 
 export default async function LocaleLayout({
   children,

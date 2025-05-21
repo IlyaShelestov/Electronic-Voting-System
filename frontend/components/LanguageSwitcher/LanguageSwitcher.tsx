@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import "./LanguageSwitcher.scss";
 
 interface LanguageSwitcherProps {
@@ -19,6 +19,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("languageSwitcher");
 
   const languages = [
     { code: "ru", label: "РУС" },
@@ -81,7 +82,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
           className="login-button"
           onClick={handleLogin}
         >
-          Войти
+          {t("login")}
         </button>
       )}
     </div>

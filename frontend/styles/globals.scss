@@ -6,6 +6,15 @@
   box-sizing: border-box;
 }
 
+.app-container {
+  display: flex;
+}
+
+.content-container {
+  width: 100%;
+  text-align: center;
+}
+
 body {
   color: $general_dark;
   font-family: "Montserrat", sans-serif;
@@ -32,6 +41,10 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+input {
+  text-align: left !important;
 }
 
 main {
