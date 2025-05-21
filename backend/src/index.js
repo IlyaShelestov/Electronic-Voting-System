@@ -28,7 +28,7 @@ const app = express();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:3000",
-  process.env.BACKEND_URL  || "http://localhost:5000"
+  process.env.BACKEND_URL  || "http://localhost:7000"
 ];
 
 const corsOptions = {

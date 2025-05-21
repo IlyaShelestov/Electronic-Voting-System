@@ -10,14 +10,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db/init-create-dbs.sql:/docker-entrypoint-initdb.d/init-create-dbs.sql
-    ports:
-      - "5432:5432"
+    networks:
+      - internal
 
   redis:
     image: redis:7-alpine
     container_name: evote-redis
-    ports:
-      - "6379:6379"
+    networks:
+      - internal
 
   backend:
     build:
@@ -31,6 +31,9 @@ services:
       - redis
     ports:
       - "7000:7000"
+    networks:
+      - internal
+      - public
 
   egov:
     build:
@@ -41,8 +44,8 @@ services:
       - ./services/egov/.env
     depends_on:
       - db
-    ports:
-      - "7002:7002"
+    networks:
+      - internal
 
   otp:
     build:
@@ -53,7 +56,16 @@ services:
       - ./services/otp/.env
     depends_on:
       - db
-    ports:
-      - "7001:7001"
+    networks:
+      - internal
+      - public
+
 volumes:
   pgdata:
+
+networks:
+  public:
+    driver: bridge
+  internal:
+    driver: bridge
+    internal: true
