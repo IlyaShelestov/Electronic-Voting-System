@@ -7,6 +7,14 @@
 - Yersultan Serimbetov SE-2210 (Frontend)
 
 ## Start
+1. Add .env files:
+```
+./backend/.env
+./frontend/.env
+./services/otp/.env
+./services/egov/.env
+```
+2. Execute command:
 ```
 docker compose up --build -d
 ```

@@ -27,7 +27,7 @@ const sendOtpEmail = async (email, otp) => {
 
 const verifyTime = (createdAt) => {
   const now = Date.now();
-  const otpAgeMs = now - createdAt.getTime() + 60 * 60 * 1000;
+  const otpAgeMs = now - createdAt.getTime();
 
   const maxOtpAge = parseInt(process.env.OTP_EXPIRY_MINUTES, 10) || 5;
   const expiryMs = maxOtpAge * 60 * 1000;
