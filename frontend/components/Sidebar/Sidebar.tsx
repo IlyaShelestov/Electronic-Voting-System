@@ -1,34 +1,39 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout } from "@/store/slices/userSlice";
-import Logo from "../Logo/Logo";
-import "./Sidebar.scss";
+import { AboutUsIcon } from "@/icons/AboutUsIcon";
 import { HomeIcon } from "@/icons/HomeIcon";
-import { VoteIcon } from "@/icons/VoteIcon";
 import { InstructionsIcon } from "@/icons/InstructionsIcon";
+import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
 import { ProfileIcon } from "@/icons/ProfileIcon";
 import { SupportIcon } from "@/icons/SupportIcon";
-import { AboutUsIcon } from "@/icons/AboutUsIcon";
-import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
-import { useLocale } from "next-intl";
-import { useTranslations } from "use-intl";
+import { VoteIcon } from "@/icons/VoteIcon";
 import { authService } from "@/services/authService";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/userSlice";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Logo from "../Logo/Logo";
+import { AdminIcon } from "@/icons/AdminIcon";
+import { ManagerIcon } from "@/icons/ManagerIcon";
+import "./Sidebar.scss";
 
-const Sidebar = () => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const pathname = usePathname();
+const Sidebar = ( ) => {
+
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
 
   if (!isAuthenticated) {
     return null;
   }
 
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const locale = useLocale();
   const t = useTranslations("sidebar");
+  const role = useAppSelector((state) => state.user.user?.role);
 
   const handleLogout = async () => {
     try {
@@ -55,6 +60,13 @@ const Sidebar = () => {
     { icon: SupportIcon, path: "/support", title: t("support") },
     { icon: AboutUsIcon, path: "/about", title: t("about") },
   ];
+
+  if (role === "admin") {
+    tabs.push({ icon: AdminIcon, path: "/admin", title: t("admin") });
+  }
+  if (role === "manager") {
+    tabs.push({ icon: ManagerIcon, path: "/manager", title: t("manager") });
+  }
 
   return (
     <aside

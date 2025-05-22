@@ -7,7 +7,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   user: null,
 };
 

@@ -1,7 +1,7 @@
 @use "../../styles/variables.scss" as *;
 .sidebar {
   width: 0;
-  height: 0;
+  height: 100%;
   position: fixed;
   background: $navbar;
   padding: 1rem;

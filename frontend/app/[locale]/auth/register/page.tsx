@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 export default function RegisterPage() {
   const locale = useLocale();
   const router = useRouter();
+  const t = useTranslations("register");
+
   const handleOnSubmit = async (registerData: IUser & { password: string }) => {
     try {
       const response = await authService.register(registerData);
@@ -19,8 +21,6 @@ export default function RegisterPage() {
       console.error("Registration error:", err);
     }
   };
-
-  const t = useTranslations("register");
 
   return (
     <div className="register-container">

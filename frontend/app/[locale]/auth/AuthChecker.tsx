@@ -17,24 +17,29 @@ const AuthChecker = () => {
 
   useEffect(() => {
     const validateSession = async () => {
-      try {
-        const user = await userService.getUser();
-        if (user) {
-          dispatch(login(user));
-        } else {
+      const token = getAuthToken();
+      if (token && !isTokenExpired(token)) {
+        try {
+          const user = await userService.getUser();
+          if (user) {
+            dispatch(login(user));
+          } else {
+            performLogout();
+          }
+        } catch (error) {
           performLogout();
         }
-      } catch (error) {
+      } else {
         performLogout();
       }
     };
-
+  
     const performLogout = () => {
       removeAuthToken();
       dispatch(logout());
       router.replace("/ru/auth/login");
     };
-
+  
     validateSession();
   }, [dispatch, router]);
 

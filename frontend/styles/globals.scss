@@ -6,13 +6,9 @@
   box-sizing: border-box;
 }
 
-.app-container {
-  display: flex;
-}
-
 .content-container {
-  width: 100%;
-  text-align: center;
+  width: calc(100% - $sidebar_width);
+  margin-left: $sidebar_width;
 }
 
 body {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
+import { getAuthToken, isTokenExpired } from "@/utils/tokenHelper"; // Assuming these functions are available
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -23,26 +24,13 @@ const IGNORED_PATHS = [
   "/android-chrome-192x192.png",
   "/android-chrome-512x512.png",
   "/apple-touch-icon.png",
-  
 ];
 
 function isIgnoredPath(pathname: string): boolean {
   return IGNORED_PATHS.some((prefix) => pathname.startsWith(prefix));
 }
 
-function extractUserRolesFromCookie(req: NextRequest): string[] {
-  const rolesCookie = req.cookies.get("auth_roles")?.value;
-  if (!rolesCookie) return [];
-
-  try {
-    const roles = JSON.parse(decodeURIComponent(rolesCookie));
-    return Array.isArray(roles) ? roles : [];
-  } catch {
-    return [];
-  }
-}
-
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (isIgnoredPath(pathname)) return NextResponse.next();
@@ -56,19 +44,34 @@ export function middleware(req: NextRequest) {
 
   if (isPublic) return intlMiddleware(req);
 
-  // Role-based access check
-  for (const [routePrefix, allowedRoles] of Object.entries(ROLE_BASED_ROUTES)) {
-    if (pathname.startsWith(`/${locale}${routePrefix}`)) {
-      const userRoles = extractUserRolesFromCookie(req);
-      const hasAccess = userRoles.some((role) => allowedRoles.includes(role));
+  const PROTECTED_PATHS = ['/dashboard', '/profile', '/admin']
 
-      if (!hasAccess) {
-        const url = req.nextUrl.clone();
-        url.pathname = `/${locale}/unauthorized`;
-        return NextResponse.redirect(url);
-      }
-    }
+  if (!PROTECTED_PATHS.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next()
   }
+
+  const token = req.cookies.get('token')?.value
+
+  if (!token) {
+    return NextResponse.redirect(new URL('/login', req.url))
+  }
+
+  const verifyResponse = await fetch(`${process.env.BACKEND_URL}/api/auth/verify`, {
+    method: 'GET',
+    headers: {
+      Cookie: `token=${token}`,
+    },
+  })
+
+  if (verifyResponse.ok) {
+    return NextResponse.next()
+  }
+
+  return NextResponse.redirect(new URL('/login', request.url))
+  
+  
+  
+
 
   return intlMiddleware(req);
 }
