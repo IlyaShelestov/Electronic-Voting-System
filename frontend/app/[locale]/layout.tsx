@@ -4,6 +4,7 @@ import { routing } from "@/i18n/routing";
 import { ToastContainer } from "react-toastify";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Header from "@/components/Header/Header";
+import ContentLayout from "@/ui/layouts/ContentLayout";
 export default async function LocaleLayout({
   children,
   params,
@@ -33,11 +34,7 @@ export default async function LocaleLayout({
           locale={locale}
           messages={messages}
         >
-            <Sidebar />
-            <div className="content-container">
-              <Header />
-              <main>{children}</main>
-            </div>
+          <ContentLayout>{children}</ContentLayout>
         </NextIntlClientProvider>
         <ToastContainer
           position="bottom-right"

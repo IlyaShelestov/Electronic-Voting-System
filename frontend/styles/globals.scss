@@ -6,10 +6,13 @@
   box-sizing: border-box;
 }
 
-.content-container {
+.content-container.authenticated {
   width: calc(100% - $sidebar_width);
   margin-left: $sidebar_width;
+  transition: margin-left 0.3s ease-in-out;
 }
+
+
 
 body {
   color: $general_dark;
