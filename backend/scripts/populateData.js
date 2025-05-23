@@ -162,7 +162,7 @@ async function populateData() {
     });
 
     await pool.query(`
-      INSERT INTO voters (candidate_id, election_id, token, vote_date)
+      INSERT INTO voters (candidate_id, election_id, token, voted_at)
       VALUES ${votes.join(",\n")}
     `);
 
