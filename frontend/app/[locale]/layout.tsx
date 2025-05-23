@@ -28,10 +28,10 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <MultiProvider>
-          {/* <AuthProvider> */}
-            <ApiProvider>
-              <NextIntlClientProvider
-              >
+          <ApiProvider>
+            <NextIntlClientProvider
+            >
+              <AuthProvider>
                 <ContentLayout>{children}</ContentLayout>
 
                 <ToastContainer
@@ -46,12 +46,10 @@ export default async function LocaleLayout({
                   pauseOnHover
                   theme="light"
                 />
-                </NextIntlClientProvider>
-            </ApiProvider>
-        {/* </AuthProvider> */}
-      </MultiProvider>
-          
-
+                </AuthProvider>
+              </NextIntlClientProvider>
+          </ApiProvider>
+        </MultiProvider>
       </body>
     </html>
   );
