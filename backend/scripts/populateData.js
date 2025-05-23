@@ -23,6 +23,11 @@ async function populateData() {
       user8: "User123!",
       user9: "User123!",
       user10: "User123!",
+      user11: "User123!",
+      user12: "User123!",
+      user13: "User123!",
+      user14: "User123!",
+      user15: "User123!",
     };
 
     const hashedPasswords = {};
@@ -109,7 +114,13 @@ async function populateData() {
       ('141414141414', 'Ольга', 'Пользователь', NULL, '+77010000011', 'olga@example.com', '1982-02-15', ${defaultCityId}, '${hashedPasswords.user7}', 'user'),
       ('151515151515', 'Екатерина', 'Пользователь', NULL, '+77010000012', 'ekaterina@example.com', '1983-01-16', ${defaultCityId}, '${hashedPasswords.user8}', 'user'),
       ('161616161616', 'Василий', 'Пользователь', NULL, '+77010000013', 'vasiliy@example.com', '1984-03-17', ${defaultCityId}, '${hashedPasswords.user9}', 'user'),
-      ('171717171717', 'Татьяна', 'Пользователь', NULL, '+77010000014', 'tatiana@example.com', '1985-02-18', ${defaultCityId}, '${hashedPasswords.user10}', 'user')
+      ('171717171717', 'Татьяна', 'Пользователь', NULL, '+77010000014', 'tatiana@example.com', '1985-02-18', ${defaultCityId}, '${hashedPasswords.user10}', 'user'),
+      -- new users
+      ('181818181818', 'Леонид', 'Пользователь', NULL, '+77010000015', 'user11@example.com', '1991-09-19', ${defaultCityId}, '${hashedPasswords.user11}', 'user'),
+      ('191919191919', 'Евгений', 'Пользователь', NULL, '+77010000016', 'user12@example.com', '1992-10-20', ${defaultCityId}, '${hashedPasswords.user12}', 'user'),
+      ('202020202020', 'Марина', 'Пользователь', NULL, '+77010000017', 'user13@example.com', '1993-11-21', ${defaultCityId}, '${hashedPasswords.user13}', 'user'),
+      ('212121212121', 'Олег', 'Пользователь', NULL, '+77010000018', 'user14@example.com', '1994-12-22', ${defaultCityId}, '${hashedPasswords.user14}', 'user'),
+      ('222222222223', 'Светлана', 'Пользователь', NULL, '+77010000019', 'user15@example.com', '1995-01-23', ${defaultCityId}, '${hashedPasswords.user15}', 'user')
       RETURNING user_id;
     `);
 
@@ -120,7 +131,7 @@ async function populateData() {
     console.log("Populating election...");
     const electionRes = await pool.query(`
       INSERT INTO elections (title, start_date, end_date, region_id, city_id)
-      VALUES ('Presidential Election', '2025-03-01 08:00:00', '2025-03-01 20:00:00', ${defaultRegionId}, ${defaultCityId})
+      VALUES ('Astana Elections', '2025-03-01 08:00:00', '2025-03-06 20:00:00', ${defaultRegionId}, ${defaultCityId})
       RETURNING election_id;
     `);
 
@@ -130,37 +141,43 @@ async function populateData() {
     const candidateRes = await pool.query(`
       INSERT INTO candidates (user_id, election_id, bio, party, avatar_url)
       VALUES 
-        (${candidateUserIds[0]}, ${electionId}, 'Опытный политик.', 'Партия  А', 'https://example.com/avatar1.jpg'),
-        (${candidateUserIds[1]}, ${electionId}, 'Борец за правосудие.', 'Партия Б', 'https://example.com/avatar2.jpg'),
-        (${candidateUserIds[2]}, ${electionId}, 'Новый взгляд на мир.', 'Партия В', 'https://example.com/avatar3.jpg')
+        (${candidateUserIds[0]}, ${electionId}, 'Опытный политик.', 'Партия  А', 'https://img.freepik.com/premium-photo/young-man-isolated-blue_1368-124991.jpg?semt=ais_hybrid&w=740'),
+        (${candidateUserIds[1]}, ${electionId}, 'Борец за правосудие.', 'Партия Б', 'https://st.depositphotos.com/1144472/2003/i/450/depositphotos_20030237-stock-photo-cheerful-young-man-over-white.jpg'),
+        (${candidateUserIds[2]}, ${electionId}, 'Новый взгляд на мир.', 'Партия В', 'https://thumbs.dreamstime.com/b/portrait-beautiful-happy-woman-white-teeth-smiling-beauty-attractive-healthy-girl-perfect-smile-blonde-hair-fresh-face-76138238.jpg')
       RETURNING candidate_id;
     `);
 
     const candidateIds = candidateRes.rows.map((row) => row.candidate_id);
 
-    console.log("Recording votes...");
+    console.log("Recording votes on different days...");
     const votes = voterIds.map((userId, index) => {
-      const candidateId = candidateIds[index % 3];
-      return `(${candidateId}, ${electionId}, 'randomToken${userId}')`;
+      const candidateId = candidateIds[index % candidateIds.length];
+      const dayOffset = Math.floor(Math.random() * 6);
+      return `(
+        ${candidateId},
+        ${electionId},
+        'token${userId}',
+        '2025-03-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+      )`;
     });
 
     await pool.query(`
-      INSERT INTO voters (candidate_id, election_id, token)
-      VALUES ${votes.join(", ")}
+      INSERT INTO voters (candidate_id, election_id, token, vote_date)
+      VALUES ${votes.join(",\n")}
     `);
 
     await pool.query(`
       INSERT INTO is_voted (user_id, election_id)
       VALUES ${voterIds
         .map((userId) => `(${userId}, ${electionId})`)
-        .join(", ")}
+        .join(", ")};
     `);
 
     console.log("Populating system events...");
     await pool.query(`
       INSERT INTO system_events (title, description, event_date)
       VALUES 
-        ('Выборы Президента', 'Описание.', NOW() + INTERVAL '1 day');
+        ('Выборы Акима Астаны', 'Описание.', NOW() + INTERVAL '1 day');
     `);
 
     await pool.query("COMMIT");

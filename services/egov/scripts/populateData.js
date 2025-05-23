@@ -21,7 +21,12 @@ async function populateData() {
                 ('141414141414', '+77010000011', 'olga@example.com'),
                 ('151515151515', '+77010000012', 'ekaterina@example.com'),
                 ('161616161616', '+77010000013', 'vasiliy@example.com'),
-                ('171717171717', '+77010000014', 'tatiana@example.com');
+                ('171717171717', '+77010000014', 'tatiana@example.com'),
+                ('181818181818', '+77010000015', 'user11@example.com'),
+                ('191919191919', '+77010000016', 'user12@example.com'),
+                ('202020202020', '+77010000017', 'user13@example.com'),
+                ('212121212121', '+77010000018', 'user14@example.com'),
+                ('222222222222', '+77010000019', 'user15@example.com');
             `);
     await pool.query("COMMIT");
     console.log("Data populated successfully.");
