@@ -35,6 +35,21 @@ services:
       - internal
       - public
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: evote-frontend
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    networks:
+      - internal
+      - public
+
   egov:
     build:
       context: ./services/egov
