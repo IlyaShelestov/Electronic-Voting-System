@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     initializeAuth();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
