@@ -15,7 +15,7 @@ export default function About() {
       role: "Backend Developer",
     },
     {
-      name: "Yesentayev Rauan",
+      name: "Yessentayev Rauan",
       group: "CS-2207",
       image: "/images/default-candidate.png",
       role: "Cybersecurity specialist",
