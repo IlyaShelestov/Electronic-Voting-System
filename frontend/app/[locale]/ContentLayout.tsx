@@ -12,8 +12,8 @@ const ContentLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const isLoading = useAppLoading();
 
   return (
-    <>
-      <AuthChecker />
+    <>  
+
       <Sidebar />
       <div className={`${isAuthenticated ? 'authenticated' : ''}`}>
         <Header />

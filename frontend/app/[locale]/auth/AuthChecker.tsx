@@ -1,15 +1,15 @@
-"use client";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { login, logout } from "@/store/slices/userSlice";
 import { userService } from "@/services/userService";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   getAuthToken,
   isTokenExpired,
   removeAuthToken,
 } from "@/utils/tokenHelper";
-import { useLocale } from "next-intl";
+
 
 const AuthChecker = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,6 @@ const AuthChecker = () => {
   useEffect(() => {
     const validateSession = async () => {
       const token = getAuthToken();
-      console.log(token);
       if (token && !isTokenExpired(token)) {
         try {
           const user = await userService.getUser();
@@ -39,7 +38,7 @@ const AuthChecker = () => {
     const performLogout = () => {
       removeAuthToken();
       dispatch(logout());
-      router.replace(`/${locale}/`);
+      router.push(`/${locale}/`);
     };
   
     validateSession();

@@ -6,17 +6,23 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authService } from "@/services/authService";
 import { useLocale, useTranslations } from "next-intl";
+import React, { useState } from 'react';
 
 export default function LoginPage() {
-  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("login");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOnSubmit = async (loginData: ILogin) => {
+    setIsLoading(true);
     try {
       const response = await authService.login(loginData.iin, loginData.password);
-      console.log(response);
-      router.push(`/${locale}/`);
-    } catch (err) {}
+      
+    } catch (err) {
+      console.error('Network error', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -27,6 +33,7 @@ export default function LoginPage() {
         {t("Do you have an account?")}{" "}
         <Link href={`/${locale}/auth/register`}>{t("Register")}</Link>
       </p>
+      {isLoading && <div>Loading...</div>}
     </>
   );
 }

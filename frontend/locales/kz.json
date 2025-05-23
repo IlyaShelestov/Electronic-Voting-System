@@ -5,6 +5,9 @@
     "profile": "Профиль",
     "logout": "Выйти"
   },
+  "languageSwitcher": {
+    "login": "Войти"
+  },
   "login": {
     "title": "Вход",
     "username": "Логин",

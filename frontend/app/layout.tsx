@@ -2,6 +2,7 @@ import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import MultiProvider from "@/providers/MultiProvider";
 import { ApiProvider } from "@/providers/ApiProvider";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -17,8 +18,6 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <MultiProvider>
-      <ApiProvider>{children}</ApiProvider>
-    </MultiProvider>
+    <>{children}</>
   );
 }
