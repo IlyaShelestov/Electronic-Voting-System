@@ -1,6 +1,7 @@
 **/.env
 **/.env.test
 **/node_modules/
+**/coverage/
 
 
 /services/**/node_modules/
