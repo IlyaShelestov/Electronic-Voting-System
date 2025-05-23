@@ -54,7 +54,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"], // Разрешает контент только с текущего домена
         scriptSrc: ["'self'"], // Разрешает выполнение скриптов только с текущего домена
-        styleSrc: ["'self'", "'unsafe-inline'"], // Разрешает стили с текущего домена + встроенные стили
+        styleSrc: ["'self'"], // Разрешает стили с текущего домена
         imgSrc: ["'self'", "data:"], // Разрешает изображения только с текущего домена и data URL
         connectSrc: ["'self'"], // Разрешает сетевые запросы только к текущему домену
         frameAncestors: ["'none'"], // Запрещает встраивание в iframe (защита от Clickjacking)
@@ -79,6 +79,7 @@ const limiterOptions = {
   legacyHeaders: false,     // Отключение устаревших заголовков
   message: "Превышен лимит запросов, пожалуйста, повторите позже.",
 };
+
 app.use("/api", rateLimit(limiterOptions));
 
 if (process.env.NODE_ENV !== "test") {
