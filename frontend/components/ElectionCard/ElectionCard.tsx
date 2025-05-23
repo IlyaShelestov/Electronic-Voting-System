@@ -1,4 +1,5 @@
 "use client";
+
 import "./ElectionCard.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

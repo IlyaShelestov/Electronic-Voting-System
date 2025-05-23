@@ -6,9 +6,9 @@ import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   getAuthToken,
-  isTokenExpired,
   removeAuthToken,
 } from "@/utils/tokenHelper";
+import { setLoading } from "@/store/slices/loadingSlice";
 
 
 const AuthChecker = () => {
@@ -19,7 +19,7 @@ const AuthChecker = () => {
   useEffect(() => {
     const validateSession = async () => {
       const token = getAuthToken();
-      if (token && !isTokenExpired(token)) {
+      if (token) {
         try {
           const user = await userService.getUser();
           if (user) {
@@ -29,9 +29,9 @@ const AuthChecker = () => {
           }
         } catch (error) {
           performLogout();
+        } finally {
+          dispatch(setLoading({ key: "auth", value: false }));
         }
-      } else {
-        performLogout();
       }
     };
   
@@ -42,7 +42,7 @@ const AuthChecker = () => {
     };
   
     validateSession();
-  }, [dispatch, router, locale]);
+  }, [dispatch, locale, router]);
 
   return null;
 };

@@ -7,25 +7,21 @@ import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
 import { ProfileIcon } from "@/icons/ProfileIcon";
 import { SupportIcon } from "@/icons/SupportIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
+import { AdminIcon } from "@/icons/AdminIcon";
+import { ManagerIcon } from "@/icons/ManagerIcon";
 import { authService } from "@/services/authService";
-import { useAppAuthenticated, useAppDispatch, useAppLoading, useAppSelector } from "@/store/hooks";
+import { useIsAuthenticated, useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/userSlice";  
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Logo from "../Logo/Logo";
-import { AdminIcon } from "@/icons/AdminIcon";
-import { ManagerIcon } from "@/icons/ManagerIcon";
+
 import "./Sidebar.scss";
 
-const Sidebar = ( ) => {
-
-  const isAuthenticated = useAppAuthenticated();
-  const isLoading = useAppLoading();
-  if (!isAuthenticated) {
-    return null;
-  }
+export default function Sidebar() {
+  const isAuthenticated = useIsAuthenticated();
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -109,5 +105,3 @@ const Sidebar = ( ) => {
     </aside>
   );
 };
-
-export default Sidebar;

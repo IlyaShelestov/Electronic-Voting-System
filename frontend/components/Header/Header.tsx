@@ -3,14 +3,14 @@
 import Logo from "../Logo/Logo";
 import "./Header.scss";
 import Link from "next/link";
-import { useAppSelector } from "@/store/hooks";
+import { useIsAuthenticated, useAppSelector } from "@/store/hooks";
 import { useRouter, usePathname } from "next/navigation";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
-import { useTranslations, useLocale } from "use-intl";
+import { useLocale } from "use-intl";
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);
-
+  const isAuthenticated = useIsAuthenticated();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();

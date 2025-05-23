@@ -32,7 +32,7 @@ export default function CandidatePopup({
         </button>
         <div className="popup-header">
           <Image
-            src={candidate.image_url || "/images/default-candidate.jpg"}
+            src={"/images/default-candidate.png"}
             alt={candidate.first_name + " " + candidate.last_name}
             width={150}
             height={150}

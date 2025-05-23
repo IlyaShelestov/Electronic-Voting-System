@@ -8,6 +8,7 @@ import { voteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import "./Vote.scss";
+import { setLoading } from "@/store/slices/loadingSlice";
 
 export default function VotePage() {
     const searchParams = useSearchParams();
@@ -18,7 +19,6 @@ export default function VotePage() {
     const [selectedElection, setSelectedElection] = useState<number | null>(null);
     const [candidates, setCandidates] = useState<ICandidate[]>([]);
     const [selectedCandidate, setSelectedCandidate] = useState<number | null>(null);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchElections = async () => {
@@ -38,7 +38,6 @@ export default function VotePage() {
         const fetchCandidates = async () => {
             if (selectedElection) {
                 try {
-                    setLoading(true);
                     const data = await electionService.getCandidates(selectedElection);
                     setCandidates(data);
 
@@ -53,9 +52,7 @@ export default function VotePage() {
                 } catch (error) {
                     toast.error("Ошибка загрузки кандидатов.");
                     console.error("Error fetching candidates:", error);
-                } finally {
-                    setLoading(false);
-                }
+                } 
             } else {
                 setCandidates([]);
                 setSelectedCandidate(null);
@@ -108,26 +105,6 @@ export default function VotePage() {
                     ))}
                 </select>
 
-                {loading ? (
-                    <p>Загрузка кандидатов...</p>
-                ) : (
-                    <ul className="candidate-list">
-                        {candidates.map((candidate) => (
-                            <li key={candidate.candidate_id}>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="candidate"
-                                        value={candidate.candidate_id}
-                                        checked={selectedCandidate === candidate.candidate_id}
-                                        onChange={() => setSelectedCandidate(candidate.candidate_id)}
-                                    />
-                                    {candidate.first_name + " " + candidate.last_name}
-                                </label>
-                            </li>
-                        ))}
-                    </ul>
-                )}
 
                 <button onClick={handleVote} className="vote-button" disabled={!selectedCandidate}>
                     Проголосовать

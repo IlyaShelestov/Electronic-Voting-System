@@ -1,4 +1,5 @@
 "use client";
+
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import { IUser } from "@/models/IUser";
 import { authService } from "@/services/authService";

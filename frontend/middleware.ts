@@ -6,7 +6,6 @@ import { getLocale } from "next-intl/server";
 const intlMiddleware = createMiddleware(routing);
 
 const PUBLIC_ROUTES = ["/auth/login", "/auth/register", "/"];
-const PROTECTED_PATHS = ['/admin', '/manager', '/profile']
 const IGNORED_PATHS = [
   "/_next",
   "/api",
@@ -33,10 +32,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(`/${defaultLocale}`, req.url));
   }
 
-  if (isIgnoredPath(pathname)) return NextResponse.next();
+  if (isIgnoredPath(pathname)) return intlMiddleware(req);
 
-  const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
-  const locale = localeMatch?.[1] || defaultLocale;
+  const locale = await getLocale();
 
   const isPublic = PUBLIC_ROUTES.some((publicPath) =>
     pathname.startsWith(`/${locale}${publicPath}`)
@@ -45,11 +43,7 @@ export async function middleware(req: NextRequest) {
   if (isPublic) return intlMiddleware(req);
 
 
-  if (!PROTECTED_PATHS.some((path) => pathname.startsWith(path))) {
-    return NextResponse.next()
-  }
-
-  return NextResponse.next();
+  return intlMiddleware(req);
 }
 
 export const config = {

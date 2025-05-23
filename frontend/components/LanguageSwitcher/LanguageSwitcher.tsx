@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAppSelector } from "@/store/hooks";
+import { useIsAuthenticated } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import "./LanguageSwitcher.scss";
@@ -16,7 +16,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+  const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("languageSwitcher");

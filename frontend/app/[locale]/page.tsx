@@ -1,17 +1,27 @@
+"use client";
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
 import { electionService } from "@/services/electionService";
-import { IElection } from "@/models/IElection";
 import ElectionCard from "@/components/ElectionCard/ElectionCard";
+import { useTranslations, useLocale } from "next-intl";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
+import { setElections } from "@/store/slices/electionSlice";
 
-interface PageProps {
-  params: Promise<{ locale: string }>;
-}
 
-export default async function Home(props: PageProps) {
-  let { locale } = await props.params;
-  const t = await getTranslations("home");
-  const elections: IElection[] = await electionService.getAll();
+export default function Home() {
+  const locale = useLocale();
+  const t = useTranslations("home");
+  const dispatch = useAppDispatch();
+  const elections = useAppSelector((state) => state.election.elections);
+
+  useEffect(() => {
+    const fetchElections = async () => {
+      const elections = await electionService.getAll();
+      dispatch(setElections(elections));
+    };
+    fetchElections();
+  }, []);
+
 
   return (
     <div className="home-container">

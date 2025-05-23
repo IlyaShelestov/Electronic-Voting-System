@@ -1,26 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { userService } from "@/services/userService";
-import { IUser } from "@/models/IUser";
 import "./Profile.scss";
 import { FaUserCircle } from "react-icons/fa";
+import { useAppSelector } from "@/store/hooks";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<IUser | null>(null);
+  const user = useAppSelector((state) => state.user.user);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await userService.getUser();
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   return (
     <>
@@ -33,8 +19,8 @@ export default function ProfilePage() {
               <h2 className="profile-name">
                 {user.first_name} {user.last_name}
               </h2>
-              <span className={`role-badge ${user.role}`}>
-                {user.role.toUpperCase()}
+              <span className={`role-badge ${user.role || ''}`}>
+                {(user.role || '').toUpperCase()}
               </span>
             </div>
           </div>
@@ -52,9 +38,6 @@ export default function ProfilePage() {
             </div>
             <div className="profile-row">
               <strong>Дата рождения:</strong> <span>{user.date_of_birth}</span>
-            </div>
-            <div className="profile-row">
-              <strong>Регион:</strong> <span>{user.region}</span>
             </div>
             <div className="profile-row">
               <strong>Город:</strong> <span>{user.city_id}</span>

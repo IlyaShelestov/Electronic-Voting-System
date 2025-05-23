@@ -1,29 +1,27 @@
 "use client";
 import React from 'react';
-import { useAppAuthenticated, useAppLoading } from '@/store/hooks';
+import { useIsAuthenticated, useAppDispatch } from '@/store/hooks';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Header from '@/components/Header/Header';
 import LoadingCircle from '@/components/LoadingCircle/LoadingCircle';
-import AuthChecker from '@/app/[locale]/auth/AuthChecker';
+import { setLoading } from '@/store/slices/loadingSlice';
 
-const ContentLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export default function ContentLayout({ children }: { children: React.ReactNode }) {
     
-  const isAuthenticated = useAppAuthenticated();
-  const isLoading = useAppLoading();
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useIsAuthenticated();
+  const isLoading = dispatch(setLoading({ key: "page", value: true }));
 
   return (
-    <>  
-
-      <Sidebar />
+    <div className="content-layout">   
+      {isAuthenticated && <Sidebar />}
       <div className={`${isAuthenticated ? 'authenticated' : ''}`}>
         <Header />
         <main>
           {isLoading && <LoadingCircle />}
-          {children}
+          {!isLoading && children}
         </main>
       </div>
-    </>
+    </div>
   );
 };
-
-export default ContentLayout;

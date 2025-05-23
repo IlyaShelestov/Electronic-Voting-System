@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { electionService } from "@/services/electionService";
-import { voteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import Image from "next/image";
@@ -23,7 +22,7 @@ export default function CandidatesPage() {
     const fetchElectionData = async () => {
       try {
         const electionData = await electionService.getById(Number(id));
-        setElection(electionData);
+        setElection(electionData);    
 
         const candidatesData = await electionService.getCandidates(Number(id));
         setCandidates(candidatesData);
@@ -42,7 +41,6 @@ export default function CandidatesPage() {
       alert("Выберите кандидата перед голосованием!");
       return;
     }
-
     router.push(`/vote?electionId=${id}&candidateId=${selectedCandidateId}`);
   };
 
@@ -67,7 +65,7 @@ export default function CandidatesPage() {
                         {candidate.first_name} {candidate.last_name}
                       </h3>
                       <Image
-                          src={candidate.image_url || "/images/default-candidate.jpg"}
+                          src={"/images/default-candidate.png"}
                           alt={candidate.first_name + " " + candidate.last_name}
                           width={100}
                           height={100}
