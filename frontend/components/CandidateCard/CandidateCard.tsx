@@ -12,7 +12,7 @@ export default function CandidateCard({ candidate, selectedCandidateId, setSelec
                         {candidate.first_name} {candidate.last_name}
                       </h3>
                       <Image
-                          src={"/images/default-candidate.png"}
+                          src={candidate.avatar_url || "/images/default-candidate.png"}
                           alt={candidate.first_name + " " + candidate.last_name}
                           width={100}
                           height={100}

@@ -3,17 +3,20 @@ import "./About.scss";
 export default function About() {
   const profiles = [
     {
-      name: "Антон Птушкин",
+      name: "Serimbetov Yersultan",
+      group: "SE-2210",
       image: "/images/default-candidate.png",
       role: "Frontend Developer",
     },
     {
-      name: "Андрей Шевченко",
+      name: "Shelestov Ilya",
+      group: "SE-2207",
       image: "/images/default-candidate.png",
       role: "Backend Developer",
     },
     {
-      name: "Генадий Головкин",
+      name: "Yesentayev Rauan",
+      group: "CS-2207",
       image: "/images/default-candidate.png",
       role: "Cybersecurity specialist",
     },
@@ -30,11 +33,12 @@ export default function About() {
             <Image
               src={profile.image}
               alt={profile.name}
-              width={275}
-              height={275}
+              width={300}
+              height={300}
             />
             <h2>{profile.name}</h2>
             <p>{profile.role}</p>
+            <p>{profile.group}</p>
           </div>
         ))}
       </div>

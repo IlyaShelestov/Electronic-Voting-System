@@ -9,16 +9,21 @@ import React from 'react';
 import { setLoading } from "@/store/slices/loadingSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { authService } from "@/services/authService";
+import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const locale = useLocale();
-  const t = useTranslations("login");
+  const t = useTranslations("loginPage");
+  const auth = useTranslations("auth");
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleOnSubmit = async (loginData: ILogin) => {
     dispatch(setLoading({ key: "auth", value: true }));
 
     try {
-      await authService.login(loginData.iin, loginData.password);
+      await authService.login(loginData.iin, loginData.password).then((res) => {
+          router.refresh();
+      });
     } catch (err) {
       console.error('Network error', err);
     } finally {
@@ -31,8 +36,8 @@ export default function LoginPage() {
       <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
       <LoginForm onSubmit={handleOnSubmit} />
       <p>
-        {t("Do you have an account?")}{" "}
-        <Link href={`/${locale}/auth/register`}>{t("Register")}</Link>
+        {auth("alreadyHaveAccount")}{" "}
+        <Link href={`/${locale}/auth/register`}>{auth("register")}</Link>
       </p>
     </>
   );

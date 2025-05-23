@@ -15,7 +15,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const t = useTranslations("login");
+  const t = useTranslations("auth");
 
   const onSubmitHandle = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,29 +25,29 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={onSubmitHandle}>
       <div className="form-group">
-        <label htmlFor="username">{t("IIN")}</label>
+        <label htmlFor="username">{t("iin")}</label>
         <input
           type="text"
           name="username"
-          placeholder={t("Your IIN")}
+          placeholder={t("iinPlaceholder")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="password">{t("Password")}</label>
+        <label htmlFor="password">{t("password")}</label>
         <input
           type="password"
           name="password"
-          placeholder={t("Your password")}
+          placeholder={t("passwordPlaceholder")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Link href="/forgot">{t("Forgot password?")}</Link>
+        <Link href="/forgot">{t("forgotPassword")}</Link>
       </div>
 
-      <button type="submit">{t("Login")}</button>
+      <button type="submit">{t("login")}</button>
     </form>
   );
 };

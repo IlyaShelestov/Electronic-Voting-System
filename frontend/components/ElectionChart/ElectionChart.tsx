@@ -34,7 +34,7 @@ interface ElectionChartProps {
 }
 
 export default function ElectionChart({ reportData }: ElectionChartProps) {
-  const t = useTranslations("home");
+  const t = useTranslations("elections");
   const chartData = transformReportToChartData(reportData);
 
   return (

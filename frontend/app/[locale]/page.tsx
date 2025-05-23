@@ -10,7 +10,7 @@ import "./Home.scss";
 
 export default function Home() {
   const locale = useLocale();
-  const t = useTranslations("home");
+  const t = useTranslations("homePage");
   const dispatch = useAppDispatch();
   const elections = useAppSelector((state) => state.election.elections);
 
