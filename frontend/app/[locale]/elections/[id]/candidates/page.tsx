@@ -9,7 +9,7 @@ import Image from "next/image";
 import CandidatePopup from "@/components/CandidatePopup/CandidatePopup";
 import "./Candidates.scss";
 import { formatTimestamp } from "@/utils/formatTimestamp";
-
+import CandidateCard from "@/components/CandidateCard/CandidateCard";
 export default function CandidatesPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -32,6 +32,7 @@ export default function CandidatesPage() {
     };
 
     if (id) {
+
       fetchElectionData();
     }
   }, [id]);
@@ -56,31 +57,13 @@ export default function CandidatesPage() {
               <h2 className="subtitle">Кандидаты</h2>
               <div className="candidates-list">
                 {candidates.map((candidate) => (
-                    <div
-                        key={candidate.candidate_id}
-                        className={`candidate-card ${selectedCandidateId === candidate.candidate_id ? "selected" : ""}`}
-                        onClick={() => setSelectedCandidateId(candidate.candidate_id)}
-                    >
-                      <h3 className="candidate-name">
-                        {candidate.first_name} {candidate.last_name}
-                      </h3>
-                      <Image
-                          src={"/images/default-candidate.png"}
-                          alt={candidate.first_name + " " + candidate.last_name}
-                          width={100}
-                          height={100}
-                          className="candidate-image"
-                      />
-                      <button
-                          className="candidate-info-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedCandidate(candidate);
-                          }}
-                      >
-                        О кандидате
-                      </button>
-                    </div>
+                  <CandidateCard
+                    key={candidate.candidate_id}
+                    candidate={candidate}
+                    selectedCandidateId={selectedCandidateId ?? 0}
+                    setSelectedCandidateId={setSelectedCandidateId}
+                    setSelectedCandidate={setSelectedCandidate}
+                  />
                 ))}
               </div>
 
