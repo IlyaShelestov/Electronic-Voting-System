@@ -9,3 +9,5 @@ import type { AppDispatch, AppStore, RootState } from "./reduxStore";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppStore: () => AppStore = useStore;
+export const useAppLoading = () => useAppSelector((state) => state.loading['pageLoad']);
+export const useAppAuthenticated = () => useAppSelector((state) => state.user.isAuthenticated);

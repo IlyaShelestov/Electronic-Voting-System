@@ -13,7 +13,8 @@ export default function LoginPage() {
   const t = useTranslations("login");
   const handleOnSubmit = async (loginData: ILogin) => {
     try {
-      const auth = await authService.login(loginData.iin, loginData.password);
+      const response = await authService.login(loginData.iin, loginData.password);
+      console.log(response);
       router.push(`/${locale}/`);
     } catch (err) {}
   };

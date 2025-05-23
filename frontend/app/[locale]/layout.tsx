@@ -2,9 +2,8 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { ToastContainer } from "react-toastify";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import Header from "@/components/Header/Header";
-import ContentLayout from "@/ui/layouts/ContentLayout";
+import ContentLayout from "@/app/[locale]/ContentLayout";
+import { getMessages } from "next-intl/server";
 export default async function LocaleLayout({
   children,
   params,
@@ -22,7 +21,7 @@ export default async function LocaleLayout({
 
   let messages;
   try {
-    messages = (await import(`@/locales/${locale}.json`)).default;
+    messages = await getMessages({locale});
   } catch (error) {
     redirect(`/${defaultLocale}`);
   }
@@ -36,6 +35,7 @@ export default async function LocaleLayout({
         >
           <ContentLayout>{children}</ContentLayout>
         </NextIntlClientProvider>
+
         <ToastContainer
           position="bottom-right"
           autoClose={5000}

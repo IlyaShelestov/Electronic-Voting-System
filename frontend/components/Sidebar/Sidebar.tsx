@@ -8,8 +8,8 @@ import { ProfileIcon } from "@/icons/ProfileIcon";
 import { SupportIcon } from "@/icons/SupportIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
 import { authService } from "@/services/authService";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout } from "@/store/slices/userSlice";
+import { useAppAuthenticated, useAppDispatch, useAppLoading, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/userSlice";  
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,8 +21,8 @@ import "./Sidebar.scss";
 
 const Sidebar = ( ) => {
 
-  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
-
+  const isAuthenticated = useAppAuthenticated();
+  const isLoading = useAppLoading();
   if (!isAuthenticated) {
     return null;
   }
@@ -91,7 +91,7 @@ const Sidebar = ( ) => {
                   <Icon
                     {...(isActive ? iconStyles.active : iconStyles.default)}
                   />
-                  <span>{title}</span>
+                  <span>{title}</span>  
                 </Link>
               </li>
             );
