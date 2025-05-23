@@ -2,7 +2,9 @@ import { ICandidate } from "@/models/ICandidate";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function CandidateCard({ candidate, selectedCandidateId, setSelectedCandidateId, setSelectedCandidate }: { candidate: ICandidate, selectedCandidateId: number, setSelectedCandidateId: (id: number) => void, setSelectedCandidate: (candidate: ICandidate) => void }) {
+export default function CandidateCard(
+    { candidate, selectedCandidateId, setSelectedCandidateId, setSelectedCandidate }: 
+    { candidate: ICandidate, selectedCandidateId: number, setSelectedCandidateId: (id: number) => void, setSelectedCandidate: (candidate: ICandidate) => void }) {
     const [imgSrc, setImgSrc] = useState(candidate.avatar_url || "/images/default-candidate.png");
     return (
         <div
