@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'development') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 }
 
 app.use("/api/auth", authRoutes);
