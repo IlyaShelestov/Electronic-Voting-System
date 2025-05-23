@@ -54,7 +54,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"], // Разрешает контент только с текущего домена
         scriptSrc: ["'self'"], // Разрешает выполнение скриптов только с текущего домена
-        styleSrc: ["'self'"], // Разрешает стили с текущего домена
+        styleSrc: ["'self'", "'unsafe-inline'"], // Разрешает стили с текущего домена
         imgSrc: ["'self'", "data:"], // Разрешает изображения только с текущего домена и data URL
         connectSrc: ["'self'"], // Разрешает сетевые запросы только к текущему домену
         frameAncestors: ["'none'"], // Запрещает встраивание в iframe (защита от Clickjacking)
@@ -93,7 +93,7 @@ app.get("/", (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'development') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 }
 
 app.use("/api/auth", authRoutes);
