@@ -19,7 +19,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations("languageSwitcher");
+  const t = useTranslations("auth");
 
   const languages = [
     { code: "ru", label: "РУС" },

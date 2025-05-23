@@ -19,7 +19,7 @@ export default function ElectionCard({ election, locale }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [reportData, setReportData] = useState<IReport[] | null>(null);
   const router = useRouter();
-  const t = useTranslations("home");
+  const t = useTranslations("elections");
 
   const handleToggle = async () => {
     setExpanded(!expanded);

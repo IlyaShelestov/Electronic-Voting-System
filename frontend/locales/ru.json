@@ -1,41 +1,43 @@
 {
-  "header": {
+  "auth":{
     "login": "Войти",
-    "register": "Регистрация",
-    "profile": "Профиль",
-    "logout": "Выйти"
-  },
-  "languageSwitcher": {
-    "login": "Войти"
-  },
-  "login": {
-    "title": "Вход",
-    "Do you have an account?": "У вас уже есть аккаунт?",
-    "IIN": "ИИН",
-    "Password": "Пароль",
-    "Your IIN": "Ваш ИИН",
-    "Your password": "Ваш пароль",
-    "Forgot password?": "Забыли пароль?",
-    "Login": "Войти",
-    "Register": "Зарегистрироваться"
-  },
-  "register": {
-    "title": "Регистрация",
+    "registration": "Регистрация",
+    "register": "Зарегистрироваться",
+    "logout": "Выйти",
+    "alreadyHaveAccount": "У вас уже есть аккаунт?",
+    "forgotPassword": "Забыли пароль?",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
     "iin": "ИИН",
+    "iinPlaceholder": "Введите ИИН",
     "firstName": "Имя",
+    "firstNamePlaceholder": "Введите имя",
     "lastName": "Фамилия",
+    "lastNamePlaceholder": "Введите фамилию",
     "patronymic": "Отчество",
+    "patronymicPlaceholder": "Введите отчество",
     "dateOfBirth": "Дата рождения",
-    "region": "Область",
+    "dateOfBirthPlaceholder": "Введите дату рождения",
     "city": "Город",
     "phoneNumber": "Номер телефона",
     "email": "Электронная почта",
-    "password": "Пароль",
-    "register": "Зарегистрироваться",
-    "alreadyHaveAccount": "У вас уже есть аккаунт?",
-    "login": "Войти"
+    "emailPlaceholder": "Введите электронную почту",
+    "phoneNumberPlaceholder": "Введите номер телефона",
+    "cityPlaceholder": "Введите город"
   },
-  "home": {
+  "elections": {
+    "title": "Выборы",
+    "viewCandidates": "Посмотреть кандидатов",
+    "date": "Дата",
+    "votes": "Голоса"
+  },
+  "loginPage": {
+    "title": "Вход в систему"
+  },
+  "registrationPage": {
+    "title": "Регистрация"
+  },
+  "homePage": {
     "title": "Главная",
     "bannerAlt": "Баннер выборов",
     "currentElections": "Актуальное",
@@ -52,15 +54,14 @@
     "support": "Тех. поддержка",
     "about": "О нас",
     "logout": "Выход",
-    "admin": "Панель администратора",
-    "manager": "Панель менеджера"
+    "admin": "Админ",
+    "manager": "Менеджер"
   },
-
-      "errors": {
-        "missingFields": "Пожалуйста, заполните все обязательные поля.",
-        "invalidCredentials": "Неверный ИИН или пароль.",
-        "accountLocked": "Ваш аккаунт заблокирован. Пожалуйста, свяжитесь с поддержкой.",
-        "serverError": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.",
-        "networkError": "Ошибка сети. Пожалуйста, проверьте соединение и попробуйте снова."
-    }
+  "errors": {
+    "missingFields": "Пожалуйста, заполните все обязательные поля.",
+    "invalidCredentials": "Неверный ИИН или пароль.",
+    "accountLocked": "Ваш аккаунт заблокирован. Пожалуйста, свяжитесь с поддержкой.",
+    "serverError": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.",
+    "networkError": "Ошибка сети. Пожалуйста, проверьте соединение и попробуйте снова."
+  }
 }

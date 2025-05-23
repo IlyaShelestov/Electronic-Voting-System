@@ -1,4 +1,3 @@
-
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -8,7 +7,6 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import MultiProvider from "@/providers/MultiProvider";
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -35,8 +33,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider>
-          <MultiProvider>
+        <MultiProvider>
+          <NextIntlClientProvider>
             <AuthProvider>
               <ContentLayout>{children}</ContentLayout>
 
@@ -52,8 +50,8 @@ export default async function LocaleLayout({
                 theme="light"
               />
               </AuthProvider>
-        </MultiProvider>
-        </NextIntlClientProvider>
+            </NextIntlClientProvider>
+          </MultiProvider>
       </body>
     </html>
   );
