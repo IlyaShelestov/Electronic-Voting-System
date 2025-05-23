@@ -10,7 +10,6 @@ import { useLocale } from "use-intl";
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);
-  const isAuthenticated = useIsAuthenticated();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();

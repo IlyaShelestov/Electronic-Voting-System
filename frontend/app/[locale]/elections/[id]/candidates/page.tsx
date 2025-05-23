@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { electionService } from "@/services/electionService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
-import Image from "next/image";
 import CandidatePopup from "@/components/CandidatePopup/CandidatePopup";
 import "./Candidates.scss";
 import { formatTimestamp } from "@/utils/formatTimestamp";

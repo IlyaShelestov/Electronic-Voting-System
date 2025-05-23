@@ -20,14 +20,7 @@ export default function Support() {
         <button>Отправить</button>
       </form>
 
-      <div className="contacts">
-        <p>Вы также можете связаться с нами следующими методами</p>
-        <p>
-          <a href="tel:+77172112233">+7 (7172) 11-22-33</a> |{" "}
-          <a href="mail:example@mail.com">example@mail.com</a> |{" "}
-          <a href="#">Telegram Bot</a>
-        </p>
-      </div>
+
     </>
   );
 }

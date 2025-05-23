@@ -4,17 +4,17 @@ export default function About() {
   const profiles = [
     {
       name: "Антон Птушкин",
-      image: "/images/ornament.png",
+      image: "/images/default-candidate.png",
       role: "Frontend Developer",
     },
     {
       name: "Андрей Шевченко",
-      image: "/images/ornament.png",
+      image: "/images/default-candidate.png",
       role: "Backend Developer",
     },
     {
       name: "Генадий Головкин",
-      image: "/images/ornament.png",
+      image: "/images/default-candidate.png",
       role: "Cybersecurity specialist",
     },
   ];

@@ -2,14 +2,14 @@
 header {
   height: $header_height;
   width: 100%;
-  background: $navbar url("/images/header-background.png") repeat;
+  background-color: $navbar;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
 
   .user {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .locales {

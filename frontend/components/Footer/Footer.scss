@@ -1,0 +1,16 @@
+@use "../../styles/variables.scss" as *;
+
+.footer {
+    background-color: $navbar;
+    padding: 20px;
+    text-align: center;
+    a {
+        color: $general_dark;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        &:hover {
+            color: $button_light;
+        }
+    }
+}
+

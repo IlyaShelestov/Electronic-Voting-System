@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { setElections } from "@/store/slices/electionSlice";
-
+import "./Home.scss";
 
 export default function Home() {
   const locale = useLocale();

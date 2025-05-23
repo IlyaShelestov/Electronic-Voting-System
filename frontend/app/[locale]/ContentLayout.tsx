@@ -4,24 +4,23 @@ import { useIsAuthenticated, useAppDispatch, usePageLoading } from '@/store/hook
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Header from '@/components/Header/Header';
 import LoadingCircle from '@/components/LoadingCircle/LoadingCircle';
-
-
+import Footer from '@/components/Footer/Footer';  
+import Main from '@/components/Main/Main';
 export default function ContentLayout({ children }: { children: React.ReactNode }) {
-    
-  const dispatch = useAppDispatch();
   const isAuthenticated = useIsAuthenticated();
   const isLoading = usePageLoading();
 
   return (
-    <div className="content-layout">   
+    <>
       {isAuthenticated && <Sidebar />}
-      <div className={`${isAuthenticated ? 'authenticated' : ''}`}>
+      <div className={`content ${isAuthenticated ? 'authenticated' : ''}`}>
         <Header />
-        <main>
+        <Main>
           {isLoading && <LoadingCircle />}
           {children}
-        </main>
+        </Main>
+        <Footer />
       </div>
-    </div>
+    </>
   );
 };
