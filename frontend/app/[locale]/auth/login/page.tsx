@@ -67,7 +67,6 @@ export default function LoginPage() {
   return (
     <>
       <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
-      {isLoading && <LoadingCircle />}
        <LoginForm onSubmit={handleOnSubmit} />
       <p>
         {auth("alreadyHaveAccount")}{" "}
