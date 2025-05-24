@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setLoading } from "@/store/slices/loadingSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/reduxStore";
@@ -23,7 +23,7 @@ export default function LoginPage() {
   const t = useTranslations("loginPage");
   const auth = useTranslations("auth");
 
-  const isLoading = useSelector((state: RootState) => state.loading.auth);
+  const isLoading = useAppSelector((state) => state.loading.auth);
 
   useEffect(() => {
     dispatch(setLoading({ key: "auth", value: false }));

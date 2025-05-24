@@ -42,6 +42,38 @@
     "alreadyHaveAccount": "У вас уже есть аккаунт?",
     "login": "Войти"
   },
+  "adminPage": {
+    "title": "Панель администратора",
+    "userManagement": "Управление пользователями",
+    "requestHandling": "Обработка запросов",
+    "createUser": "Создать пользователя",
+    "updateUser": "Обновить пользователя",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "actions": "Действия",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Электронная почта",
+    "phoneNumber": "Номер телефона",
+    "city": "Город",
+    "role": "Роль",
+    "searchPlaceholder": "Поиск по имени или email",
+    "filterPlaceholder": {
+      "name": "Поиск по имени",
+      "email": "Поиск по email",
+      "role": "Поиск по роли",
+      "iin": "Поиск по ИИН",
+      "cityId": "Поиск по ID города",
+      "phoneNumber": "Поиск по номеру телефона"
+    },
+    "filterType": {
+      "name": "Имя",
+      "email": "Email",
+      "role": "Роль",
+      "iin": "ИИН",
+      "cityId": "ID города"
+    }
+  },
   "homePage": {
     "title": "Главная",
     "bannerAlt": "Баннер выборов",

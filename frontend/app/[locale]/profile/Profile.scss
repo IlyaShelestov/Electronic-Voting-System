@@ -1,12 +1,11 @@
 .profile-container {
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
   margin: 40px auto;
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
 .profile-title {
@@ -15,12 +14,6 @@
   margin-bottom: 20px;
 }
 
-.profile-card {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: left;
-}
 
 .profile-header {
   display: flex;
@@ -46,6 +39,7 @@
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: left;
 }
 
 .role-badge.user {

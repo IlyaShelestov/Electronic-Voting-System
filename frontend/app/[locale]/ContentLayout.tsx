@@ -18,7 +18,7 @@ export default function ContentLayout({ children }: { children: React.ReactNode 
         <Header />
         <Main>
           {isLoading && <LoadingCircle />}
-          {children}
+          {!isLoading && children}  
         </Main>
         <Footer />
       </div>

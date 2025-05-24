@@ -29,7 +29,7 @@ export default function Home() {
 
       <div className="banner">
         <Image
-          src="/images/election-banner.png"
+          src="/images/default-banner.png"
           alt={t("bannerAlt")}
           width={1200}
           height={300}
