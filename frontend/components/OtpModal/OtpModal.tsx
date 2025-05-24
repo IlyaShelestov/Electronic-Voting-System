@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import './OtpModal.scss';
 
@@ -27,8 +28,8 @@ const OtpModal: React.FC<OtpModalProps> = ({ isOpen, onClose, onSubmit }) => {
                     onChange={(e) => setOtp(e.target.value)}
                     placeholder="Enter OTP"
                 />
-                <button onClick={handleSubmit}>Submit</button>
-                <button onClick={onClose}>Cancel</button>
+                <button className='submit-btn' onClick={handleSubmit}>Submit</button>
+                <button className='cancel-btn' onClick={onClose}>Cancel</button>
             </div>
         </div>
     );

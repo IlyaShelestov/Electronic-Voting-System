@@ -1,9 +1,8 @@
 "use client";
 
 import { ICandidate } from "@/models/ICandidate";
-import Image from "next/image";
 import "./CandidatePopup.scss";
-
+import { useState } from "react";
 interface CandidatePopupProps {
   candidate: ICandidate | null;
   onClose: () => void;
@@ -15,6 +14,7 @@ export default function CandidatePopup({
 }: CandidatePopupProps) {
   if (!candidate) return null;
 
+  const [imgSrc, setImgSrc] = useState(candidate.avatar_url);
   return (
     <div
       className="popup-overlay"
@@ -31,12 +31,13 @@ export default function CandidatePopup({
           ✖
         </button>
         <div className="popup-header">
-          <Image
-            src={"/images/default-candidate.png"}
+          <img
+            src={candidate.avatar_url}
             alt={candidate.first_name + " " + candidate.last_name}
             width={150}
             height={150}
             className="candidate-image"
+            onError={() => setImgSrc("/images/default-candidate.png")}
           />
           <h2>{candidate.first_name + " " + candidate.last_name}</h2>
         </div>

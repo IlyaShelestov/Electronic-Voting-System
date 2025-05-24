@@ -1,25 +1,46 @@
 "use client";
 
+import OtpModal from "@/components/OtpModal/OtpModal";
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import { IUser } from "@/models/IUser";
 import { authService } from "@/services/authService";
+import { otpService } from "@/services/otpService";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations("registrationPage");
 
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [pendingUserData, setPendingUserData] = useState<IUser & { password: string } | null>(null);
+
   const handleOnSubmit = async (registerData: IUser & { password: string }) => {
     try {
-      const response = await authService.register(registerData);
-      console.log("Registration successful:", response);
+      await otpService.sendOtp(registerData.email);
+      setPendingUserData(registerData);
+      setIsOtpModalOpen(true);
+    } catch (err: any) {
+      console.error("Failed to send OTP:", err);
+    }
+  };
 
+  const handleOtpSubmit = async (otp: string) => {
+    if (!pendingUserData) return;
+
+    try {
+      const registrationData = { ...pendingUserData, otp };
+      const response = await authService.register(registrationData);
+      console.log("Registration successful:", response);
+      setIsOtpModalOpen(false);
+      setPendingUserData(null);
       setTimeout(() => router.push(`/${locale}/auth/login`), 1000);
     } catch (err: any) {
       console.error("Registration error:", err);
+      setIsOtpModalOpen(false);
     }
   };
 
@@ -29,13 +50,15 @@ export default function RegisterPage() {
       <RegisterForm onSubmit={handleOnSubmit} />
       <p className="text-center">
         {t("alreadyHaveAccount")}{" "}
-        <Link
-          href={`/${locale}/auth/login`}
-          className="text-blue-500"
-        >
+        <Link href={`/${locale}/auth/login`} className="text-blue-500">
           {t("login")}
         </Link>
       </p>
+      <OtpModal
+        isOpen={isOtpModalOpen}
+        onClose={() => setIsOtpModalOpen(false)}
+        onSubmit={handleOtpSubmit}
+      />
     </div>
   );
 }
