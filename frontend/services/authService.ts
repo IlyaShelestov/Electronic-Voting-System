@@ -4,11 +4,12 @@ import { IUser } from "@/models/IUser";
 
 export const authService = {
   login: async (iin: string, password: string): Promise<AuthResponse> => {
-    const { data } = await apiClient.post<AuthResponse>("/auth/login", {
+    const response = await apiClient.post("/auth/login", {
       iin,
       password,
     });
-    return data;
+    console.log(response);
+    return response.data;
   },
 
   register: async (userData: IUser): Promise<IUser> => {

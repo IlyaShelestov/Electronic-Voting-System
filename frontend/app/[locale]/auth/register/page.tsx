@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 export default function RegisterPage() {
   const locale = useLocale();
   const router = useRouter();
-  const t = useTranslations("register");
+  const t = useTranslations("registrationPage");
 
   const handleOnSubmit = async (registerData: IUser & { password: string }) => {
     try {

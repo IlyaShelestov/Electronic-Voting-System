@@ -13,8 +13,6 @@ import {
 } from "@/utils/tokenHelper";
 import { useLocale } from "next-intl";
 
-
-
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -57,7 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     initializeAuth();
-  }, [dispatch]);
+  }, [dispatch, locale, pathname, router]);
 
   return (
     <>

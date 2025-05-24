@@ -7,6 +7,7 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import MultiProvider from "@/providers/MultiProvider";
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
+import QueryProvider from "@/providers/QueryClientProvider";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -35,23 +36,25 @@ export default async function LocaleLayout({
       <body>
         <MultiProvider>
           <NextIntlClientProvider>
-            <AuthProvider>
-              <ContentLayout>{children}</ContentLayout>
+            <QueryProvider>
+              <AuthProvider>
+                <ContentLayout>{children}</ContentLayout>
 
-              <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                pauseOnHover
-                theme="light"
-              />
+                <ToastContainer
+                  position="bottom-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  pauseOnHover
+                  theme="light"
+                />
               </AuthProvider>
-            </NextIntlClientProvider>
-          </MultiProvider>
+            </QueryProvider>
+          </NextIntlClientProvider>
+        </MultiProvider>
       </body>
     </html>
   );

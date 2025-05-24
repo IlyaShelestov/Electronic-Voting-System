@@ -1,7 +1,7 @@
 import { ICandidate } from "@/models/ICandidate";
-import Image from "next/image";
+import "./CandidateCard.scss";
 import { useState } from "react";
-
+import Image from "next/image";
 export default function CandidateCard(
     { candidate, selectedCandidateId, setSelectedCandidateId, setSelectedCandidate }: 
     { candidate: ICandidate, selectedCandidateId: number, setSelectedCandidateId: (id: number) => void, setSelectedCandidate: (candidate: ICandidate) => void }) {
@@ -10,6 +10,7 @@ export default function CandidateCard(
         <div
             key={candidate.candidate_id}
             onClick={() => setSelectedCandidateId(candidate.candidate_id)}
+            className={`candidate-card ${selectedCandidateId === candidate.candidate_id ? "selected" : ""}`}
         >
             <h3 className="candidate-name">
             {candidate.first_name} {candidate.last_name}
