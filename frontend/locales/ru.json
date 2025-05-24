@@ -58,6 +58,7 @@
     "city": "Город",
     "role": "Роль",
     "searchPlaceholder": "Поиск по имени или email",
+    "usersPerPage": "Пользователей на странице",  
     "filterPlaceholder": {
       "name": "Поиск по имени",
       "email": "Поиск по email",
@@ -71,7 +72,8 @@
       "email": "Email",
       "role": "Роль",
       "iin": "ИИН",
-      "cityId": "ID города"
+      "cityId": "ID города",
+      "phoneNumber": "Номер телефона" 
     }
   },
   "homePage": {

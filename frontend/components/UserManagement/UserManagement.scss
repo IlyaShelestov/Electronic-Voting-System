@@ -220,3 +220,20 @@
     border: 1px solid #ccc;
 }
 
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-item input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.filter-item input:focus {
+    border-color: #007bff;
+    outline: none;
+}   

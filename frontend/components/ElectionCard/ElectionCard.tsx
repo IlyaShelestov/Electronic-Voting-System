@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "use-intl";
 import { electionService } from "@/services/electionService";
-import { IElection } from "@/models/IElection";
+import { IElection } from "@/models/IElection"; 
 import { IReport } from "@/models/IReport";
 import { RightArrowCircle } from "@/icons/RightArrowCircle";
 import ElectionChart from "@/components/ElectionChart/ElectionChart";

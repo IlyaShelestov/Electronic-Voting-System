@@ -8,6 +8,7 @@ import { voteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import "./Vote.scss";
+import OtpModal from '@/components/OtpModal/OtpModal';
 
 export default function VotePage() {
     const searchParams = useSearchParams();
@@ -19,6 +20,8 @@ export default function VotePage() {
     const [candidates, setCandidates] = useState<ICandidate[]>([]);
     const [selectedCandidate, setSelectedCandidate] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
+    const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchElections = async () => {
@@ -71,6 +74,21 @@ export default function VotePage() {
         }
     }, [queryElectionId]);
 
+    useEffect(() => {
+        const checkVotingStatus = async () => {
+            if (selectedElection) {
+                try {
+                    const status = await voteService.checkVotedStatus(selectedElection);
+                    setHasVoted(status.hasVoted);
+                } catch (error) {
+                    console.error('Error checking voting status:', error);
+                }
+            }
+        };
+
+        checkVotingStatus();
+    }, [selectedElection]);
+
     const handleElectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const electionId = e.target.value ? Number(e.target.value) : null;
         setSelectedElection(electionId);
@@ -82,13 +100,23 @@ export default function VotePage() {
             toast.warn("Выберите кандидата перед голосованием!");
             return;
         }
-        try {
-            await voteService.castVote(Number(selectedElection), selectedCandidate);
-        } catch (error) {
-            console.error("Ошибка голосования:", error);
-        }
+        setIsOtpModalOpen(true);
     };
 
+    const handleOtpSubmit = async (otp: string) => {
+        if (selectedCandidate !== null) {
+            try {
+                await voteService.castVote(Number(selectedElection), selectedCandidate, otp);
+                setIsOtpModalOpen(false);
+                toast.success("Ваш голос успешно принят!");
+            } catch (error) {
+                console.error("Ошибка голосования:", error);
+                toast.error("Ошибка голосования. Пожалуйста, попробуйте еще раз.");
+            }
+        } else {
+            toast.warn("Выберите кандидата перед голосованием!");
+        }
+    };
 
     return (
         <div className="vote-container">
@@ -110,7 +138,7 @@ export default function VotePage() {
 
                 {loading ? (
                     <p>Загрузка кандидатов...</p>
-                ) : (
+                ) : !hasVoted ? (
                     <ul className="candidate-list">
                         {candidates.map((candidate) => (
                             <li key={candidate.candidate_id}>
@@ -127,12 +155,19 @@ export default function VotePage() {
                             </li>
                         ))}
                     </ul>
+                ) : (
+                    <p>Вы уже проголосовали на этих выборах.</p>
                 )}
 
                 <button onClick={handleVote} className="vote-button" disabled={!selectedCandidate}>
                     Проголосовать
                 </button>
             </div>
+            <OtpModal
+                isOpen={isOtpModalOpen}
+                onClose={() => setIsOtpModalOpen(false)}
+                onSubmit={handleOtpSubmit}
+            />
         </div>
     );
 }
