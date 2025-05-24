@@ -68,7 +68,7 @@ export default function LoginPage() {
     <>
       <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
       {isLoading && <LoadingCircle />}
-      {!isLoading && <LoginForm onSubmit={handleOnSubmit} />}
+       <LoginForm onSubmit={handleOnSubmit} />
       <p>
         {auth("alreadyHaveAccount")}{" "}
         <Link href={`/${locale}/auth/register`}>{auth("register")}</Link>
