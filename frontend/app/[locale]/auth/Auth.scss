@@ -27,6 +27,7 @@
       flex-direction: column;
       align-items: start;
       justify-content: center;
+      width: 100%;
 
       label {
         font-size: 24px;
@@ -34,7 +35,7 @@
         margin-bottom: 5px;
       }
 
-      input {
+      input, select {
         width: 520px;
         font-size: 16px;
         padding: 20px;
@@ -52,15 +53,29 @@
       font-weight: 600;
       color: $selected;
       margin-bottom: 30px;
+      transition: all 0.4s ease;
+      &:hover {
+        background-color: $general_light;
+        color: $general_dark;
+      }
     }
   }
 
   p {
     text-align: center;
+    transition: all 0.3s ease;
+    &:hover {
+      color: $general_dark;
+    }
   }
 
   a {
     color: $button_light;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    &:hover {
+      color: $general_dark;
+    }
   }
 }
 

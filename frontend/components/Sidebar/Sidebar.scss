@@ -59,6 +59,7 @@
     background-color: transparent;
     padding: 10px 15px;
     border-radius: 30px;
+    color: $button_hover_light;
 
     &:hover {
       background: $button_danger;

@@ -10,9 +10,8 @@ export default function ProfilePage() {
 
   return (
     <>
-      <h1 className="profile-title">Профиль</h1>
       {user ? (
-        <div className="profile-card">
+        <div className="profile-container">
           <div className="profile-header">
             <FaUserCircle className="profile-avatar" />
             <div>

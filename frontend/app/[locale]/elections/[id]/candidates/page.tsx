@@ -9,6 +9,8 @@ import CandidatePopup from "@/components/CandidatePopup/CandidatePopup";
 import "./Candidates.scss";
 import { formatTimestamp } from "@/utils/formatTimestamp";
 import CandidateCard from "@/components/CandidateCard/CandidateCard";
+import { useIsAuthenticated } from "@/store/hooks";
+
 export default function CandidatesPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -16,7 +18,7 @@ export default function CandidatesPage() {
   const [candidates, setCandidates] = useState<ICandidate[]>([]);
   const [selectedCandidate, setSelectedCandidate] = useState<ICandidate | null>(null);
   const [selectedCandidateId, setSelectedCandidateId] = useState<number | null>(null);
-
+  const isAuthenticated = useIsAuthenticated();
   useEffect(() => {
     const fetchElectionData = async () => {
       try {
@@ -65,10 +67,11 @@ export default function CandidatesPage() {
                   />
                 ))}
               </div>
-
-              <button className="vote-button" onClick={handleVote} disabled={!selectedCandidateId}>
-                Проголосовать
-              </button>
+              {isAuthenticated && (
+                <button className="vote-button" onClick={handleVote} disabled={!selectedCandidateId}>
+                  Проголосовать
+                </button>
+              )}
             </>
         )}
 

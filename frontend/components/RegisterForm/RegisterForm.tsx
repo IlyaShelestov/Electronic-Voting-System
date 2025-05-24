@@ -24,7 +24,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     password: "",
   });
 
-  const t = useTranslations("register");
+  const t = useTranslations("auth");
 
   useEffect(() => {
     const fetchCities = async () => {

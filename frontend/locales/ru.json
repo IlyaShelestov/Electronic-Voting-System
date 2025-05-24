@@ -32,10 +32,49 @@
     "votes": "Голоса"
   },
   "loginPage": {
-    "title": "Вход в систему"
+    "title": "Вход в систему",
+    "forbiddenAccess": "Доступ запрещен",
+    "serverError": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.",
+    "unknownError": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже."
   },
   "registrationPage": {
-    "title": "Регистрация"
+    "title": "Регистрация",
+    "alreadyHaveAccount": "У вас уже есть аккаунт?",
+    "login": "Войти"
+  },
+  "adminPage": {
+    "title": "Панель администратора",
+    "userManagement": "Управление пользователями",
+    "requestHandling": "Обработка запросов",
+    "createUser": "Создать пользователя",
+    "updateUser": "Обновить пользователя",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "actions": "Действия",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Электронная почта",
+    "phoneNumber": "Номер телефона",
+    "city": "Город",
+    "role": "Роль",
+    "searchPlaceholder": "Поиск по имени или email",
+    "usersPerPage": "Пользователей на странице",  
+    "filterPlaceholder": {
+      "name": "Поиск по имени",
+      "email": "Поиск по email",
+      "role": "Поиск по роли",
+      "iin": "Поиск по ИИН",
+      "cityId": "Поиск по ID города",
+      "phoneNumber": "Поиск по номеру телефона"
+    },
+    "filterType": {
+      "name": "Имя",
+      "email": "Email",
+      "role": "Роль",
+      "iin": "ИИН",
+      "cityId": "ID города",
+      "phoneNumber": "Номер телефона" 
+    }
   },
   "homePage": {
     "title": "Главная",

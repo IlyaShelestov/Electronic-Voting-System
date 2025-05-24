@@ -2,7 +2,9 @@
 
 .home-container {
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-title {
@@ -19,7 +21,7 @@ h3 {
 
 .banner {
   width: 100%;
-  max-width: 100vw;
+  max-width: 1200px;
   height: 300px;
   display: flex;
   justify-content: center;

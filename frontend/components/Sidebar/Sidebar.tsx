@@ -34,10 +34,9 @@ export default function Sidebar() {
   const handleLogout = async () => {
     try {
       await authService.logout();
-      dispatch(logout());
-      router.push(`/${locale}/`);
     } catch (error) {
       console.error("Failed to logout cleanly:", error);
+    } finally {
       dispatch(logout());
       router.push(`/${locale}/`);
     }
@@ -51,7 +50,7 @@ export default function Sidebar() {
   const tabs = [
     { icon: HomeIcon, path: "", title: t("home") },
     { icon: VoteIcon, path: "/vote", title: t("vote") },
-    { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
+    // { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
     { icon: ProfileIcon, path: "/profile", title: t("profile") },
     { icon: SupportIcon, path: "/support", title: t("support") },
     { icon: AboutUsIcon, path: "/about", title: t("about") },
