@@ -1,0 +1,17 @@
+.manager-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.manager-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.manager-nav-item {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
