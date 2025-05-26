@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-
+import './Manager.scss';
 export default function ManagerPage() {
     return (
         <div className="manager-page">

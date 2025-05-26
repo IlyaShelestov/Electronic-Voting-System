@@ -1,8 +1,8 @@
-
 import { apiClient } from './apiClient';
 import { IElection } from '@/models/IElection';
 import { ICandidate } from '@/models/ICandidate';
 import { IEvent } from '@/models/IEvent';
+import { electionService } from './electionService';
 
 export async function createElection(electionData: IElection) {
     const response = await apiClient.post('/manager/elections', electionData);
@@ -74,4 +74,25 @@ export async function updateEvent(eventId: number, eventData: IEvent) {
         throw new Error('Failed to update event');
     }
     return response.data;
+}
+
+export async function getElections() {
+    const response = await electionService.getAll();    
+    return response     ;
+}
+
+export async function getCandidates() {
+    const response = await apiClient.get('/candidates');
+    if (response.status !== 200) {
+        throw new Error('Failed to fetch candidates');
+    }
+    return response.data as ICandidate[];
+}
+
+export async function getEvents() {
+    const response = await apiClient.get('/events');
+    if (response.status !== 200) {
+        throw new Error('Failed to fetch events');
+    }
+    return response.data as IEvent[];
 }

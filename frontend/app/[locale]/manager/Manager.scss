@@ -1,17 +1,64 @@
+@import '../../../styles/variables.scss';
+
 .manager-page {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: $general_light;
+    font-family: sans-serif;
+}
+
+.manager-layout {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    max-width: 800px;
+    width: 100%;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .manager-nav {
     display: flex;
-    gap: 20px;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    background-color: $navbar;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
 }
 
 .manager-nav-item {
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
+    a {
+        text-decoration: none;
+        color: $general_dark;
+        font-size: 1.2em;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+            background-color: $button_light;
+            color: $general_light;
+        }
     }
 }
+
+.manager-nav-item-active {
+    text-decoration: underline;
+}
+
+.manager-nav-item-active {
+    text-decoration: underline;
+}
+
+.manager-nav-item-active {
+    text-decoration: underline;
+}
+

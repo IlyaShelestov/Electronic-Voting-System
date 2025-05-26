@@ -4,11 +4,10 @@ import { useTranslations } from "next-intl";
 
 
 export default function ManagerLayout({ children }: { children: React.ReactNode }) {
-    const t = useTranslations('Manager');
     return (
-        <>
-            <h1>{t('title')}</h1>
+        <div className="manager-layout">
+            <h1>Manager</h1>
             {children}
-        </>
+        </div>
     );
 }

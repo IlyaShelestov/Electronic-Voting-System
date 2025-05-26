@@ -1,0 +1,92 @@
+@import '../../../../styles/variables.scss';
+
+.manager-resource-page {
+    padding: 20px;
+    font-family: sans-serif;
+    background-color: $general_light;
+
+    h1 {
+        color: $general_dark;
+        margin-bottom: 20px;
+    }
+}
+
+.manager-button {
+    background-color: $button_light;
+    color: $general_light;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $button_hover_light;
+    }
+}
+
+.manager-form {
+    background-color: $border_light;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+
+    .form-group {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: $general_dark;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid $selected;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: $general_light;
+            color: $general_dark;
+
+            &:focus {
+                border-color: $button_light;
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(0, 173, 181, 0.25);
+            }
+        }
+    }
+
+    .submit-button {
+        background-color: $button_dark;
+        color: $general_light;
+        &:hover {
+            background-color: $button_hover_dark;
+        }
+    }
+}
+
+.manager-list {
+    list-style: none;
+    padding: 0;
+
+    .manager-list-item {
+        background-color: $border_light;
+        padding: 15px;
+        border: 1px solid $selected;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $general_dark;
+    }
+}

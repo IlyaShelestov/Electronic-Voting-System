@@ -1,8 +1,8 @@
 import { IUser } from "./IUser";
 
 export interface ICandidate extends IUser {
-  election_id: number;
-  candidate_id: number;
+  election_id?: number;
+  candidate_id?: number;
   bio: string;
   party: string;
   avatar_url?: string;

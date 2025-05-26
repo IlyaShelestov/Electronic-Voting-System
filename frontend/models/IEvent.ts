@@ -1,9 +1,6 @@
 export interface IEvent {
-    id?: number;
-    name: string;
+    event_id?: number;
+    title: string;
     description: string;
-    start_date: Date;
-    end_date: Date;
-    location: string;
-    image: string;
+    event_date: string;
 }
