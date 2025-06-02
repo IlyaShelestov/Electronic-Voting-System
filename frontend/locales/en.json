@@ -1,78 +1,105 @@
 {
-  "header": {
+  "auth": {
     "login": "Login",
+    "registration": "Registration",
     "register": "Register",
-    "profile": "Profile",
-    "logout": "Logout"
-  },
-  "languageSwitcher": {
-    "login": "Login"
-  },
-  "login": {
-    "title": "Login",
-    "username": "Username",
-    "password": "Password",
+    "logout": "Logout",
+    "alreadyHaveAccount": "Already have an account?",
     "forgotPassword": "Forgot password?",
-    "submit": "Login"
-  },
-  "register": {
-    "title": "Register",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "iin": "IIN",
+    "iinPlaceholder": "Enter your IIN",
     "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
     "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
     "patronymic": "Patronymic",
+    "patronymicPlaceholder": "Enter your patronymic",
     "dateOfBirth": "Date of Birth",
-    "region": "Region",
+    "dateOfBirthPlaceholder": "Enter your date of birth",
     "city": "City",
     "phoneNumber": "Phone Number",
     "email": "Email",
-    "password": "Password",
-    "submit": "Register"
+    "emailPlaceholder": "Enter your email",
+    "phoneNumberPlaceholder": "Enter your phone number",
+    "cityPlaceholder": "Enter your city"
   },
-  "profile": {
-    "title": "Profile",
-    "editProfile": "Edit Profile",
-    "changePassword": "Change Password",
-    "deleteAccount": "Delete Account",
-    "saveChanges": "Save Changes"
+  "elections": {
+    "title": "Elections",
+    "viewCandidates": "View Candidates",
+    "date": "Date",
+    "votes": "Votes"
   },
-  "passwordChange": {
-    "currentPassword": "Current Password",
-    "newPassword": "New Password",
-    "confirmNewPassword": "Confirm New Password",
-    "submit": "Change Password"
+  "loginPage": {
+    "title": "Login",
+    "forbiddenAccess": "Access Denied",
+    "serverError": "An unexpected error occurred. Please try again later.",
+    "unknownError": "An unexpected error occurred. Please try again later."
   },
-  "error": {
-    "invalidCredentials": "Invalid username or password",
-    "userNotFound": "User not found",
-    "emailAlreadyExists": "Email already exists",
-    "passwordMismatch": "Passwords do not match",
-    "serverError": "Server error, please try again later"
+  "registrationPage": {
+    "title": "Registration",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login"
   },
-  "success": {
-    "registrationSuccess": "Registration successful, please login",
-    "profileUpdated": "Profile updated successfully",
-    "passwordChanged": "Password changed successfully",
-    "accountDeleted": "Account deleted successfully"
+  "adminPage": {
+    "title": "Admin Panel",
+    "userManagement": "User Management",
+    "requestHandling": "Request Handling",
+    "createUser": "Create User",
+    "updateUser": "Update User",
+    "edit": "Edit",
+    "delete": "Delete",
+    "actions": "Actions",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "city": "City",
+    "role": "Role",
+    "searchPlaceholder": "Search by name or email",
+    "usersPerPage": "Users per page",
+    "filterPlaceholder": {
+      "name": "Search by name",
+      "email": "Search by email",
+      "role": "Search by role",
+      "iin": "Search by IIN",
+      "cityId": "Search by city ID",
+      "phoneNumber": "Search by phone number"
+    },
+    "filterType": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "iin": "IIN",
+      "cityId": "City ID",
+      "phoneNumber": "Phone Number"
+    }
   },
-  "validation": {
-    "required": "This field is required",
-    "email": "Invalid email address",
-    "phoneNumber": "Invalid phone number",
-    "passwordLength": "Password must be at least 6 characters long",
-    "passwordMatch": "Passwords do not match"
-  },
-  "home": {
-    "title": "Главная страница"
+  "homePage": {
+    "title": "Home",
+    "bannerAlt": "Election Banner",
+    "currentElections": "Current",
+    "viewCandidates": "View Candidates",
+    "date": "Date",
+    "votes": "Votes"
   },
   "sidebar": {
-    "title": "Навигация",
-    "home": "Главная",
-    "vote": "Проголосовать",
-    "instructions": "Инструкция",
-    "profile": "Профиль",
-    "support": "Тех. поддержка",
-    "about": "О нас",
-    "admin": "Админ",
-    "logout": "Выход"
+    "title": "Navigation",
+    "home": "Home",
+    "vote": "Vote",
+    "instructions": "Instructions",
+    "profile": "Profile",
+    "support": "Support",
+    "about": "About Us",
+    "logout": "Logout",
+    "admin": "Admin",
+    "manager": "Manager"
+  },
+  "errors": {
+    "missingFields": "Please fill in all required fields.",
+    "invalidCredentials": "Invalid IIN or password.",
+    "serverError": "An unexpected error occurred. Please try again later.",
+    "networkError": "Network error. Please check your connection and try again."
   }
 }

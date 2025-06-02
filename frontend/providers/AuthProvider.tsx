@@ -5,7 +5,7 @@ import { useEffect, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks";
 import { login, logout } from "@/store/slices/userSlice";
-import { userService } from "@/services/userService";
+import { UserService } from "@/services/userService";
 import {
   getAuthToken,
   isTokenExpired,
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (token && !isTokenExpired(token)) {
         try {
-          const user = await userService.getUser();
+          const user = await UserService.getUser();
           if (user) {
             dispatch(login(user));
           } else {

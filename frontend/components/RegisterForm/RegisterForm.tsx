@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { IUser } from "@/models/IUser";
-import { locationsService } from "@/services/locationsService";
+import { LocationsService } from "@/services/locationsService";
 import { ICity } from "@/models/ICity";
 import { useTranslations } from "next-intl";
 
@@ -28,8 +28,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   useEffect(() => {
     const fetchCities = async () => {
-      const citiesData = await locationsService.getCities();
-      console.log(citiesData);
+      const citiesData = await LocationsService.getCities();
       setCities(citiesData);
       if (citiesData.length > 0) {
         setFormData((prev) => ({ ...prev, city_id: citiesData[0].city_id }));

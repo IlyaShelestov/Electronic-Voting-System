@@ -4,7 +4,7 @@ import "./ElectionCard.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "use-intl";
-import { electionService } from "@/services/electionService";
+import { ElectionService } from "@/services/electionService";
 import { IElection } from "@/models/IElection"; 
 import { IReport } from "@/models/IReport";
 import { RightArrowCircle } from "@/icons/RightArrowCircle";
@@ -23,8 +23,8 @@ export default function ElectionCard({ election, locale }: Props) {
 
   const handleToggle = async () => {
     setExpanded(!expanded);
-    if (!reportData && !expanded) {
-      const report = await electionService.getReport(election.election_id);
+    if (!reportData && !expanded && election.election_id) {
+      const report = await ElectionService.getReport(election.election_id);
       setReportData(report);
     }
   };

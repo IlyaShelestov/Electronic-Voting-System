@@ -9,7 +9,7 @@ import { SupportIcon } from "@/icons/SupportIcon";
 import { VoteIcon } from "@/icons/VoteIcon";
 import { AdminIcon } from "@/icons/AdminIcon";
 import { ManagerIcon } from "@/icons/ManagerIcon";
-import { authService } from "@/services/authService";
+import { AuthService } from "@/services/authService";
 import { useIsAuthenticated, useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/userSlice";  
 import { useLocale, useTranslations } from "next-intl";
@@ -33,7 +33,7 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await authService.logout();
+      await AuthService.logout();
     } catch (error) {
       console.error("Failed to logout cleanly:", error);
     } finally {

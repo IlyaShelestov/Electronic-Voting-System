@@ -6,7 +6,7 @@ import './UserManagement.scss';
 import UserUpdateModal from '@/components/UserUpdateModal/UserUpdateModal';
 import { FaPlus, FaTrash, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-import { fetchUsers, updateUser, deleteUser } from '@/services/adminService';
+import { AdminService } from '@/services/adminService';
 
 export default function UserManagement() {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -28,7 +28,7 @@ export default function UserManagement() {
 
     const loadUsers = async () => {
         try {
-            const data = await fetchUsers();
+            const data = await AdminService.fetchUsers();
             setUsers(data);
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -43,7 +43,7 @@ export default function UserManagement() {
     const handleSave = async (updatedUser: IUser) => {
         if (updatedUser.user_id !== undefined) {
             try {
-                await updateUser(updatedUser.user_id, updatedUser);
+                await AdminService.updateUser(updatedUser.user_id, updatedUser);
                 setIsModalOpen(false);
                 loadUsers();
             } catch (error) {
@@ -54,7 +54,7 @@ export default function UserManagement() {
 
     const handleDelete = async (userId: number) => {
         try {
-            await deleteUser(userId);
+            await AdminService.deleteUser(userId);
             loadUsers();
         } catch (error) {
             console.error('Error deleting user:', error);

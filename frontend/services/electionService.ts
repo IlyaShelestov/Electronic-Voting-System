@@ -5,28 +5,30 @@ import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import { IReport } from "@/models/IReport";
 
-const apiEndpoint = `${API_URL}/elections`;
 
-export const electionService = {
-  getAll: async (): Promise<IElection[]> => {
-    return fetchWithCache<IElection[]>(`${apiEndpoint}`);
-  },
 
-  getAvailable: async (): Promise<IElection[]> => {
-    return fetchWithCache<IElection[]>(`${apiEndpoint}/avaliable`);
-  },
+export class ElectionService {
+  private static apiEndpoint = `${API_URL}/elections`;
 
-  getById: async (id: number): Promise<IElection> => {
-    return fetchWithCache<IElection>(`${apiEndpoint}/${id}`);
-  },
+  public static async getAll(): Promise<IElection[]> {
+    return fetchWithCache<IElection[]>(`${this.apiEndpoint}`);
+  }
 
-  getCandidates: async (electionId: number): Promise<ICandidate[]> => {
+  public static async getAvailable(): Promise<IElection[]> {
+    return fetchWithCache<IElection[]>(`${this.apiEndpoint}/avaliable`);
+  }
+
+  public static async getById(id: number): Promise<IElection> {
+    return fetchWithCache<IElection>(`${this.apiEndpoint}/${id}`);
+  }
+
+  public static async getCandidates(electionId: number): Promise<ICandidate[]> {
     return fetchWithCache<ICandidate[]>(
-      `${apiEndpoint}/${electionId}/candidates`
+      `${this.apiEndpoint}/${electionId}/candidates`
     );
-  },
+  }
 
-  getReport: async (electionId: number): Promise<IReport[]> => {
-    return fetchWithCache<IReport[]>(`${apiEndpoint}/${electionId}/report`);
-  },
-};
+  public static async getReport(electionId: number): Promise<IReport[]> {
+    return fetchWithCache<IReport[]>(`${this.apiEndpoint}/${electionId}/report`);
+  }
+}

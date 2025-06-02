@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { electionService } from "@/services/electionService";
+import { ElectionService } from "@/services/electionService";
 import ElectionCard from "@/components/ElectionCard/ElectionCard";
 import { useTranslations, useLocale } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchElections = async () => {
-      const elections = await electionService.getAll();
+      const elections = await ElectionService.getAll();
       dispatch(setElections(elections));
     };
     fetchElections();

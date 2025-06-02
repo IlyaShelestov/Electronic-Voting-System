@@ -1,31 +1,105 @@
 {
-  "header": {
-    "login": "Войти",
-    "register": "Регистрация",
+  "auth": {
+    "login": "Кіру",
+    "registration": "Тіркелу",
+    "register": "Тіркелу",
+    "logout": "Шығу",
+    "alreadyHaveAccount": "Аккаунтыңыз бар ма?",
+    "forgotPassword": "Құпиясөзді ұмыттыңыз ба?",
+    "password": "Құпиясөз",
+    "passwordPlaceholder": "Құпиясөзді енгізіңіз",
+    "iin": "ЖСН",
+    "iinPlaceholder": "ЖСН енгізіңіз",
+    "firstName": "Аты",
+    "firstNamePlaceholder": "Атыңызды енгізіңіз",
+    "lastName": "Тегі",
+    "lastNamePlaceholder": "Тегіңізді енгізіңіз",
+    "patronymic": "Әкесінің аты",
+    "patronymicPlaceholder": "Әкесінің атын енгізіңіз",
+    "dateOfBirth": "Туған күні",
+    "dateOfBirthPlaceholder": "Туған күніңізді енгізіңіз",
+    "city": "Қала",
+    "phoneNumber": "Телефон нөмірі",
+    "email": "Электрондық пошта",
+    "emailPlaceholder": "Электрондық поштаңызды енгізіңіз",
+    "phoneNumberPlaceholder": "Телефон нөміріңізді енгізіңіз",
+    "cityPlaceholder": "Қаланы енгізіңіз"
+  },
+  "elections": {
+    "title": "Сайлау",
+    "viewCandidates": "Кандидаттарды қарау",
+    "date": "Күні",
+    "votes": "Дауыс"
+  },
+  "loginPage": {
+    "title": "Жүйеге кіру",
+    "forbiddenAccess": "Қатынау рұқсат етілмеген",
+    "serverError": "Күтпеген қате орын алды. Кейінірек қайталап көріңіз.",
+    "unknownError": "Күтпеген қате орын алды. Кейінірек қайталап көріңіз."
+  },
+  "registrationPage": {
+    "title": "Тіркелу",
+    "alreadyHaveAccount": "Аккаунтыңыз бар ма?",
+    "login": "Кіру"
+  },
+  "adminPage": {
+    "title": "Әкімші панелі",
+    "userManagement": "Пайдаланушыларды басқару",
+    "requestHandling": "Сұраныстарды өңдеу",
+    "createUser": "Пайдаланушыны қосу",
+    "updateUser": "Пайдаланушыны жаңарту",
+    "edit": "Өңдеу",
+    "delete": "Жою",
+    "actions": "Әрекеттер",
+    "firstName": "Аты",
+    "lastName": "Тегі",
+    "email": "Электрондық пошта",
+    "phoneNumber": "Телефон нөмірі",
+    "city": "Қала",
+    "role": "Рөл",
+    "searchPlaceholder": "Аты немесе email бойынша іздеу",
+    "usersPerPage": "Беттегі пайдаланушылар саны",
+    "filterPlaceholder": {
+      "name": "Аты бойынша іздеу",
+      "email": "Email бойынша іздеу",
+      "role": "Рөлі бойынша іздеу",
+      "iin": "ЖСН бойынша іздеу",
+      "cityId": "Қала ID бойынша іздеу",
+      "phoneNumber": "Телефон нөмірі бойынша іздеу"
+    },
+    "filterType": {
+      "name": "Аты",
+      "email": "Email",
+      "role": "Рөлі",
+      "iin": "ЖСН",
+      "cityId": "Қала ID",
+      "phoneNumber": "Телефон нөмірі"
+    }
+  },
+  "homePage": {
+    "title": "Басты бет",
+    "bannerAlt": "Сайлау баннері",
+    "currentElections": "Актуалды",
+    "viewCandidates": "Кандидаттарды қарау",
+    "date": "Күні",
+    "votes": "Дауыс"
+  },
+  "sidebar": {
+    "title": "Навигация",
+    "home": "Басты бет",
+    "vote": "Дауыс беру",
+    "instructions": "Нұсқаулық",
     "profile": "Профиль",
-    "logout": "Выйти"
+    "support": "Тех. қолдау",
+    "about": "Біз туралы",
+    "logout": "Шығу",
+    "admin": "Әкімші",
+    "manager": "Менеджер"
   },
-  "languageSwitcher": {
-    "login": "Войти"
-  },
-  "login": {
-    "title": "Вход",
-    "username": "Логин",
-    "password": "Пароль",
-    "forgotPassword": "Забыли пароль?",
-    "submit": "Войти"
-  },
-  "register": {
-    "title": "Регистрация",
-    "firstName": "Имя",
-    "lastName": "Фамилия",
-    "patronymic": "Отчество",
-    "dateOfBirth": "Дата рождения",
-    "region": "Область",
-    "city": "Город",
-    "phoneNumber": "Номер телефона",
-    "email": "Электронная почта",
-    "password": "Пароль",
-    "submit": "Зарегистрироваться"
+  "errors": {
+    "missingFields": "Барлық міндетті өрістерді толтырыңыз.",
+    "invalidCredentials": "ЖСН немесе құпиясөз қате.",
+    "serverError": "Күтпеген қате орын алды. Кейінірек қайталап көріңіз.",
+    "networkError": "Желі қатесі. Байланысты тексеріп, қайта көріңіз."
   }
 }

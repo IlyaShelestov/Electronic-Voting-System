@@ -9,10 +9,9 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setLoading } from "@/store/slices/loadingSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/reduxStore";
-import { authService } from "@/services/authService";
+import { AuthService } from "@/services/authService";
 import { removeAuthToken } from "@/utils/tokenHelper";
 import LoginForm from "@/components/LoginForm/LoginForm";
-import LoadingCircle from "@/components/LoadingCircle/LoadingCircle";
 import { ILogin } from "@/models/ILogin";
 import "./Login.scss";
 
@@ -31,7 +30,7 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     mutationFn: (loginData: ILogin) =>
-      authService.login(loginData.iin, loginData.password),
+      AuthService.login(loginData.iin, loginData.password),
     onMutate: () => {
       dispatch(setLoading({ key: "auth", value: true }));
     },

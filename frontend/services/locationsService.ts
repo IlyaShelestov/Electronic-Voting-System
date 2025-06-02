@@ -5,20 +5,20 @@ import { fetchWithCache } from "@/utils/fetchWithCache";
 
 const apiEndpoint = `${API_URL}/locations`;
 
-export const locationsService = {
-  getCities: async (): Promise<ICity[]> => {
+export class LocationsService {
+  public static async getCities(): Promise<ICity[]> {
     return fetchWithCache<ICity[]>(`${apiEndpoint}/cities`);
-  },
+  }
 
-  getCityById: async (id: number): Promise<ICity> => {
+  public static async getCityById(id: number): Promise<ICity> {
     return fetchWithCache<ICity>(`${apiEndpoint}/cities/${id}`);
-  },
+  }
 
-  getRegions: async (): Promise<IRegion[]> => {
+  public static async getRegions(): Promise<IRegion[]> {
     return fetchWithCache<IRegion[]>(`${apiEndpoint}/regions`);
-  },
+  }
 
-  getRegionById: async (id: number): Promise<IRegion> => {
+  public static async getRegionById(id: number): Promise<IRegion> {
     return fetchWithCache<IRegion>(`${apiEndpoint}/regions/${id}`);
-  },
-};
+  }
+}
