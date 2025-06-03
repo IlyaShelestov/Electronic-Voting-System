@@ -1,18 +1,24 @@
 @use "../../styles/variables.scss" as *;
 .sidebar {
   grid-area: sidebar;
-
   position: fixed;
   transition: all 0.3s ease-in-out;
-  height: $sidebar_height;
+  max-height: $sidebar_height;
+  height: 100%;
   max-width: $sidebar_width;
   width: 100%;
+  overflow-y: auto;
 
   .sidebar-content {
     background: $navbar;
     padding: 1rem;
-    height:100%;
+    height: 100%;
     padding-top: 0;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
   
   &.open {
@@ -26,11 +32,9 @@
   }
 
   ul {
-    height: 100%;
     list-style: none;
     li {
-      border-radius: 30px;
-      font-size: 20px;
+      border-radius: 12px;
       margin-bottom: 16px;
       a {
         padding: 10px 15px;
@@ -51,8 +55,14 @@
     }
   }
 
+  .nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+  }
+
   .logout {
-    font-size: 24px;
     border: none;
     cursor: pointer;
     width: 100%;
@@ -61,7 +71,7 @@
     gap: 10px;
     background-color: transparent;
     padding: 10px 15px;
-    border-radius: 30px;
+    border-radius: 12px;
     color: $button_hover_light;
 
     &:hover {

@@ -68,41 +68,36 @@ export default function Sidebar() {
       className={`sidebar ${!isAuthenticated ? "hidden" : "open"}`}
       aria-label="Sidebar Navigation"
     >
-      <div className="sidebar-content">
-        <Logo />
-        <nav>
-          <ul>
-            {tabs.map(({ icon: Icon, path, title }, index) => {
-              const fullPath = `/${locale}${path}`;
-              const isActive = pathname === fullPath;
-              return (
-                <li
-                  key={index}
-                  className={isActive ? "active" : ""}
-                >
-                  <Link
-                    href={fullPath}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    <Icon
-                      {...(isActive ? iconStyles.active : iconStyles.default)}
-                    />
-                    <span>{title}</span>  
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-          <button
-            className="logout"
-            onClick={handleLogout}
-            aria-label="Logout"
-          >
-            <LeftArrowIcon {...iconStyles.default} />
-            <span>{t("logout")}</span>
-          </button>
-        </nav>
-      </div>
+<div className="sidebar-content">
+  <Logo />
+
+  <nav className="nav">
+    <ul>
+      {tabs.map(({ icon: Icon, path, title }, index) => {
+        const fullPath = `/${locale}${path}`;
+        const isActive = pathname === fullPath;
+        return (
+          <li key={index} className={isActive ? "active" : ""}>
+            <Link href={fullPath} aria-current={isActive ? "page" : undefined}>
+              <Icon {...(isActive ? iconStyles.active : iconStyles.default)} />
+              <span>{title}</span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+
+    {/* ✅ Make sure this is inside the .nav block */}
+    <button
+      className="logout"
+      onClick={handleLogout}
+      aria-label="Logout"
+    >
+      <LeftArrowIcon {...iconStyles.default} />
+      <span>{t("logout")}</span>
+    </button>
+  </nav>
+</div>
 
     </aside>
   );
