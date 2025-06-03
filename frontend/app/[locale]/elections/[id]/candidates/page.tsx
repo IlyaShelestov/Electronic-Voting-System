@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { electionService } from "@/services/electionService";
+import { ElectionService } from "@/services/electionService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import CandidatePopup from "@/components/CandidatePopup/CandidatePopup";
@@ -22,10 +22,10 @@ export default function CandidatesPage() {
   useEffect(() => {
     const fetchElectionData = async () => {
       try {
-        const electionData = await electionService.getById(Number(id));
+        const electionData = await ElectionService.getById(Number(id));
         setElection(electionData);    
 
-        const candidatesData = await electionService.getCandidates(Number(id));
+        const candidatesData = await ElectionService.getCandidates(Number(id));
         setCandidates(candidatesData);
       } catch (error) {
         console.error("Error fetching election data:", error);

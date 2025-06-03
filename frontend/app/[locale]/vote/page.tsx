@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { electionService } from "@/services/electionService";
-import { voteService } from "@/services/voteService";
+import { ElectionService } from "@/services/electionService";
+import { VoteService } from "@/services/voteService";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import "./Vote.scss";
@@ -26,7 +26,7 @@ export default function VotePage() {
     useEffect(() => {
         const fetchElections = async () => {
             try {
-                const data = await electionService.getAll();
+                const data = await ElectionService.getAll();
                 setElections(data);
             } catch (error) {
                 toast.error("Ошибка загрузки выборов.");
@@ -42,12 +42,12 @@ export default function VotePage() {
             if (selectedElection) {
                 try {
                     setLoading(true);
-                    const data = await electionService.getCandidates(selectedElection);
+                    const data = await ElectionService.getCandidates(selectedElection);
                     setCandidates(data);
 
                     if (queryCandidateId) {
                         const candidateExists = data.some(
-                            (candidate: { candidate_id: number; }) => candidate.candidate_id === Number(queryCandidateId)
+                            (candidate: ICandidate) => candidate.candidate_id === Number(queryCandidateId)
                         );
                         if (candidateExists) {
                             setSelectedCandidate(Number(queryCandidateId));
@@ -78,7 +78,7 @@ export default function VotePage() {
         const checkVotingStatus = async () => {
             if (selectedElection) {
                 try {
-                    const status = await voteService.checkVotedStatus(selectedElection);
+                    const status = await VoteService.checkVotedStatus(selectedElection);
                     setHasVoted(status.hasVoted);
                 } catch (error) {
                     console.error('Error checking voting status:', error);
@@ -106,7 +106,7 @@ export default function VotePage() {
     const handleOtpSubmit = async (otp: string) => {
         if (selectedCandidate !== null) {
             try {
-                await voteService.castVote(Number(selectedElection), selectedCandidate, otp);
+                await VoteService.castVote(Number(selectedElection), selectedCandidate, otp);
                 setIsOtpModalOpen(false);
                 toast.success("Ваш голос успешно принят!");
             } catch (error) {
@@ -148,7 +148,7 @@ export default function VotePage() {
                                         name="candidate"
                                         value={candidate.candidate_id}
                                         checked={selectedCandidate === candidate.candidate_id}
-                                        onChange={() => setSelectedCandidate(candidate.candidate_id)}
+                                        onChange={() => setSelectedCandidate(candidate.candidate_id ?? null)}
                                     />
                                     {candidate.first_name + " " + candidate.last_name}
                                 </label>

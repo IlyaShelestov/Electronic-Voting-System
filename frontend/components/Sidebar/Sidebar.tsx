@@ -50,7 +50,7 @@ export default function Sidebar() {
   const tabs = [
     { icon: HomeIcon, path: "", title: t("home") },
     { icon: VoteIcon, path: "/vote", title: t("vote") },
-    // { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
+    { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
     { icon: ProfileIcon, path: "/profile", title: t("profile") },
     { icon: SupportIcon, path: "/support", title: t("support") },
     { icon: AboutUsIcon, path: "/about", title: t("about") },
@@ -68,39 +68,42 @@ export default function Sidebar() {
       className={`sidebar ${!isAuthenticated ? "hidden" : "open"}`}
       aria-label="Sidebar Navigation"
     >
-      <Logo />
-      <nav className="sidebar_wrapper">
-        <ul>
-          {tabs.map(({ icon: Icon, path, title }, index) => {
-            const fullPath = `/${locale}${path}`;
-            const isActive = pathname === fullPath;
-            return (
-              <li
-                key={index}
-                className={isActive ? "active" : ""}
-              >
-                <Link
-                  href={fullPath}
-                  aria-current={isActive ? "page" : undefined}
+      <div className="sidebar-content">
+        <Logo />
+        <nav>
+          <ul>
+            {tabs.map(({ icon: Icon, path, title }, index) => {
+              const fullPath = `/${locale}${path}`;
+              const isActive = pathname === fullPath;
+              return (
+                <li
+                  key={index}
+                  className={isActive ? "active" : ""}
                 >
-                  <Icon
-                    {...(isActive ? iconStyles.active : iconStyles.default)}
-                  />
-                  <span>{title}</span>  
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <button
-          className="logout"
-          onClick={handleLogout}
-          aria-label="Logout"
-        >
-          <LeftArrowIcon {...iconStyles.default} />
-          <span>{t("logout")}</span>
-        </button>
-      </nav>
+                  <Link
+                    href={fullPath}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    <Icon
+                      {...(isActive ? iconStyles.active : iconStyles.default)}
+                    />
+                    <span>{title}</span>  
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            className="logout"
+            onClick={handleLogout}
+            aria-label="Logout"
+          >
+            <LeftArrowIcon {...iconStyles.default} />
+            <span>{t("logout")}</span>
+          </button>
+        </nav>
+      </div>
+
     </aside>
   );
 };

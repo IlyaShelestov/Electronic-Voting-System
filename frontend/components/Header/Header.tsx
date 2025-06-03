@@ -3,7 +3,7 @@
 import Logo from "../Logo/Logo";
 import "./Header.scss";
 import Link from "next/link";
-import { useIsAuthenticated, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { useRouter, usePathname } from "next/navigation";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import { useLocale } from "use-intl";
@@ -26,24 +26,27 @@ const Header = () => {
   };
 
   return (
-    <header>
-      {!user ? (
-        <Link href={`/${locale}`}>
-          <Logo />
-        </Link>
-      ) : (
-        <Link
-          href={`/${locale}/profile`}
-          className="user"
-        >
-          {user.first_name} {user.last_name}
-        </Link>
-      )}
+    <header className="header">
+      <div className="header-content">
 
-      <LanguageSwitcher
-        currentLocale={locale}
-        onChange={handleLocaleChange}
-      />
+        {!user ? (
+          <Link href={`/${locale}`}>
+            <Logo />
+          </Link>
+        ) : (
+          <Link
+            href={`/${locale}/profile`}
+            className="user"
+          >
+            {user.first_name} {user.last_name}
+          </Link>
+        )}
+
+        <LanguageSwitcher
+          currentLocale={locale}
+          onChange={handleLocaleChange}
+        />
+      </div>
     </header>
   );
 };

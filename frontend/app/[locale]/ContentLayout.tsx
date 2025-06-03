@@ -13,8 +13,8 @@ export default function ContentLayout({ children }: { children: React.ReactNode 
 
   return (
     <>
-      {isAuthenticated && <Sidebar />}
       <div className={`content ${isAuthenticated ? 'authenticated' : ''}`}>
+        {isAuthenticated && <Sidebar />}
         <Header />
         <Main>
           {isLoading && <LoadingCircle />}
