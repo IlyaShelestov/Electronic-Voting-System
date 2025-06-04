@@ -4,8 +4,9 @@ export async function fetchWithCache<T>(url: string): Promise<T> {
       method: "GET",
       credentials: "include",
       cache: "force-cache",
-      next: { revalidate: 60 },
     });
+
+    console.log(response)
 
     if (!response.ok) {
       console.error(`Error fetching ${url}:`, response.statusText);

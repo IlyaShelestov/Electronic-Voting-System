@@ -1,15 +1,18 @@
 @use "../../styles/variables.scss" as *;
-.header {
-  height: $header_height;
+.header { 
   grid-area: header;
   width: 100%;
-  .header-content {
+  max-height: $header_height;
+  &-content {
     background-color: $navbar;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
   }
 
   .user {

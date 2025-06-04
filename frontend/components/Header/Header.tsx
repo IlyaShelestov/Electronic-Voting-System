@@ -6,23 +6,17 @@ import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter, usePathname } from "next/navigation";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
-import { useLocale } from "use-intl";
+import { setUserLocale } from "@/utils/locale";
+import { Locale } from "@/i18n/config";
+
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);
-  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLocaleChange = (newLocale: string) => {
-    let pathWithoutLocale = pathname;
-    const pathParts = pathname.split("/");
-
-    if (["en", "ru", "kz"].includes(pathParts[1])) {
-      pathWithoutLocale = "/" + pathParts.slice(2).join("/");
-    }
-
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+  const handleLocaleChange = (newLocale: Locale) => {
+    setUserLocale(newLocale);
   };
 
   return (
@@ -30,12 +24,12 @@ const Header = () => {
       <div className="header-content">
 
         {!user ? (
-          <Link href={`/${locale}`}>
+          <Link href={`/`}>
             <Logo />
           </Link>
         ) : (
           <Link
-            href={`/${locale}/profile`}
+            href={`/profile`}
             className="user"
           >
             {user.first_name} {user.last_name}
@@ -43,7 +37,6 @@ const Header = () => {
         )}
 
         <LanguageSwitcher
-          currentLocale={locale}
           onChange={handleLocaleChange}
         />
       </div>

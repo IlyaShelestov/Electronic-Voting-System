@@ -1,4 +1,4 @@
-@import '../../../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .manager-resource-page {
     padding: 20px;
@@ -28,7 +28,7 @@
 }
 
 .manager-form {
-    background-color: $border_light;
+    background-color: $border_light; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -46,10 +46,10 @@
 
         input[type="text"],
         input[type="date"],
-        input[type="number"] {
+        textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid $selected;
+            border: 1px solid $selected; 
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 1em;
@@ -59,13 +59,18 @@
             &:focus {
                 border-color: $button_light;
                 outline: none;
-                box-shadow: 0 0 0 0.2rem rgba(0, 173, 181, 0.25);
+                box-shadow: 0 0 0 0.2rem rgba(0, 173, 181, 0.25); 
             }
+        }
+        
+        textarea {
+            min-height: 100px; // Adjusted for potentially longer descriptions
+            resize: vertical;
         }
     }
 
     .submit-button {
-        background-color: $button_dark;
+        background-color: $button_dark; 
         color: $general_light;
         &:hover {
             background-color: $button_hover_dark;
@@ -89,4 +94,11 @@
         align-items: center;
         color: $general_dark;
     }
+}
+
+.loading-message {
+    color: $general_dark;
+    font-size: 1.2em;
+    padding: 20px;
+    text-align: center;
 }

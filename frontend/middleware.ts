@@ -1,9 +1,7 @@
+// middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import createMiddleware from "next-intl/middleware";
-import { routing } from "@/i18n/routing";
-import { getLocale } from "next-intl/server";
-
-const intlMiddleware = createMiddleware(routing);
+import createIntlMiddleware from 'next-intl/middleware';
+import { defaultLocale, locales } from "./i18n/config";
 
 const PUBLIC_ROUTES = ["/auth/login", "/auth/register", "/"];
 const IGNORED_PATHS = [
@@ -25,27 +23,16 @@ function isIgnoredPath(pathname: string): boolean {
   return IGNORED_PATHS.some((prefix) => pathname.startsWith(prefix));
 }
 
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const defaultLocale = await getLocale();
-  if (pathname === '/') {
-    return NextResponse.redirect(new URL(`/${defaultLocale}`, req.url));
+
+  if (isIgnoredPath(pathname)) {
+    return NextResponse.next();
   }
 
-  if (isIgnoredPath(pathname)) return intlMiddleware(req);
-
-  const locale = await getLocale();
-
-  const isPublic = PUBLIC_ROUTES.some((publicPath) =>
-    pathname.startsWith(`/${locale}${publicPath}`)
-  );
-
-  if (isPublic) return intlMiddleware(req);
-
-
-  return intlMiddleware(req);
+  return;
 }
 
 export const config = {
-  matcher: ['/((?!api|trpc|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };

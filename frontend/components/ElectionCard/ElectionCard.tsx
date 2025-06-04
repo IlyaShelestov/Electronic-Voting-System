@@ -30,7 +30,7 @@ export default function ElectionCard({ election, locale }: Props) {
   };
 
   const navigateToCandidates = () => {
-    router.push(`/${locale}/elections/${election.election_id}/candidates`);
+    router.push(`/elections/${election.election_id}/candidates`);
   };
 
   return (

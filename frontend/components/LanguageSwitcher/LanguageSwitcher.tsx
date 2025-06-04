@@ -5,21 +5,20 @@ import { useIsAuthenticated } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import "./LanguageSwitcher.scss";
+import { Locale } from "@/i18n/config";
 
 interface LanguageSwitcherProps {
-  currentLocale: string;
-  onChange: (locale: string) => void;
+  onChange: (locale: Locale) => void;
 }
 
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
-  currentLocale,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
-  const locale = useLocale();
   const t = useTranslations("auth");
+  const currentLocale = useLocale();
 
   const languages = [
     { code: "ru", label: "РУС" },
@@ -30,13 +29,13 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   const currentLanguage =
     languages.find((lang) => lang.code === currentLocale) || languages[0];
 
-  const handleSelect = (selectedLocale: string) => {
+  const handleSelect = (selectedLocale: Locale) => {
     onChange(selectedLocale);
     setIsOpen(false);
   };
 
   const handleLogin = () => {
-    router.push(`/${locale}/auth/login`);
+    router.push(`/auth/login`);
   };
 
   return (
@@ -63,11 +62,11 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
               }`}
               role="option"
               aria-selected={currentLocale === code}
-              onClick={() => handleSelect(code)}
+              onClick={() => handleSelect(code as Locale)}
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  handleSelect(code);
+                  handleSelect(code as Locale);
                 }
               }}
             >

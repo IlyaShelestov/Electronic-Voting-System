@@ -1,6 +1,6 @@
 "use client";
 
-import { getCandidates, createCandidate } from "@/services/managerService";
+import { ManagerService} from "@/services/managerService";
 import { ICandidate } from "@/models/ICandidate";
 import { useEffect, useState } from "react";
 import './Candidates.scss';
@@ -9,15 +9,14 @@ export default function CandidatesPage() {
     const [candidates, setCandidates] = useState<ICandidate[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
-    // Initialize with all fields from ICandidate and IUser that we need for creation
     const [newCandidate, setNewCandidate] = useState<Partial<ICandidate>>({
         first_name: "",
         last_name: "",
-        iin: "", // Assuming IIN is required for user creation part of candidate
-        date_of_birth: "", // Assuming required
-        city_id: 0, // Assuming required
-        phone_number: "", // Assuming required
-        email: "", // Assuming required
+        iin: "",
+        date_of_birth: "",
+        city_id: 0,
+        phone_number: "",
+        email: "",
         bio: "",
         party: "",
         avatar_url: "",
@@ -29,7 +28,7 @@ export default function CandidatesPage() {
     const fetchCandidates = async () => {
         try {
             setLoading(true);
-            const data = await getCandidates();
+            const data = await ManagerService.getCandidates();
             setCandidates(data);
         } catch (error) {
             console.error("Failed to fetch candidates:", error);
@@ -66,7 +65,7 @@ export default function CandidatesPage() {
                 bio: newCandidate.bio || "",
                 party: newCandidate.party || "",
             };
-            await createCandidate(candidateDataToSend);
+            await ManagerService.createCandidate(candidateDataToSend);
             setShowForm(false);
             setNewCandidate({ // Reset form
                 first_name: "", last_name: "", iin: "", date_of_birth: "", city_id: 0, phone_number: "", email: "",

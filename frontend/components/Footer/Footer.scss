@@ -3,8 +3,9 @@
 .footer {
     grid-area: footer;
     &-content {
+        padding-top: 16px;
+        padding-bottom: 16px;
         background-color: $navbar;
-        padding: 12px;
         text-align: center;
         a {
             color: $general_dark;

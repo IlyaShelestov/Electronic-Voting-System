@@ -1,13 +1,12 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { redirect } from "next/navigation";
-import { routing } from "@/i18n/routing";
 import { ToastContainer } from "react-toastify";
-import ContentLayout from "@/app/[locale]/ContentLayout";
+import ContentLayout from "@/app/ContentLayout";
 import { AuthProvider } from "@/providers/AuthProvider";
 import MultiProvider from "@/providers/MultiProvider";
 import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import QueryProvider from "@/providers/QueryClientProvider";
+import { getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "eVote",
@@ -19,18 +18,13 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default async function LocaleLayout({
+export default async function RootLayout({
   children,
-  params
 }: {
   children: React.ReactNode;
   params: Promise<{locale: string}>;
 }) {
-  const {locale} = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    redirect(`/${routing.defaultLocale}`);
-  }
-
+  const locale = await getLocale();
   return (
     <html lang={locale}>
       <body>

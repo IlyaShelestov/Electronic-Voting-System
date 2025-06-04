@@ -3,8 +3,8 @@
 import OtpModal from "@/components/OtpModal/OtpModal";
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import { IUser } from "@/models/IUser";
-import { authService } from "@/services/authService";
-import { otpService } from "@/services/otpService";
+import { AuthService } from "@/services/authService";
+import { OtpService } from "@/services/otpService";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export default function RegisterPage() {
 
   const handleOnSubmit = async (registerData: IUser & { password: string }) => {
     try {
-      await otpService.sendOtp(registerData.email);
+      await OtpService.sendOtp(registerData.email);
       setPendingUserData(registerData);
       setIsOtpModalOpen(true);
     } catch (err: any) {
@@ -33,11 +33,11 @@ export default function RegisterPage() {
 
     try {
       const registrationData = { ...pendingUserData, otp };
-      const response = await authService.register(registrationData);
-      console.log("Registration successful:", response);
+      const response = await AuthService.register(registrationData);
+      console.log("Registration OtpService:", response);
       setIsOtpModalOpen(false);
       setPendingUserData(null);
-      setTimeout(() => router.push(`/${locale}/auth/login`), 1000);
+      setTimeout(() => router.push(`/auth/login`), 1000);
     } catch (err: any) {
       console.error("Registration error:", err);
       setIsOtpModalOpen(false);
@@ -50,7 +50,7 @@ export default function RegisterPage() {
       <RegisterForm onSubmit={handleOnSubmit} />
       <p className="text-center">
         {t("alreadyHaveAccount")}{" "}
-        <Link href={`/${locale}/auth/login`} className="text-blue-500">
+        <Link href={`/auth/login`} className="text-blue-500">
           {t("login")}
         </Link>
       </p>

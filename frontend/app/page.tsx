@@ -17,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchElections = async () => {
       const elections = await ElectionService.getAll();
+      console.log(elections)
       dispatch(setElections(elections));
     };
     fetchElections();

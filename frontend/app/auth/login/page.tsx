@@ -37,7 +37,7 @@ export default function LoginPage() {
     onSuccess: (data) => {
       console.log("Login success:", data);
       // You could route to dashboard here
-      router.push(`/${locale}`);
+      router.push(`/`);
     },
     onError: (error: any) => {
       const status = error?.response?.status;

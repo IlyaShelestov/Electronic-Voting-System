@@ -1,5 +1,5 @@
 "use client";
-import { createElection, getElections } from "@/services/managerService";
+import { ManagerService } from "@/services/managerService";
 import { IElection } from "@/models/IElection";
 import { useEffect, useState } from "react";
 import './Elections.scss';
@@ -19,7 +19,7 @@ export default function ElectionsPage() {
     const fetchElections = async () => {
         try {
             setLoading(true);
-            const data = await getElections();
+            const data = await ManagerService.getElections();
             setElections(data);
         } catch (error) {
             console.error("Failed to fetch elections:", error);
@@ -40,13 +40,12 @@ export default function ElectionsPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            // Ensure region_id and city_id are numbers before sending
             const electionDataToSend = {
                 ...newElection,
                 region_id: Number(newElection.region_id),
                 city_id: Number(newElection.city_id),
             };
-            await createElection(electionDataToSend as IElection); // Cast because createElection expects election_id, but backend should handle it
+            await ManagerService.createElection(electionDataToSend as IElection); // Cast because createElection expects election_id, but backend should handle it
             setShowForm(false);
             setNewElection({
                 title: "",
@@ -55,10 +54,9 @@ export default function ElectionsPage() {
                 region_id: 0,
                 city_id: 0,
             });
-            fetchElections(); // Refresh the list
+            fetchElections();
         } catch (error) {
             console.error("Failed to create election:", error);
-            // Optionally, display an error message to the user
         }
     };
 

@@ -27,7 +27,6 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const locale = useLocale();
   const t = useTranslations("sidebar");
   const role = useAppSelector((state) => state.user.user?.role);
 
@@ -38,7 +37,7 @@ export default function Sidebar() {
       console.error("Failed to logout cleanly:", error);
     } finally {
       dispatch(logout());
-      router.push(`/${locale}/`);
+      router.push(`/`);
     }
   };
 
@@ -48,7 +47,7 @@ export default function Sidebar() {
   };
 
   const tabs = [
-    { icon: HomeIcon, path: "", title: t("home") },
+    { icon: HomeIcon, path: "/", title: t("home") },
     { icon: VoteIcon, path: "/vote", title: t("vote") },
     { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
     { icon: ProfileIcon, path: "/profile", title: t("profile") },
@@ -74,7 +73,7 @@ export default function Sidebar() {
   <nav className="nav">
     <ul>
       {tabs.map(({ icon: Icon, path, title }, index) => {
-        const fullPath = `/${locale}${path}`;
+        const fullPath = `${path}`;
         const isActive = pathname === fullPath;
         return (
           <li key={index} className={isActive ? "active" : ""}>

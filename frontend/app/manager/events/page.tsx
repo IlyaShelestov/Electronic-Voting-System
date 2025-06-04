@@ -1,5 +1,5 @@
 "use client";
-import { getEvents, createEvent } from "@/services/managerService";
+import { ManagerService } from "@/services/managerService";
 import { IEvent } from "@/models/IEvent";
 import { useEffect, useState } from "react";
 import './Events.scss';
@@ -17,7 +17,7 @@ export default function EventsPage() {
     const fetchEvents = async () => {
         try {
             setLoading(true);
-            const data = await getEvents();
+            const data = await ManagerService.getEvents();
             setEvents(data);
         } catch (error) {
             console.error("Failed to fetch events:", error);
@@ -38,7 +38,7 @@ export default function EventsPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await createEvent(newEvent as IEvent);
+            await ManagerService.createEvent(newEvent as IEvent);
             setShowForm(false);
             setNewEvent({ title: "", description: "", event_date: "" });
             fetchEvents(); // Refresh list

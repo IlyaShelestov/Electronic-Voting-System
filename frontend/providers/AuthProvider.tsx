@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const locale = useLocale();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -49,13 +48,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const handleLogout = () => {
       removeAuthToken();
       dispatch(logout());
-      if (pathname !== `/${locale}/`) {
-        router.replace(`/${locale}/`);
-      }
+      router.push("/");
     };
 
     initializeAuth();
-  }, [dispatch, locale, pathname, router]);
+  }, [dispatch, pathname, router]);
 
   return (
     <>

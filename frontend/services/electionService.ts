@@ -10,6 +10,8 @@ import { IReport } from "@/models/IReport";
 export class ElectionService {
   private static apiEndpoint = `${API_URL}/elections`;
 
+
+
   public static async getAll(): Promise<IElection[]> {
     return fetchWithCache<IElection[]>(`${this.apiEndpoint}`);
   }
