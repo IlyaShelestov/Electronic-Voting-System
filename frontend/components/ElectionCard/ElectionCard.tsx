@@ -56,7 +56,12 @@ export default function ElectionCard({ election, locale }: Props) {
         </button>
       </div>
 
-      {expanded && reportData && <ElectionChart reportData={reportData} />}
+      {expanded && (
+        <div className={`election-chart-wrapper ${expanded && reportData ? "visible" : ""}`}>
+          {reportData && <div className="election-chart"><ElectionChart reportData={reportData} /></div>}
+        </div>
+      )}
+
     </div>
   );
 }

@@ -1,0 +1,19 @@
+.banner-slider {
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+  
+    .keen-slider__slide {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+  
+    .banner-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  }
+  

@@ -1,13 +1,18 @@
 @use "../../styles/variables.scss" as *;
+
 .sidebar {
   grid-area: sidebar;
   position: fixed;
-  transition: all 0.3s ease-in-out;
-  max-height: $sidebar_height;
+  top: 0;
+  left: 0;
   height: 100%;
+  width: $sidebar_width;
   max-width: $sidebar_width;
-  width: 100%;
+  max-height: $sidebar_height;
   overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+  z-index: 1000;
 
   .sidebar-content {
     background: $navbar;
@@ -20,15 +25,9 @@
     flex-direction: column;
     gap: 30px;
   }
-  
-  &.open {
-    left: 0;
-    top: 0;
-  }
 
   &.hidden {
-    left: -$sidebar_width;
-    top: 0;
+    transform: translateX(-100%);
   }
 
   ul {
@@ -36,6 +35,7 @@
     li {
       border-radius: 12px;
       margin-bottom: 16px;
+
       a {
         padding: 10px 15px;
         display: flex;
@@ -43,14 +43,16 @@
         gap: 10px;
         cursor: pointer;
       }
+
       &.active {
         background-color: $selected;
         color: $button_light;
         font-weight: bold;
       }
+
       &:hover {
         background-color: $selected;
-        transition: all 0.2s ease-out;
+        transition: background-color 0.2s ease-out;
       }
     }
   }
@@ -76,9 +78,7 @@
 
     &:hover {
       background: $button_danger;
-      transition: all 0.3s ease-in;
+      transition: background 0.3s ease-in;
     }
   }
-
-
 }

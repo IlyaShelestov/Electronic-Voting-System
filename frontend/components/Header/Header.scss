@@ -2,7 +2,7 @@
 .header { 
   grid-area: header;
   width: 100%;
-  max-height: $header_height;
+
   &-content {
     background-color: $navbar;
     width: 100%;
@@ -12,6 +12,7 @@
     justify-content: space-between;
     padding-top: 16px;
     padding-bottom: 16px;
+    max-height: $header_height;
 
   }
 

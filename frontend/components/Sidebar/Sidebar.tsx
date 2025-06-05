@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { AboutUsIcon } from "@/icons/AboutUsIcon";
 import { HomeIcon } from "@/icons/HomeIcon";
 import { InstructionsIcon } from "@/icons/InstructionsIcon";
@@ -12,23 +13,22 @@ import { ManagerIcon } from "@/icons/ManagerIcon";
 import { AuthService } from "@/services/authService";
 import { useIsAuthenticated, useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/userSlice";  
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "../Logo/Logo";
 
 import "./Sidebar.scss";
 
 export default function Sidebar() {
   const isAuthenticated = useIsAuthenticated();
-
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
-
   const t = useTranslations("sidebar");
   const role = useAppSelector((state) => state.user.user?.role);
+
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleLogout = async () => {
     try {
@@ -39,6 +39,10 @@ export default function Sidebar() {
       dispatch(logout());
       router.push(`/`);
     }
+  };
+
+  const toggleSidebar = () => {
+    setIsOpen((prev) => !prev);
   };
 
   const iconStyles = {
@@ -62,42 +66,44 @@ export default function Sidebar() {
     tabs.push({ icon: ManagerIcon, path: "/manager", title: t("manager") });
   }
 
+  if (!isAuthenticated) return null;
+
   return (
-    <aside
-      className={`sidebar ${!isAuthenticated ? "hidden" : "open"}`}
-      aria-label="Sidebar Navigation"
-    >
-<div className="sidebar-content">
-  <Logo />
+    <>
+      <aside
+        className={`sidebar ${isOpen ? "open" : "hidden"}`}
+        aria-label="Sidebar Navigation"
+      >
+        <div className="sidebar-content">
+          <Logo />
 
-  <nav className="nav">
-    <ul>
-      {tabs.map(({ icon: Icon, path, title }, index) => {
-        const fullPath = `${path}`;
-        const isActive = pathname === fullPath;
-        return (
-          <li key={index} className={isActive ? "active" : ""}>
-            <Link href={fullPath} aria-current={isActive ? "page" : undefined}>
-              <Icon {...(isActive ? iconStyles.active : iconStyles.default)} />
-              <span>{title}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+          <nav className="nav">
+            <ul>
+              {tabs.map(({ icon: Icon, path, title }, index) => {
+                const fullPath = `${path}`;
+                const isActive = pathname === fullPath;
+                return (
+                  <li key={index} className={isActive ? "active" : ""}>
+                    <Link href={fullPath} aria-current={isActive ? "page" : undefined}>
+                      <Icon {...(isActive ? iconStyles.active : iconStyles.default)} />
+                      <span>{title}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-    {/* ✅ Make sure this is inside the .nav block */}
-    <button
-      className="logout"
-      onClick={handleLogout}
-      aria-label="Logout"
-    >
-      <LeftArrowIcon {...iconStyles.default} />
-      <span>{t("logout")}</span>
-    </button>
-  </nav>
-</div>
-
-    </aside>
+            <button
+              className="logout"
+              onClick={handleLogout}
+              aria-label="Logout"
+            >
+              <LeftArrowIcon {...iconStyles.default} />
+              <span>{t("logout")}</span>
+            </button>
+          </nav>
+        </div>
+      </aside>
+    </>
   );
-};
+}

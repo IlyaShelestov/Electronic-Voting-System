@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { ElectionService } from "@/services/electionService";
 import ElectionCard from "@/components/ElectionCard/ElectionCard";
@@ -7,12 +8,19 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { setElections } from "@/store/slices/electionSlice";
 import "./Home.scss";
+import HomeBannerSlider from "@/components/BannerSlider/BannerSlider";
 
 export default function Home() {
   const locale = useLocale();
   const t = useTranslations("homePage");
   const dispatch = useAppDispatch();
   const elections = useAppSelector((state) => state.election.elections);
+  const slides = [
+    {
+      src: "/images/home-banner.png",
+      alt: t("bannerAlt"),
+    }
+  ];
 
   useEffect(() => {
     const fetchElections = async () => {
@@ -29,13 +37,7 @@ export default function Home() {
       <h1 className="home-title">{t("title")}</h1>
 
       <div className="banner">
-        <Image
-          src="/images/default-banner.png"
-          alt={t("bannerAlt")}
-          width={1200}
-          height={300}
-          className="banner-image"
-        />
+      <HomeBannerSlider slides={slides} />
       </div>
 
       <h2>{t("currentElections")}</h2>

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@tanstack/react-query": "^5.76.2"
+    "@tanstack/react-query": "^5.76.2",
+    "keen-slider": "^6.8.6"
   }
 }
