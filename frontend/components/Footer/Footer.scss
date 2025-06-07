@@ -1,21 +1,19 @@
-@use "../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .footer {
-    grid-area: footer;
-    &-content {
-        padding-top: 16px;
-        padding-bottom: 16px;
-        background-color: $navbar;
-        text-align: center;
-        a {
-            color: $general_dark;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            &:hover {
-                color: $button_light;
-            }
-        }
+  grid-area: footer;
+  &-content {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: $navbar;
+    text-align: center;
+    a {
+      color: $general_dark;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      &:hover {
+        color: $button_light;
+      }
     }
+  }
 }
-
-

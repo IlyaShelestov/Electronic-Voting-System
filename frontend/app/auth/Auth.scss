@@ -1,4 +1,4 @@
-@use "../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .auth {
   display: flex;
@@ -35,7 +35,8 @@
         margin-bottom: 5px;
       }
 
-      input, select {
+      input,
+      select {
         width: 520px;
         font-size: 16px;
         padding: 20px;

@@ -1,17 +1,11 @@
 @use "./fonts.scss";
 @use "./variables.scss" as *;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-.authenticated {
-  width: calc(100% - $sidebar_width);
-  margin-left: $sidebar_width;
-  transition: width 0.3s ease-in-out;
-}
-
 
 body {
   font-size: 16px;
@@ -20,27 +14,28 @@ body {
 }
 
 a {
-  text-decoration: none !important;
+  text-decoration: none;
   color: inherit;
   cursor: pointer;
 }
 
 button {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
+  all: unset;
   cursor: pointer;
-  outline: inherit;
-}
-
-input {
-  text-align: left !important;
 }
 
 input {
   all: unset;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.authenticated {
+  width: calc(100% - $sidebar_width);
+  margin-left: $sidebar_width;
+  transition: width 0.3s ease-in-out;
 }
 
 .content {
@@ -50,24 +45,28 @@ input {
 
   & > * {
     padding: 4px;
+
     & > * {
       border-radius: 12px;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
     }
   }
 }
 
 .sidebar {
   padding: 4px;
+
   & > * {
     border-radius: 12px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
   }
 }
 
-.main, .header, .footer {
+.main,
+.header,
+.footer {
   & > * {
-    padding-left:  30px;
-    padding-right:  30px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }

@@ -14,7 +14,7 @@ interface Props {
   slides: Slide[];
 }
 
-export default function HomeBannerSlider({ slides }: Props) {
+export default function BannerSlider({ slides }: Props) {
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {

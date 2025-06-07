@@ -1,11 +1,10 @@
+@use "@/styles/variables.scss" as *;
+
 .vote-container {
-  max-width: 800px;
   width: 100%;
-  margin: 40px auto;
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -16,7 +15,7 @@
 }
 
 .vote-box {
-  background: #f9f9f9;
+  background: $general_light;
   padding: 20px;
   border-radius: 12px;
 }
@@ -63,7 +62,7 @@ select {
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 2px solid #00adb5;
+  border: 2px solid $button_light;
   border-radius: 50%;
   outline: none;
   position: relative;
@@ -71,19 +70,18 @@ select {
 }
 
 .candidate-list input[type="radio"]:checked {
-  background-color: #00adb5;
+  background-color: $button_light;
   border: 5px solid white;
-  box-shadow: 0 0 0 2px #00adb5;
+  box-shadow: 0 0 0 2px $button_light;
 }
 
 .candidate-list label:hover {
-  background-color: #e0f7fa;
-  border: 2px solid #00adb5;
+  border: 2px solid $button_light;
   border-radius: 8px;
 }
 
 .vote-button {
-  background: #00adb5;
+  background: $button_light;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -94,5 +92,5 @@ select {
 }
 
 .vote-button:hover {
-  background: #008c9e;
+  background: $button_hover_light;
 }

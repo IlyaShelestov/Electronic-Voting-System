@@ -1,6 +1,5 @@
 import { API_URL } from "@/config/env";
 import { fetchWithCache } from "@/utils/fetchWithCache";
-import { ICity } from "@/models/ICity";
 import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import { IReport } from "@/models/IReport";
@@ -10,14 +9,12 @@ import { IReport } from "@/models/IReport";
 export class ElectionService {
   private static apiEndpoint = `${API_URL}/elections`;
 
-
-
   public static async getAll(): Promise<IElection[]> {
     return fetchWithCache<IElection[]>(`${this.apiEndpoint}`);
   }
 
   public static async getAvailable(): Promise<IElection[]> {
-    return fetchWithCache<IElection[]>(`${this.apiEndpoint}/avaliable`);
+    return fetchWithCache<IElection[]>(`${this.apiEndpoint}/available`);
   }
 
   public static async getById(id: number): Promise<IElection> {

@@ -3,8 +3,12 @@ import { AuthResponse } from "@/models/IAuthResponse";
 import { IUser } from "@/models/IUser";
 
 export class AuthService {
-  public static async login(iin: string, password: string): Promise<AuthResponse> {
-    const response = await apiClient.post("/auth/login", {
+  private static apiEndpoint = "/auth";
+  public static async login(
+    iin: string,
+    password: string
+  ): Promise<AuthResponse> {
+    const response = await apiClient.post(`${this.apiEndpoint}/login`, {
       iin,
       password,
     });
@@ -13,11 +17,14 @@ export class AuthService {
   }
 
   public static async register(userData: IUser): Promise<IUser> {
-    const { data } = await apiClient.post<IUser>("/auth/register", userData);
+    const { data } = await apiClient.post<IUser>(
+      `${this.apiEndpoint}/register`,
+      userData
+    );
     return data;
   }
 
   public static async logout(): Promise<void> {
-    await apiClient.post("/auth/logout");
+    await apiClient.post(`${this.apiEndpoint}/logout`);
   }
 }

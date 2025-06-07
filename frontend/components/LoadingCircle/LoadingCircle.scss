@@ -1,10 +1,9 @@
-@use "../../styles/variables.scss" as *;
+@use "@/styles/variables.scss" as *;
 
 .loading-circle {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .spinner {
@@ -20,4 +19,4 @@
   to {
     transform: rotate(360deg);
   }
-} 
+}

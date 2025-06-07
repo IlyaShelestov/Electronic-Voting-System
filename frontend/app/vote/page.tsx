@@ -9,8 +9,10 @@ import { IElection } from "@/models/IElection";
 import { ICandidate } from "@/models/ICandidate";
 import "./Vote.scss";
 import OtpModal from '@/components/OtpModal/OtpModal';
+import { useTranslations } from "next-intl";
 
 export default function VotePage() {
+    const t = useTranslations("votePage");
     const searchParams = useSearchParams();
     const queryElectionId = searchParams.get("electionId");
     const queryCandidateId = searchParams.get("candidateId");
@@ -119,16 +121,18 @@ export default function VotePage() {
     };
 
     return (
+        <>
+            <h1 className="vote-title">{t("title")}</h1>
+
         <div className="vote-container">
-            <h1 className="vote-title">Отдать свой голос</h1>
             <div className="vote-box">
-                <label htmlFor="election-select">Выбрать категорию голосования</label>
+                <label htmlFor="election-select">{t("selectElection")}</label>
                 <select
                     id="election-select"
                     value={selectedElection ?? ""}
                     onChange={handleElectionChange}
                 >
-                    <option value="">Выберите выборы</option>
+                    <option value="">{t("selectElection")}</option>
                     {elections.map((election) => (
                         <option key={election.election_id} value={election.election_id}>
                             {election.title}
@@ -137,7 +141,7 @@ export default function VotePage() {
                 </select>
 
                 {loading ? (
-                    <p>Загрузка кандидатов...</p>
+                    <p>{t("loadingCandidates")}</p>
                 ) : !hasVoted ? (
                     <ul className="candidate-list">
                         {candidates.map((candidate) => (
@@ -156,11 +160,11 @@ export default function VotePage() {
                         ))}
                     </ul>
                 ) : (
-                    <p>Вы уже проголосовали на этих выборах.</p>
+                    <p>{t("alreadyVoted")}</p>
                 )}
 
                 <button onClick={handleVote} className="vote-button" disabled={!selectedCandidate}>
-                    Проголосовать
+                    {t("vote")}
                 </button>
             </div>
             <OtpModal
@@ -169,5 +173,6 @@ export default function VotePage() {
                 onSubmit={handleOtpSubmit}
             />
         </div>
+        </>
     );
 }

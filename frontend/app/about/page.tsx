@@ -1,6 +1,9 @@
 import Image from "next/image";
 import "./About.scss";
+import { useTranslations } from "next-intl";
+
 export default function About() {
+  const t = useTranslations("aboutPage");
   const profiles = [
     {
       name: "Serimbetov Yersultan",
@@ -23,7 +26,7 @@ export default function About() {
   ];
   return (
     <>
-      <h1>О нас</h1>
+      <h1>{t("title")}</h1>
       <div className="about_us">
         {profiles.map((profile) => (
           <div

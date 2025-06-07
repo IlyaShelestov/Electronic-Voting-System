@@ -1,5 +1,5 @@
-@use "../../styles/variables.scss" as *;
-.header { 
+@use "@/styles/variables.scss" as *;
+.header {
   grid-area: header;
   width: 100%;
 
@@ -13,12 +13,11 @@
     padding-top: 16px;
     padding-bottom: 16px;
     max-height: $header_height;
-
   }
 
   .user {
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 18px;
     transition: all 0.3s ease;
     &:hover {
       color: $button_light;

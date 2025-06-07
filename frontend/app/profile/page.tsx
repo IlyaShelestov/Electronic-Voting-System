@@ -3,13 +3,15 @@
 import "./Profile.scss";
 import { FaUserCircle } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
   const user = useAppSelector((state) => state.user.user);
-
+  const t = useTranslations("profilePage");
 
   return (
     <>
+      <h1>{t("title")}</h1>
       {user ? (
         <div className="profile-container">
           <div className="profile-header">

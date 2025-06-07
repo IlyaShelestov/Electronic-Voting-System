@@ -1,5 +1,5 @@
 {
-  "auth":{
+  "auth": {
     "login": "Войти",
     "registration": "Регистрация",
     "register": "Зарегистрироваться",
@@ -58,7 +58,7 @@
     "city": "Город",
     "role": "Роль",
     "searchPlaceholder": "Поиск по имени или email",
-    "usersPerPage": "Пользователей на странице",  
+    "usersPerPage": "Пользователей на странице",
     "filterPlaceholder": {
       "name": "Поиск по имени",
       "email": "Поиск по email",
@@ -73,7 +73,7 @@
       "role": "Роль",
       "iin": "ИИН",
       "cityId": "ID города",
-      "phoneNumber": "Номер телефона" 
+      "phoneNumber": "Номер телефона"
     }
   },
   "homePage": {
@@ -82,7 +82,35 @@
     "currentElections": "Актуальное",
     "viewCandidates": "Посмотреть кандидатов",
     "date": "Дата",
-    "votes": "Голоса"
+    "votes": "Голоса",
+    "filterBy": "Фильтр",
+    "allElections": "Все выборы",
+    "availableElections": "Доступные выборы",
+    "noElections": "Нет доступных выборов",
+    "noAvailableElections": "Нет доступных выборов",
+    "authRequired": "Для просмотра доступных выборов необходимо авторизоваться"
+  },
+  "votePage": {
+    "title": "Отдать свой голос",
+    "selectElection": "Выбрать выборы",
+    "loadingCandidates": "Загрузка кандидатов...",
+    "alreadyVoted": "Вы уже проголосовали на этих выборах.",
+    "vote": "Проголосовать"
+  },
+  "profilePage": {
+    "title": "Профиль"
+  },
+  "managerPage": {
+    "title": "Панель менеджера"
+  },
+  "instructionsPage": {
+    "title": "Инструкция"
+  },
+  "supportPage": {
+    "title": "Тех. поддержка"
+  },
+  "aboutPage": {
+    "title": "О нас"
   },
   "sidebar": {
     "title": "Навигация",

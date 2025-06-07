@@ -1,72 +1,68 @@
-@use "../../styles/variables.scss" as *;
-
+@use "@/styles/variables.scss" as *;
 
 .candidate-card {
-    background: #f0f0f0;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    width: 100%;
-    max-width: 420px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .candidate-image {
-    border-radius: 20px;
-    width: 340px;
-    height: 340px;
-    object-fit: cover;
-  }
-  
-  .candidate-name {
-    font-size: 22px;
-    margin: 10px 0;
-    object-fit: cover;
-  }
-  
-  .candidate-info-btn {
-    background: $general_dark;
-    color: white;
-    padding: 15px 10px;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  
-    &:hover {
-      font-weight: bold;
-      color: $general_dark;
-      background: $general_light;
-    }
-  }
+  background: #f0f0f0;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 
-  
+.candidate-image {
+  border-radius: 20px;
+  width: 340px;
+  height: 340px;
+  object-fit: cover;
+}
+
+.candidate-name {
+  font-size: 22px;
+  margin: 10px 0;
+  object-fit: cover;
+}
+
+.candidate-info-btn {
+  background: $general_dark;
+  color: white;
+  padding: 15px 10px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    font-weight: bold;
+    color: $general_dark;
+    background: $general_light;
+  }
+}
+
 .candidate-card {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    opacity: 0.8;
-    border: 2px solid transparent;
-  }
-  
-  
-  
-  .candidate-card:hover {
-    border: 2px solid $selected;
-    background-color: darken($selected, 5%);
-    transform: scale(1.05);
-    opacity: 1;
-  }
-  
-  .candidate-card.selected {
-    border: 2px solid $border_dark;
-    background-color: $selected;
-    transform: scale(1.05);
-    opacity: 1;
-  }
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  opacity: 0.8;
+  border: 2px solid transparent;
+}
+
+.candidate-card:hover {
+  border: 2px solid $selected;
+  background-color: $selected;
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.candidate-card.selected {
+  border: 2px solid $border_dark;
+  background-color: $selected;
+  transform: scale(1.05);
+  opacity: 1;
+}

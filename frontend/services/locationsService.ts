@@ -3,22 +3,22 @@ import { ICity } from "@/models/ICity";
 import { IRegion } from "@/models/IRegion";
 import { fetchWithCache } from "@/utils/fetchWithCache";
 
-const apiEndpoint = `${API_URL}/locations`;
-
 export class LocationsService {
+  private static apiEndpoint = `${API_URL}/locations`;
+
   public static async getCities(): Promise<ICity[]> {
-    return fetchWithCache<ICity[]>(`${apiEndpoint}/cities`);
+    return fetchWithCache<ICity[]>(`${this.apiEndpoint}/cities`);
   }
 
   public static async getCityById(id: number): Promise<ICity> {
-    return fetchWithCache<ICity>(`${apiEndpoint}/cities/${id}`);
+    return fetchWithCache<ICity>(`${this.apiEndpoint}/cities/${id}`);
   }
 
   public static async getRegions(): Promise<IRegion[]> {
-    return fetchWithCache<IRegion[]>(`${apiEndpoint}/regions`);
+    return fetchWithCache<IRegion[]>(`${this.apiEndpoint}/regions`);
   }
 
   public static async getRegionById(id: number): Promise<IRegion> {
-    return fetchWithCache<IRegion>(`${apiEndpoint}/regions/${id}`);
+    return fetchWithCache<IRegion>(`${this.apiEndpoint}/regions/${id}`);
   }
 }

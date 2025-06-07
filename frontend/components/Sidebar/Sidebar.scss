@@ -1,18 +1,13 @@
-@use "../../styles/variables.scss" as *;
-
+@use "@/styles/variables.scss" as *;
 .sidebar {
   grid-area: sidebar;
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: $sidebar_width;
-  max-width: $sidebar_width;
+  transition: all 0.3s ease-in-out;
   max-height: $sidebar_height;
+  height: 100%;
+  max-width: $sidebar_width;
+  width: 100%;
   overflow-y: auto;
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(0);
-  z-index: 1000;
 
   .sidebar-content {
     background: $navbar;
@@ -26,8 +21,14 @@
     gap: 30px;
   }
 
+  &.open {
+    left: 0;
+    top: 0;
+  }
+
   &.hidden {
-    transform: translateX(-100%);
+    left: -$sidebar_width;
+    top: 0;
   }
 
   ul {
@@ -35,7 +36,6 @@
     li {
       border-radius: 12px;
       margin-bottom: 16px;
-
       a {
         padding: 10px 15px;
         display: flex;
@@ -43,16 +43,14 @@
         gap: 10px;
         cursor: pointer;
       }
-
       &.active {
         background-color: $selected;
         color: $button_light;
         font-weight: bold;
       }
-
       &:hover {
         background-color: $selected;
-        transition: background-color 0.2s ease-out;
+        transition: all 0.2s ease-out;
       }
     }
   }
@@ -67,7 +65,6 @@
   .logout {
     border: none;
     cursor: pointer;
-    width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -78,7 +75,7 @@
 
     &:hover {
       background: $button_danger;
-      transition: background 0.3s ease-in;
+      transition: all 0.3s ease-in;
     }
   }
 }

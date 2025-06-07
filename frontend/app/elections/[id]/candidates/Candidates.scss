@@ -31,11 +31,8 @@
   flex-wrap: wrap;
 }
 
-
-
-
 .vote-button {
-  background: darken($general_light, 10%);
+  background: $general_light;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -48,7 +45,7 @@
 
 .vote-button:hover {
   border: 2px solid $button_light;
-  background: darken($general_light, 10%);
+  background: $general_light;
   font-weight: bold;
   color: $button_light;
 }

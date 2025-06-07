@@ -1,239 +1,236 @@
-@use '@/styles/variables' as *;
+@use "@/styles/variables" as *;
 
 .userManagement {
-    padding: 1rem;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    width: 100%;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  width: 100%;
 }
 
 .userManagement__title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .userManagement__table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .userManagement__table th,
 .userManagement__table td {
-    border: 1px solid #e0e0e0;
-    padding: 0.75rem;
-    text-align: left;
-    font-size: 0.95rem;
-    color: #333;
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #333;
 }
 
 .userManagement__table th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #495057;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #495057;
 }
 
 .userManagement__table tr:nth-child(even) {
-    background-color: #f1f3f5;
+  background-color: #f1f3f5;
 }
 
 .userManagement__table tr:hover {
-    background-color: #e9ecef;
-    transition: background-color 0.3s ease;
+  background-color: #e9ecef;
+  transition: background-color 0.3s ease;
 }
 
 .userManagement__table button {
-    margin-left: 0.5rem;
-    padding: 0.3rem 0.6rem;
-    background-color: $button_light;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  background-color: $button_light;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .userManagement__table .edit-button {
-    background-color: $button_light;
-    opacity: 0.8;
+  background-color: $button_light;
+  opacity: 0.8;
 }
 
 .userManagement__table .delete-button {
-    background-color: $button_danger;
-    opacity: 0.8;
+  background-color: $button_danger;
+  opacity: 0.8;
 }
 
 .userManagement__table .edit-button:hover {
-    background-color: $button_light;
-    transform: scale(1.05);
-    opacity: 1;
+  background-color: $button_light;
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 .userManagement__table .delete-button:hover {
-    background-color: $button_danger;
-    transform: scale(1.05);
-    opacity: 1;
+  background-color: $button_danger;
+  transform: scale(1.05);
+  opacity: 1;
 }
 
-
 .filters {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .filters input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
 .filters input:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .filters input::placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 .filters select {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
 }
 
 .filters select:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .filters .fa-plus {
-    color: #007bff;
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.2s ease;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .filters .fa-plus:hover {
-    color: #0056b3;
-    transform: scale(1.1);
+  color: #0056b3;
+  transform: scale(1.1);
 }
 
 .search-input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-    transition: border-color 0.3s ease;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
 }
 
 .search-input:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .search-input::placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
 }
 
 .pagination button {
-    padding: 0.5rem 1rem;
-    background-color: $button_light;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 0.5rem 1rem;
+  background-color: $button_light;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .pagination button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 5px;
-    padding: 8px 12px;
-    border: none;
-    background-color: $general_light;
-    color: #333;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: none;
+  background-color: $general_light;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .pagination button.active {
-    background-color: $button_light;
-    color: #fff;
-    transform: scale(1.1);
+  background-color: $button_light;
+  color: #fff;
+  transform: scale(1.1);
 }
 
 .pagination button:hover:not(.active) {
-    
 }
 
 .pagination button:disabled {
-    background-color: $border_light;
-    cursor: not-allowed;
+  background-color: $border_light;
+  cursor: not-allowed;
 }
 
 .users-per-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .users-per-page label {
-    margin-right: 10px;
-    font-weight: bold;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 .users-per-page select {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-
 .filter-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .filter-item input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
 .filter-item input:focus {
-    border-color: #007bff;
-    outline: none;
-}   
+  border-color: #007bff;
+  outline: none;
+}
