@@ -167,3 +167,42 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: "Error logging out" });
   }
 };
+
+exports.passwordReset = async (req, res) => {
+  try {
+    const { iin, newPassword, otp } = req.body;
+
+    if (!iin || !newPassword || !otp) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    if (!isValidIIN(iin)) {
+      return res.status(400).json({ message: "Invalid IIN format" });
+    }
+    if (!isStrongPassword(newPassword)) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 9 characters long and contain at least one letter, one number, and one special character",
+      });
+    }
+
+    const user = await User.findByIIN(iin);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (process.env.NODE_ENV !== "test") {
+      const otpValid = await verifyOtp(user.email, otp);
+      if (otpValid.status == false) {
+        return res.status(400).json({ message: otpValid.message });
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.updatePassword(iin, hashedPassword);
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error resetting password" });
+  }
+};

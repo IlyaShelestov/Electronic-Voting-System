@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { register, login, logout } = require("../controllers/authController");
+const {
+  register,
+  login,
+  logout,
+  passwordReset,
+} = require("../controllers/authController");
 const {
   preventLoggedIn,
   verifyToken,
@@ -190,5 +195,55 @@ router.post("/login", preventLoggedIn, login);
  *         description: Server error
  */
 router.post("/logout", verifyToken, logout);
+
+/**
+ * @swagger
+ * /api/auth/password-reset:
+ *   post:
+ *     summary: Reset user password
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - iin
+ *               - newPassword
+ *               - otp
+ *             properties:
+ *               iin:
+ *                 type: string
+ *                 description: Individual identification number (12 digits)
+ *               newPassword:
+ *                 type: string
+ *                 format: password
+ *                 description: New password (must be at least 9 characters with at least one letter, one number, and one special character)
+ *               otp:
+ *                 type: string
+ *                 description: One-time password sent to the user's email
+ *     responses:
+ *       200:
+ *         description: Password reset successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Password reset successfully
+ *       400:
+ *         description: Bad request - validation error or missing fields
+ *       403:
+ *         description: Forbidden - already logged in
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
+router.post("/password-reset", preventLoggedIn, passwordReset);
 
 module.exports = router;
