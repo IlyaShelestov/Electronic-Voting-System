@@ -1,4 +1,4 @@
-import { IIcon } from "@/models/IIcon";
+import { IIcon } from '@/models/IIcon';
 
 export function InstructionsIcon(props: IIcon) {
   return (

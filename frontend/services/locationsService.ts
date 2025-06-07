@@ -1,7 +1,7 @@
-import { API_URL } from "@/config/env";
-import { ICity } from "@/models/ICity";
-import { IRegion } from "@/models/IRegion";
-import { fetchWithCache } from "@/utils/fetchWithCache";
+import { API_URL } from '@/config/env';
+import { ICity } from '@/models/ICity';
+import { IRegion } from '@/models/IRegion';
+import { fetchWithCache } from '@/utils/fetchWithCache';
 
 export class LocationsService {
   private static apiEndpoint = `${API_URL}/locations`;

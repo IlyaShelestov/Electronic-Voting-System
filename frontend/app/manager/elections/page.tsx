@@ -1,8 +1,10 @@
 "use client";
-import { ManagerService } from "@/services/managerService";
-import { IElection } from "@/models/IElection";
-import { useEffect, useState } from "react";
 import './Elections.scss';
+
+import { useEffect, useState } from 'react';
+
+import { IElection } from '@/models/IElection';
+import { ManagerService } from '@/services/managerService';
 
 export default function ElectionsPage() {
     const [elections, setElections] = useState<IElection[]>([]);

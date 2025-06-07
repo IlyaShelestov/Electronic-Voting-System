@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { ElectionService } from "@/services/electionService";
-import { IElection } from "@/models/IElection";
-import { ICandidate } from "@/models/ICandidate";
-import CandidatePopup from "@/components/CandidatePopup/CandidatePopup";
-import "./Candidates.scss";
-import { formatTimestamp } from "@/utils/formatTimestamp";
-import CandidateCard from "@/components/CandidateCard/CandidateCard";
-import { useIsAuthenticated } from "@/store/hooks";
+import './Candidates.scss';
+
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import CandidateCard from '@/components/CandidateCard/CandidateCard';
+import CandidatePopup from '@/components/CandidatePopup/CandidatePopup';
+import { ICandidate } from '@/models/ICandidate';
+import { IElection } from '@/models/IElection';
+import { ElectionService } from '@/services/electionService';
+import { useIsAuthenticated } from '@/store/hooks';
+import { formatTimestamp } from '@/utils/formatTimestamp';
 
 export default function CandidatesPage() {
   const { id } = useParams();

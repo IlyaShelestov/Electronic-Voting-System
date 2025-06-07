@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setLoading } from "@/store/slices/loadingSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/reduxStore";
-import { AuthService } from "@/services/authService";
-import { removeAuthToken } from "@/utils/tokenHelper";
-import LoginForm from "@/components/LoginForm/LoginForm";
-import { ILogin } from "@/models/ILogin";
-import "./Login.scss";
+import './Login.scss';
+
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import LoginForm from '@/components/LoginForm/LoginForm';
+import { ILogin } from '@/models/ILogin';
+import { AuthService } from '@/services/authService';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/reduxStore';
+import { setLoading } from '@/store/slices/loadingSlice';
+import { removeAuthToken } from '@/utils/tokenHelper';
+import { useMutation } from '@tanstack/react-query';
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();

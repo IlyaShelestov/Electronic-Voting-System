@@ -1,6 +1,7 @@
 "use client"
-import React, { useState } from 'react';
 import './OtpModal.scss';
+
+import React, { useState } from 'react';
 
 interface OtpModalProps {
     isOpen: boolean;

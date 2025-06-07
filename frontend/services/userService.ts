@@ -1,5 +1,5 @@
-import { apiClient } from "@/services/apiClient";
-import { IUser } from "@/models/IUser";
+import { IUser } from '@/models/IUser';
+import { apiClient } from '@/services/apiClient';
 
 export class UserService {
   private static apiEndpoint = "/users";

@@ -1,7 +1,8 @@
-// middleware.ts
-import { NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from 'next-intl/middleware';
-import { defaultLocale, locales } from "./i18n/config";
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+import { defaultLocale, locales } from './i18n/config';
 
 const PUBLIC_ROUTES = ["/auth/login", "/auth/register", "/"];
 const IGNORED_PATHS = [

@@ -1,4 +1,4 @@
-import ReduxProvider from "@/providers/StoreProvider";
+import ReduxProvider from '@/providers/StoreProvider';
 
 export default function MultiProvider({
                                           children,

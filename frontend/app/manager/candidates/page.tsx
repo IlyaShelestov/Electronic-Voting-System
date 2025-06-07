@@ -1,9 +1,11 @@
 "use client";
 
-import { ManagerService} from "@/services/managerService";
-import { ICandidate } from "@/models/ICandidate";
-import { useEffect, useState } from "react";
 import './Candidates.scss';
+
+import { useEffect, useState } from 'react';
+
+import { ICandidate } from '@/models/ICandidate';
+import { ManagerService } from '@/services/managerService';
 
 export default function CandidatesPage() {
     const [candidates, setCandidates] = useState<ICandidate[]>([]);

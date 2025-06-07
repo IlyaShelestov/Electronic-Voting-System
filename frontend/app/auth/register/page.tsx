@@ -1,14 +1,15 @@
 "use client";
 
-import OtpModal from "@/components/OtpModal/OtpModal";
-import RegisterForm from "@/components/RegisterForm/RegisterForm";
-import { IUser } from "@/models/IUser";
-import { AuthService } from "@/services/authService";
-import { OtpService } from "@/services/otpService";
-import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import OtpModal from '@/components/OtpModal/OtpModal';
+import RegisterForm from '@/components/RegisterForm/RegisterForm';
+import { IUser } from '@/models/IUser';
+import { AuthService } from '@/services/authService';
+import { OtpService } from '@/services/otpService';
 
 export default function RegisterPage() {
   const locale = useLocale();

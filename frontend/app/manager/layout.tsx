@@ -1,7 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
-
-
+import { useTranslations } from 'next-intl';
 
 export default function ManagerLayout({ children }: { children: React.ReactNode }) {
     return (

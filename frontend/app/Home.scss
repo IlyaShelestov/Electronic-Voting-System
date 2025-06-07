@@ -22,11 +22,10 @@ h3 {
 
 .banner {
   width: 100%;
-  max-width: 1200px;
-  height: 300px;
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
+  position: relative;
 
   &-image {
     width: 100%;

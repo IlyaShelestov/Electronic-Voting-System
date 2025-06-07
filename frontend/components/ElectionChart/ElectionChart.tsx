@@ -1,19 +1,15 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { IReport } from "@/models/IReport";
-import { useTranslations } from "use-intl";
+import 'chartjs-adapter-date-fns';
+
 import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  TimeScale,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import "chartjs-adapter-date-fns";
+    CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, TimeScale,
+    Tooltip
+} from 'chart.js';
+import dynamic from 'next/dynamic';
+import { useTranslations } from 'use-intl';
+
+import { IReport } from '@/models/IReport';
 
 ChartJS.register(
   LineElement,

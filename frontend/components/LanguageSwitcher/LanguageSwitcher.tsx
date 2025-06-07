@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { useIsAuthenticated } from "@/store/hooks";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import "./LanguageSwitcher.scss";
-import { Locale } from "@/i18n/config";
+import './LanguageSwitcher.scss';
+
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+
+import { Locale } from '@/i18n/config';
+import { useIsAuthenticated } from '@/store/hooks';
 
 interface LanguageSwitcherProps {
   onChange: (locale: Locale) => void;

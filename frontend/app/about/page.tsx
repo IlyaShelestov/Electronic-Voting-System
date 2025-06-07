@@ -1,6 +1,7 @@
-import Image from "next/image";
-import "./About.scss";
-import { useTranslations } from "next-intl";
+import './About.scss';
+
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export default function About() {
   const t = useTranslations("aboutPage");

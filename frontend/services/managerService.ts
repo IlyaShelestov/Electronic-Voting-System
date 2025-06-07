@@ -1,8 +1,9 @@
-import { apiClient } from "./apiClient";
-import { IElection } from "@/models/IElection";
-import { ICandidate } from "@/models/ICandidate";
-import { IEvent } from "@/models/IEvent";
-import { ElectionService } from "./electionService";
+import { ICandidate } from '@/models/ICandidate';
+import { IElection } from '@/models/IElection';
+import { IEvent } from '@/models/IEvent';
+
+import { apiClient } from './apiClient';
+import { ElectionService } from './electionService';
 
 export class ManagerService {
   private static apiEndpoint = "/manager";

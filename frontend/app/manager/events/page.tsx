@@ -1,8 +1,10 @@
 "use client";
-import { ManagerService } from "@/services/managerService";
-import { IEvent } from "@/models/IEvent";
-import { useEffect, useState } from "react";
 import './Events.scss';
+
+import { useEffect, useState } from 'react';
+
+import { IEvent } from '@/models/IEvent';
+import { ManagerService } from '@/services/managerService';
 
 export default function EventsPage() {
     const [events, setEvents] = useState<IEvent[]>([]);

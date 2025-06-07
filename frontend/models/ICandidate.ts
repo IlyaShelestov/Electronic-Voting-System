@@ -1,4 +1,4 @@
-import { IUser } from "./IUser";
+import { IUser } from './IUser';
 
 export interface ICandidate extends IUser {
   election_id?: number;
