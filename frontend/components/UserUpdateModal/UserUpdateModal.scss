@@ -11,6 +11,20 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+
+  button {
+    padding: 12px 20px;
+    background-color: $button_light;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: $button_light;
+  }
 }
 
 .modal-content {
@@ -77,18 +91,4 @@ h2 {
 
 .form-group.full-width {
   grid-column: span 2;
-}
-
-button {
-  padding: 12px 20px;
-  background-color: $button_light;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: $button_light;
 }

@@ -59,51 +59,24 @@ export default function BannerSlider({ slides }: Props) {
               onClick={(e: any) =>
                 e.stopPropagation() || instanceRef.current?.prev()
               }
-              disabled={currentSlide === 0}
             />
             <Arrow
               onClick={(e: any) =>
                 e.stopPropagation() || instanceRef.current?.next()
               }
-              disabled={
-                currentSlide ===
-                instanceRef.current.track.details.slides.length - 1
-              }
             />
           </>
         )}
       </div>
-      {loaded && instanceRef.current && (
-        <div className="dots">
-          {[
-            ...Array(instanceRef.current.track.details.slides.length).keys(),
-          ].map((idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                instanceRef.current?.moveToIdx(idx);
-              }}
-              className={"dot" + (currentSlide === idx ? " active" : "")}
-            ></button>
-          ))}
-        </div>
-      )}
     </>
   );
 }
 
-function Arrow(props: {
-  disabled: boolean;
-  left?: boolean;
-  onClick: (e: any) => void;
-}) {
-  const disabled = props.disabled ? " arrow--disabled" : "";
+function Arrow(props: { left?: boolean; onClick: (e: any) => void }) {
   return (
     <svg
       onClick={props.onClick}
-      className={`arrow ${
-        props.left ? "arrow--left" : "arrow--right"
-      } ${disabled}`}
+      className={`arrow ${props.left ? "arrow--left" : "arrow--right"}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

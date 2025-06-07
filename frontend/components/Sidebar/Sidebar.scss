@@ -2,12 +2,15 @@
 .sidebar {
   grid-area: sidebar;
   position: fixed;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.8s ease-in-out;
   max-height: $sidebar_height;
   height: 100%;
   max-width: $sidebar_width;
   width: 100%;
   overflow-y: auto;
+  left: -$sidebar_width;
+  top: 0;
+  transition: left 1s ease-in-out;
 
   .sidebar-content {
     background: $navbar;
@@ -23,12 +26,6 @@
 
   &.open {
     left: 0;
-    top: 0;
-  }
-
-  &.hidden {
-    left: -$sidebar_width;
-    top: 0;
   }
 
   ul {

@@ -5,55 +5,72 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1600px;
+  max-width: 1400px;
 }
 
-.home-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-h2,
-h3 {
-  text-align: start;
-  margin-bottom: 20px;
-}
-
-.banner {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-  position: relative;
-
-  &-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-  }
+.home-subtitle {
+  margin-bottom: 24px;
 }
 
 .elections-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
   margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .filter-container {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: end;
+  justify-content: space-between;
+  width: 100%;
   margin-bottom: 20px;
 
-  select {
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
+
+  & > div {
+    gap: 30px;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid $border_light;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 300px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: $button_light;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $general_dark;
+      opacity: 0.7;
+    }
+  }
+
+  select {
+    border-radius: 8px;
+  }
+}
+
+.status-message {
+  font-size: 1rem;
+  color: $general_dark;
+  background-color: $general_light;
+  border: 1px solid $border_light;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
 }
 
 .error-message {
@@ -62,7 +79,7 @@ h3 {
   color: $button_danger;
   background-color: $button_danger;
   border: 1px solid $button_danger;
-  border-radius: 4px;
+  border-radius: 8px;
   text-align: center;
   margin-top: 10px;
 }
@@ -72,8 +89,8 @@ h3 {
   font-size: 1rem;
   color: $general_dark;
   background-color: $general_light;
-  border: 1px solid $border_dark;
-  border-radius: 4px;
+  border: 1px solid $border_light;
+  border-radius: 8px;
   text-align: center;
   margin-top: 10px;
 }

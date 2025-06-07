@@ -1,6 +1,6 @@
 import '@/styles/globals.scss';
 
-import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import { ToastContainer } from 'react-toastify';
 
@@ -24,32 +24,28 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 }) {
   const locale = await getLocale();
+  console.log(process.memoryUsage());
   return (
     <html lang={locale}>
       <body>
         <MultiProvider>
-          <NextIntlClientProvider>
-            <QueryProvider>
-              <AuthProvider>
-                <ContentLayout>{children}</ContentLayout>
-
-                <ToastContainer
-                  position="bottom-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  pauseOnHover
-                  theme="light"
-                />
-              </AuthProvider>
-            </QueryProvider>
-          </NextIntlClientProvider>
+          <ContentLayout>{children}</ContentLayout>
+          <ToastContainer
+            aria-label={"Notifications"}
+            position="bottom-right"
+            draggable
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            pauseOnHover
+            theme="light"
+          />
         </MultiProvider>
       </body>
     </html>

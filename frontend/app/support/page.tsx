@@ -3,8 +3,8 @@ import './Support.scss';
 export default function Support() {
   return (
     <>
-      <h1>Техническая поддержка</h1>
-      <p className="description">
+      <h1 className="support-title">Техническая поддержка</h1>
+      <p className="support-description">
         Здесь Вы можете оставить свой вопрос
         <br /> и наши специалисты свяжутся с Вами
       </p>
@@ -20,8 +20,6 @@ export default function Support() {
 
         <button>Отправить</button>
       </form>
-
-
     </>
   );
 }

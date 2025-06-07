@@ -1,13 +1,5 @@
 @use "@/styles/variables" as *;
 
-.userManagement {
-  padding: 1rem;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
-  width: 100%;
-}
-
 .userManagement__title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -15,6 +7,7 @@
 }
 
 .userManagement__table {
+  border-radius: 12px;
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
@@ -190,9 +183,6 @@
   background-color: $button_light;
   color: #fff;
   transform: scale(1.1);
-}
-
-.pagination button:hover:not(.active) {
 }
 
 .pagination button:disabled {

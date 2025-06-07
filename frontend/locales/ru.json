@@ -84,11 +84,19 @@
     "date": "Дата",
     "votes": "Голоса",
     "filterBy": "Фильтр",
+    "sortBy": "Сортировать",
     "allElections": "Все выборы",
-    "availableElections": "Доступные выборы",
-    "noElections": "Нет доступных выборов",
-    "noAvailableElections": "Нет доступных выборов",
-    "authRequired": "Для просмотра доступных выборов необходимо авторизоваться"
+    "availableElections": "Актуальные выборы",
+    "noElections": "Нет выборов",
+    "noAvailableElections": "Нет актуальных выборов",
+    "authRequired": "Для просмотра доступных выборов необходимо авторизоваться",
+    "noElectionsFound": "Выборы не найдены",
+    "loadingElections": "Загрузка выборов...",
+    "byDate": "По дате",
+    "byVotes": "По голосам",
+    "byName": "По имени",
+    "searchPlaceholder": "Поиск",
+    "farthestDate": "Самая дальняя дата"
   },
   "votePage": {
     "title": "Отдать свой голос",

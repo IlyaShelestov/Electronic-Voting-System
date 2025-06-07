@@ -14,10 +14,9 @@ import { ElectionService } from '@/services/electionService';
 
 interface Props {
   election: IElection;
-  locale: string;
 }
 
-export default function ElectionCard({ election, locale }: Props) {
+export default function ElectionCard({ election }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [reportData, setReportData] = useState<IReport[] | null>(null);
   const router = useRouter();
@@ -59,11 +58,18 @@ export default function ElectionCard({ election, locale }: Props) {
       </div>
 
       {expanded && (
-        <div className={`election-chart-wrapper ${expanded && reportData ? "visible" : ""}`}>
-          {reportData && <div className="election-chart"><ElectionChart reportData={reportData} /></div>}
+        <div
+          className={`election-chart-wrapper ${
+            expanded && reportData ? "visible" : ""
+          }`}
+        >
+          {reportData && (
+            <div className="election-chart">
+              <ElectionChart reportData={reportData} />
+            </div>
+          )}
         </div>
       )}
-
     </div>
   );
 }

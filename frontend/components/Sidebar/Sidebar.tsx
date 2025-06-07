@@ -73,7 +73,7 @@ export default function Sidebar() {
   return (
     <>
       <aside
-        className={`sidebar ${isOpen ? "open" : "hidden"}`}
+        className={`sidebar ${isOpen ? "open" : ""}`}
         aria-label="Sidebar Navigation"
       >
         <div className="sidebar-content">
@@ -85,9 +85,17 @@ export default function Sidebar() {
                 const fullPath = `${path}`;
                 const isActive = pathname === fullPath;
                 return (
-                  <li key={index} className={isActive ? "active" : ""}>
-                    <Link href={fullPath} aria-current={isActive ? "page" : undefined}>
-                      <Icon {...(isActive ? iconStyles.active : iconStyles.default)} />
+                  <li
+                    key={index}
+                    className={isActive ? "active" : ""}
+                  >
+                    <Link
+                      href={fullPath}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <Icon
+                        {...(isActive ? iconStyles.active : iconStyles.default)}
+                      />
                       <span>{title}</span>
                     </Link>
                   </li>

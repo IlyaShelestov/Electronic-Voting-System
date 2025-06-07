@@ -4,7 +4,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 body {
@@ -17,11 +17,13 @@ a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 button {
   all: unset;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 input {
@@ -30,35 +32,41 @@ input {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .authenticated {
   width: calc(100% - $sidebar_width);
   margin-left: $sidebar_width;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: padding 0.3s ease;
 
   & > * {
     padding: 4px;
+    transition: padding 0.3s ease;
 
     & > * {
       border-radius: 12px;
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.3s ease, border-radius 0.3s ease;
     }
   }
 }
 
 .sidebar {
   padding: 4px;
+  transition: padding 0.3s ease;
 
   & > * {
     border-radius: 12px;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease, border-radius 0.3s ease;
   }
 }
 
@@ -68,5 +76,25 @@ input {
   & > * {
     padding-left: 30px;
     padding-right: 30px;
+    transition: padding 0.3s ease;
+  }
+}
+
+select {
+  padding: 8px;
+  border: 1px solid $border_light;
+  border-radius: 12px;
+  background-color: $general_light;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: $button_hover_dark;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $button_light;
   }
 }

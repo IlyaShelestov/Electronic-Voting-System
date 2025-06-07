@@ -1,16 +1,19 @@
+@use "@/styles/variables" as *;
+
 .election-card {
   cursor: pointer;
-  background: #e0e0e0;
-  border-radius: 5px;
+  background-color: $general_light;
+  border-radius: 12px;
   font-size: 22px;
   overflow: hidden;
   transition: box-shadow 0.2s ease;
+  border: 1px solid $border_light;
 
   .election-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+    padding: 12px 20px;
   }
 
   .arrow-btn {
@@ -35,7 +38,7 @@
     transition: all 0.3s ease;
 
     &.visible {
-      max-height: 500px; // big enough to reveal chart
+      max-height: 500px;
       opacity: 1;
     }
   }
