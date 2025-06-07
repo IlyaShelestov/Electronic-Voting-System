@@ -160,6 +160,21 @@ class User {
     }
     return updated;
   }
+
+  static async updatePassword(iin, newPasswordHash) {
+    const result = await pool.query(
+      "UPDATE users SET password_hash = $1 WHERE iin = $2 RETURNING user_id, iin, first_name, last_name, patronymic, city_id, phone_number, email, role, created_at, updated_at, date_of_birth::text as date_of_birth",
+      [newPasswordHash, iin]
+    );
+    const updated = result.rows[0];
+
+    if (updated) {
+      await redisClient.del(`users:iin:${iin}`);
+      await redisClient.del(`users:phone:${updated.phone_number}`);
+      await redisClient.del(`users:email:${updated.email}`);
+    }
+    return updated;
+  }
 }
 
 module.exports = User;

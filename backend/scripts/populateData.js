@@ -7,33 +7,13 @@ async function populateData() {
     await pool.query("BEGIN");
 
     console.log("Hashing passwords...");
-    const plainPasswords = {
-      admin: "Admin123!",
-      manager: "Manager123!",
-      candidate1: "Alice123!",
-      candidate2: "Bob123!",
-      candidate3: "Charlie123!",
-      user1: "User123!",
-      user2: "User123!",
-      user3: "User123!",
-      user4: "User123!",
-      user5: "User123!",
-      user6: "User123!",
-      user7: "User123!",
-      user8: "User123!",
-      user9: "User123!",
-      user10: "User123!",
-      user11: "User123!",
-      user12: "User123!",
-      user13: "User123!",
-      user14: "User123!",
-      user15: "User123!",
+    // Simplified password structure - only two types
+    const passwordHashes = {
+      admin: await bcrypt.hash("Admin123!", 10),
+      manager: await bcrypt.hash("Manager123!", 10),
+      candidate: await bcrypt.hash("Candidate123!", 10),
+      user: await bcrypt.hash("User123!", 10),
     };
-
-    const hashedPasswords = {};
-    for (const key in plainPasswords) {
-      hashedPasswords[key] = await bcrypt.hash(plainPasswords[key], 10);
-    }
 
     console.log("Inserting regions...");
     const regions = [
@@ -93,91 +73,274 @@ async function populateData() {
       citiesMap[city.name] = result.rows[0].city_id;
     }
 
-    const defaultCityId = citiesMap["Астана"];
-    const defaultRegionId = regionsMap["Астана"];
+    // Cities and regions for our elections
+    const astanaRegionId = regionsMap["Астана"];
+    const astanaCityId = citiesMap["Астана"];
+    const almatyRegionId = regionsMap["Алматы"];
+    const almatyCityId = citiesMap["Алматы"];
 
     console.log("Populating users...");
+    // Create admin and manager
+    let userInsertValues = `
+      ('111111111111', 'Админ', 'Пользователь', NULL, '+77220000000', 'admin@example.com', '1980-01-01', ${astanaCityId}, '${passwordHashes.admin}', 'admin'),
+      ('222222222222', 'Менеджер', 'Пользователь', NULL, '+77220000001', 'manager@example.com', '1985-01-01', ${astanaCityId}, '${passwordHashes.manager}', 'manager')`;
+
+    // Create 12 candidates
+    const candidateNames = [
+      "Иван",
+      "Алексей",
+      "Мария",
+      "Сергей",
+      "Анна",
+      "Дмитрий",
+      "Елена",
+      "Михаил",
+      "Ольга",
+      "Николай",
+      "Виктория",
+      "Александр",
+    ];
+
+    for (let i = 0; i < 12; i++) {
+      const iin = `3${i.toString().padStart(11, "0")}`;
+      userInsertValues += `,
+      ('${iin}', '${candidateNames[i]}', 'Кандидат', NULL, '+7701000${(i + 100)
+        .toString()
+        .padStart(4, "0")}', 'candidate${i + 1}@example.com', '1990-0${
+        (i % 9) + 1
+      }-${(i % 20) + 1}', ${i < 7 ? astanaCityId : almatyCityId}, '${
+        passwordHashes.candidate
+      }', 'user')`;
+    }
+
+    // Create 100 regular users
+    for (let i = 0; i < 100; i++) {
+      const iin = `9${i.toString().padStart(11, "0")}`;
+      const cityId = i < 50 ? astanaCityId : almatyCityId; // First 50 in Astana, next 50 in Almaty
+      userInsertValues += `,
+      ('${iin}', 'Пользователь${i + 1}', 'Фамилия${i + 1}', NULL, '+7701${i
+        .toString()
+        .padStart(7, "0")}', 'user${i + 1}@example.com', '1980-0${
+        (i % 9) + 1
+      }-${(i % 20) + 1}', ${cityId}, '${passwordHashes.user}', 'user')`;
+    }
+
     const userRes = await pool.query(`
       INSERT INTO users (iin, first_name, last_name, patronymic, phone_number, email, date_of_birth, city_id, password_hash, role)
-      VALUES 
-      ('111111111111', 'Админ', 'Пользователь', NULL, '+77010000000', 'admin@example.com', '1980-01-01', ${defaultCityId}, '${hashedPasswords.admin}', 'admin'),
-      ('222222222222', 'Менеджер', 'Пользователь', NULL, '+77010000001', 'manager@example.com', '1985-01-01', ${defaultCityId}, '${hashedPasswords.manager}', 'manager'),
-      ('333333333333', 'Иван', 'Кандидат', NULL, '+77010000002', 'ivan@example.com', '1990-02-15', ${defaultCityId}, '${hashedPasswords.candidate1}', 'user'),
-      ('444444444444', 'Алексей', 'Кандидат', NULL, '+77010000003', 'alexey@example.com', '1985-03-20', ${defaultCityId}, '${hashedPasswords.candidate2}', 'user'),
-      ('555555555555', 'Мария', 'Кандидат', NULL, '+77010000004', 'maria@example.com', '1988-07-25', ${defaultCityId}, '${hashedPasswords.candidate3}', 'user'),
-      ('666666666666', 'Сергей', 'Пользователь', NULL, '+77010000005', 'sergey@example.com', '1992-05-10', ${defaultCityId}, '${hashedPasswords.user1}', 'user'),
-      ('777777777777', 'Николай', 'Пользователь', NULL, '+77010000006', 'nikolay@example.com', '1993-03-10', ${defaultCityId}, '${hashedPasswords.user2}', 'user'),
-      ('888888888888', 'Петр', 'Пользователь', NULL, '+77010000007', 'petr@example.com', '1994-02-11', ${defaultCityId}, '${hashedPasswords.user3}', 'user'),
-      ('999999999999', 'Дмитрий', 'Пользователь', NULL, '+77010000008', 'dmitry@example.com', '1995-01-12', ${defaultCityId}, '${hashedPasswords.user4}', 'user'),
-      ('121212121212', 'Андрей', 'Пользователь', NULL, '+77010000009', 'andrey@example.com', '1986-08-13', ${defaultCityId}, '${hashedPasswords.user5}', 'user'),
-      ('131313131313', 'Константин', 'Пользователь', NULL, '+77010000010', 'konstantin@example.com', '1987-07-14', ${defaultCityId}, '${hashedPasswords.user6}', 'user'),
-      ('141414141414', 'Ольга', 'Пользователь', NULL, '+77010000011', 'olga@example.com', '1982-02-15', ${defaultCityId}, '${hashedPasswords.user7}', 'user'),
-      ('151515151515', 'Екатерина', 'Пользователь', NULL, '+77010000012', 'ekaterina@example.com', '1983-01-16', ${defaultCityId}, '${hashedPasswords.user8}', 'user'),
-      ('161616161616', 'Василий', 'Пользователь', NULL, '+77010000013', 'vasiliy@example.com', '1984-03-17', ${defaultCityId}, '${hashedPasswords.user9}', 'user'),
-      ('171717171717', 'Татьяна', 'Пользователь', NULL, '+77010000014', 'tatiana@example.com', '1985-02-18', ${defaultCityId}, '${hashedPasswords.user10}', 'user'),
-      -- new users
-      ('181818181818', 'Леонид', 'Пользователь', NULL, '+77010000015', 'user11@example.com', '1991-09-19', ${defaultCityId}, '${hashedPasswords.user11}', 'user'),
-      ('191919191919', 'Евгений', 'Пользователь', NULL, '+77010000016', 'user12@example.com', '1992-10-20', ${defaultCityId}, '${hashedPasswords.user12}', 'user'),
-      ('202020202020', 'Марина', 'Пользователь', NULL, '+77010000017', 'user13@example.com', '1993-11-21', ${defaultCityId}, '${hashedPasswords.user13}', 'user'),
-      ('212121212121', 'Олег', 'Пользователь', NULL, '+77010000018', 'user14@example.com', '1994-12-22', ${defaultCityId}, '${hashedPasswords.user14}', 'user'),
-      ('222222222223', 'Светлана', 'Пользователь', NULL, '+77010000019', 'user15@example.com', '1995-01-23', ${defaultCityId}, '${hashedPasswords.user15}', 'user')
+      VALUES ${userInsertValues}
       RETURNING user_id;
     `);
 
     const userIds = userRes.rows.map((row) => row.user_id);
-    const candidateUserIds = userIds.slice(2, 5);
-    const voterIds = userIds.slice(5);
+    // Skip admin and manager (first 2 users)
+    const candidateUserIds = userIds.slice(2, 14); // 12 candidates
+    const voterIds = userIds.slice(14); // 100 normal users
 
-    console.log("Populating election...");
-    const electionRes = await pool.query(`
+    // Divide voters by region
+    const astanaVoterIds = voterIds.slice(0, 50);
+    const almatyVoterIds = voterIds.slice(50);
+
+    console.log("Populating elections...");
+    const electionsRes = await pool.query(`
       INSERT INTO elections (title, start_date, end_date, region_id, city_id)
-      VALUES ('Astana Elections', '2025-03-01 08:00:00', '2025-03-06 20:00:00', ${defaultRegionId}, ${defaultCityId})
+      VALUES 
+        ('Astana Elections 2025', '2025-03-01 08:00:00', '2025-03-06 20:00:00', ${astanaRegionId}, ${astanaCityId}),
+        ('Astana City Council', '2025-04-01 08:00:00', '2025-04-06 20:00:00', ${astanaRegionId}, ${astanaCityId}),
+        ('Almaty Elections 2025', '2025-05-01 08:00:00', '2025-05-06 20:00:00', ${almatyRegionId}, ${almatyCityId}),
+        ('Almaty City Council', '2025-06-01 08:00:00', '2025-06-06 20:00:00', ${almatyRegionId}, ${almatyCityId})
       RETURNING election_id;
     `);
 
-    const electionId = electionRes.rows[0].election_id;
+    const electionIds = electionsRes.rows.map((row) => row.election_id);
 
     console.log("Populating candidates...");
+    // Candidate photos
+    const candidatePhotos = [
+      "https://img.freepik.com/premium-photo/young-man-isolated-blue_1368-124991.jpg?semt=ais_hybrid&w=740",
+      "https://st.depositphotos.com/1144472/2003/i/450/depositphotos_20030237-stock-photo-cheerful-young-man-over-white.jpg",
+      "https://thumbs.dreamstime.com/b/portrait-beautiful-happy-woman-white-teeth-smiling-beauty-attractive-healthy-girl-perfect-smile-blonde-hair-fresh-face-76138238.jpg",
+    ];
+
+    // Election 1: 3 candidates
+    const election1Candidates = candidateUserIds.slice(0, 3);
+    // Election 2: 4 candidates
+    const election2Candidates = candidateUserIds.slice(3, 7);
+    // Election 3: 2 candidates
+    const election3Candidates = candidateUserIds.slice(7, 9);
+    // Election 4: 3 candidates
+    const election4Candidates = candidateUserIds.slice(9, 12);
+
+    const partiesNames = [
+      "Партия A",
+      "Партия Б",
+      "Партия В",
+      "Партия Г",
+      "Партия Д",
+    ];
+
+    let candidateInsertValues = "";
+
+    // Election 1 candidates
+    election1Candidates.forEach((userId, idx) => {
+      candidateInsertValues += `${candidateInsertValues ? "," : ""}
+        (${userId}, ${electionIds[0]}, 'Кандидат с опытом работы ${
+        5 + idx
+      } лет.', '${partiesNames[idx % partiesNames.length]}', '${
+        candidatePhotos[idx % candidatePhotos.length]
+      }')`;
+    });
+
+    // Election 2 candidates
+    election2Candidates.forEach((userId, idx) => {
+      candidateInsertValues += `,
+        (${userId}, ${electionIds[1]}, 'Опыт в городском управлении ${
+        3 + idx
+      } лет.', '${partiesNames[(idx + 1) % partiesNames.length]}', '${
+        candidatePhotos[idx % candidatePhotos.length]
+      }')`;
+    });
+
+    // Election 3 candidates
+    election3Candidates.forEach((userId, idx) => {
+      candidateInsertValues += `,
+        (${userId}, ${electionIds[2]}, 'Лидер общественного мнения с ${
+        8 + idx
+      } годами опыта.', '${partiesNames[(idx + 2) % partiesNames.length]}', '${
+        candidatePhotos[idx % candidatePhotos.length]
+      }')`;
+    });
+
+    // Election 4 candidates
+    election4Candidates.forEach((userId, idx) => {
+      candidateInsertValues += `,
+        (${userId}, ${
+        electionIds[3]
+      }, 'Эксперт в области экономики и развития.', '${
+        partiesNames[(idx + 3) % partiesNames.length]
+      }', '${candidatePhotos[idx % candidatePhotos.length]}')`;
+    });
+
     const candidateRes = await pool.query(`
       INSERT INTO candidates (user_id, election_id, bio, party, avatar_url)
-      VALUES 
-        (${candidateUserIds[0]}, ${electionId}, 'Опытный политик.', 'Партия  А', 'https://img.freepik.com/premium-photo/young-man-isolated-blue_1368-124991.jpg?semt=ais_hybrid&w=740'),
-        (${candidateUserIds[1]}, ${electionId}, 'Борец за правосудие.', 'Партия Б', 'https://st.depositphotos.com/1144472/2003/i/450/depositphotos_20030237-stock-photo-cheerful-young-man-over-white.jpg'),
-        (${candidateUserIds[2]}, ${electionId}, 'Новый взгляд на мир.', 'Партия В', 'https://thumbs.dreamstime.com/b/portrait-beautiful-happy-woman-white-teeth-smiling-beauty-attractive-healthy-girl-perfect-smile-blonde-hair-fresh-face-76138238.jpg')
-      RETURNING candidate_id;
+      VALUES ${candidateInsertValues}
+      RETURNING candidate_id, election_id;
     `);
 
-    const candidateIds = candidateRes.rows.map((row) => row.candidate_id);
+    // Map to store candidate IDs by election
+    const candidatesByElection = {};
+    candidateRes.rows.forEach((row) => {
+      if (!candidatesByElection[row.election_id]) {
+        candidatesByElection[row.election_id] = [];
+      }
+      candidatesByElection[row.election_id].push(row.candidate_id);
+    });
 
     console.log("Recording votes on different days...");
-    const votes = voterIds.map((userId, index) => {
-      const candidateId = candidateIds[index % candidateIds.length];
+    // 50 Astana voters for elections 1 and 2
+    const astanaVotes = [];
+
+    // Votes for election 1 - all 50 Astana voters
+    astanaVoterIds.forEach((userId, idx) => {
+      const electionId = electionIds[0];
+      const candidates = candidatesByElection[electionId];
+      const candidateId =
+        candidates[Math.floor(Math.random() * candidates.length)];
       const dayOffset = Math.floor(Math.random() * 6);
-      return `(
+
+      astanaVotes.push(`(
         ${candidateId},
         ${electionId},
-        'token${userId}',
+        'token${userId}_${electionId}',
         '2025-03-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
-      )`;
+      )`);
+    });
+
+    // Votes for election 2 - all 50 Astana voters
+    astanaVoterIds.forEach((userId, idx) => {
+      const electionId = electionIds[1];
+      const candidates = candidatesByElection[electionId];
+      const candidateId =
+        candidates[Math.floor(Math.random() * candidates.length)];
+      const dayOffset = Math.floor(Math.random() * 6);
+
+      astanaVotes.push(`(
+        ${candidateId},
+        ${electionId},
+        'token${userId}_${electionId}',
+        '2025-04-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+      )`);
+    });
+
+    // 50 Almaty voters for elections 3 and 4
+    const almatyVotes = [];
+
+    // Votes for election 3 - all 50 Almaty voters
+    almatyVoterIds.forEach((userId, idx) => {
+      const electionId = electionIds[2];
+      const candidates = candidatesByElection[electionId];
+      const candidateId =
+        candidates[Math.floor(Math.random() * candidates.length)];
+      const dayOffset = Math.floor(Math.random() * 6);
+
+      almatyVotes.push(`(
+        ${candidateId},
+        ${electionId},
+        'token${userId}_${electionId}',
+        '2025-05-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+      )`);
+    });
+
+    // Votes for election 4 - all 50 Almaty voters
+    almatyVoterIds.forEach((userId, idx) => {
+      const electionId = electionIds[3];
+      const candidates = candidatesByElection[electionId];
+      const candidateId =
+        candidates[Math.floor(Math.random() * candidates.length)];
+      const dayOffset = Math.floor(Math.random() * 6);
+
+      almatyVotes.push(`(
+        ${candidateId},
+        ${electionId},
+        'token${userId}_${electionId}',
+        '2025-06-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+      )`);
     });
 
     await pool.query(`
       INSERT INTO voters (candidate_id, election_id, token, voted_at)
-      VALUES ${votes.join(",\n")}
+      VALUES ${[...astanaVotes, ...almatyVotes].join(",\n")}
     `);
+
+    // Record which users have voted
+    let isVotedValues = [];
+
+    // Record Astana voters for elections 1 and 2
+    astanaVoterIds.forEach((userId) => {
+      isVotedValues.push(`(${userId}, ${electionIds[0]})`);
+      isVotedValues.push(`(${userId}, ${electionIds[1]})`);
+    });
+
+    // Record Almaty voters for elections 3 and 4
+    almatyVoterIds.forEach((userId) => {
+      isVotedValues.push(`(${userId}, ${electionIds[2]})`);
+      isVotedValues.push(`(${userId}, ${electionIds[3]})`);
+    });
 
     await pool.query(`
       INSERT INTO is_voted (user_id, election_id)
-      VALUES ${voterIds
-        .map((userId) => `(${userId}, ${electionId})`)
-        .join(", ")};
+      VALUES ${isVotedValues.join(", ")};
     `);
 
     console.log("Populating system events...");
     await pool.query(`
       INSERT INTO system_events (title, description, event_date)
       VALUES 
-        ('Выборы Акима Астаны', 'Описание.', NOW() + INTERVAL '1 day');
+        ('Начало регистрации кандидатов в Астане', 'Открыта регистрация кандидатов на выборы Акима Астаны. Подробности на официальном сайте.', NOW() - INTERVAL '60 days'),
+        ('Начало предвыборной кампании', 'Официальный старт предвыборной кампании. Дебаты состоятся через неделю.', NOW() - INTERVAL '30 days'),
+        ('Выборы Акима Астаны', 'Приглашаем всех избирателей принять участие в голосовании.', NOW() + INTERVAL '1 day'),
+        ('Выборы в городской совет Алматы', 'Важное событие для жителей Алматы.', NOW() + INTERVAL '30 days'),
+        ('Дебаты кандидатов', 'Прямая трансляция дебатов кандидатов на пост Акима.', NOW() + INTERVAL '7 days'),
+        ('Подведение итогов голосования', 'Объявление результатов выборов и инаугурация нового Акима.', NOW() + INTERVAL '10 days')
     `);
 
     await pool.query("COMMIT");
