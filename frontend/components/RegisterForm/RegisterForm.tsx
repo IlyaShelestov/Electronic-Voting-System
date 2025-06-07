@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { IUser } from "@/models/IUser";
-import { LocationsService } from "@/services/locationsService";
-import { ICity } from "@/models/ICity";
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
+import React, { useEffect, useState } from 'react';
+
+import { ICity } from '@/models/ICity';
+import { IUser } from '@/models/IUser';
+import { LocationsService } from '@/services/locationsService';
 
 interface RegisterFormProps {
   onSubmit: (userData: IUser & { password: string }) => Promise<void>;

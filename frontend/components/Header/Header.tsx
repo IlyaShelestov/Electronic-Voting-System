@@ -1,14 +1,16 @@
 "use client";
 
-import Logo from "../Logo/Logo";
-import "./Header.scss";
-import Link from "next/link";
-import { useAppSelector } from "@/store/hooks";
-import { useRouter, usePathname } from "next/navigation";
-import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
-import { setUserLocale } from "@/utils/locale";
-import { Locale } from "@/i18n/config";
+import './Header.scss';
 
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
+import { Locale } from '@/i18n/config';
+import { useAppSelector } from '@/store/hooks';
+import { setUserLocale } from '@/utils/locale';
+
+import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwitcher';
+import Logo from '../Logo/Logo';
 
 const Header = () => {
   const user = useAppSelector((state) => state.user.user);

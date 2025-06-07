@@ -1,24 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { AboutUsIcon } from "@/icons/AboutUsIcon";
-import { HomeIcon } from "@/icons/HomeIcon";
-import { InstructionsIcon } from "@/icons/InstructionsIcon";
-import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
-import { ProfileIcon } from "@/icons/ProfileIcon";
-import { SupportIcon } from "@/icons/SupportIcon";
-import { VoteIcon } from "@/icons/VoteIcon";
-import { AdminIcon } from "@/icons/AdminIcon";
-import { ManagerIcon } from "@/icons/ManagerIcon";
-import { AuthService } from "@/services/authService";
-import { useIsAuthenticated, useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout } from "@/store/slices/userSlice";  
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import Logo from "../Logo/Logo";
+import './Sidebar.scss';
 
-import "./Sidebar.scss";
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import { AboutUsIcon } from '@/icons/AboutUsIcon';
+import { AdminIcon } from '@/icons/AdminIcon';
+import { HomeIcon } from '@/icons/HomeIcon';
+import { InstructionsIcon } from '@/icons/InstructionsIcon';
+import { LeftArrowIcon } from '@/icons/LeftArrowIcon';
+import { ManagerIcon } from '@/icons/ManagerIcon';
+import { ProfileIcon } from '@/icons/ProfileIcon';
+import { SupportIcon } from '@/icons/SupportIcon';
+import { VoteIcon } from '@/icons/VoteIcon';
+import { AuthService } from '@/services/authService';
+import { useAppDispatch, useAppSelector, useIsAuthenticated } from '@/store/hooks';
+import { logout } from '@/store/slices/userSlice';
+
+import Logo from '../Logo/Logo';
 
 export default function Sidebar() {
   const isAuthenticated = useIsAuthenticated();

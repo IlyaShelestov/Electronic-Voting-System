@@ -1,7 +1,10 @@
-import { ICandidate } from "@/models/ICandidate";
-import "./CandidateCard.scss";
-import { useState } from "react";
-import Image from "next/image";
+import './CandidateCard.scss';
+
+import Image from 'next/image';
+import { useState } from 'react';
+
+import { ICandidate } from '@/models/ICandidate';
+
 export default function CandidateCard(
     { candidate, selectedCandidateId, setSelectedCandidateId, setSelectedCandidate }: 
     { candidate: ICandidate, selectedCandidateId: number, setSelectedCandidateId: (id: number) => void, setSelectedCandidate: (candidate: ICandidate) => void }) {

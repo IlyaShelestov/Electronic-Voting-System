@@ -1,17 +1,13 @@
 "use client";
-import { setLoading } from "@/store/slices/loadingSlice";
+import { useLocale } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 
-import { useEffect, ReactNode } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useAppDispatch } from "@/store/hooks";
-import { login, logout } from "@/store/slices/userSlice";
-import { UserService } from "@/services/userService";
-import {
-  getAuthToken,
-  isTokenExpired,
-  removeAuthToken,
-} from "@/utils/tokenHelper";
-import { useLocale } from "next-intl";
+import { UserService } from '@/services/userService';
+import { useAppDispatch } from '@/store/hooks';
+import { setLoading } from '@/store/slices/loadingSlice';
+import { login, logout } from '@/store/slices/userSlice';
+import { getAuthToken, isTokenExpired, removeAuthToken } from '@/utils/tokenHelper';
 
 interface AuthProviderProps {
   children: ReactNode;

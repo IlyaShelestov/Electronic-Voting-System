@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IElection } from "@/models/IElection";
+import { IElection } from '@/models/IElection';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ElectionState {
   elections: IElection[];

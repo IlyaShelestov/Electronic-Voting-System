@@ -1,9 +1,11 @@
 "use client";
 
-import "./Profile.scss";
-import { FaUserCircle } from "react-icons/fa";
-import { useAppSelector } from "@/store/hooks";
-import { useTranslations } from "next-intl";
+import './Profile.scss';
+
+import { useTranslations } from 'next-intl';
+import { FaUserCircle } from 'react-icons/fa';
+
+import { useAppSelector } from '@/store/hooks';
 
 export default function ProfilePage() {
   const user = useAppSelector((state) => state.user.user);

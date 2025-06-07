@@ -1,7 +1,9 @@
 "use client";
-import { useState } from 'react';
-import { IUser } from '@/models/IUser';
 import './UserUpdateModal.scss';
+
+import { useState } from 'react';
+
+import { IUser } from '@/models/IUser';
 
 interface UserUpdateModalProps {
     user: IUser;

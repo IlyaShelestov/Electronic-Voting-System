@@ -1,6 +1,7 @@
 "use client";
-import React from 'react';
 import './LoadingCircle.scss';
+
+import React from 'react';
 
 const  LoadingCircle: React.FC = () => {
   return (

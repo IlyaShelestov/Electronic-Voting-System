@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ElectionService } from "@/services/electionService";
-import ElectionCard from "@/components/ElectionCard/ElectionCard";
-import { useTranslations, useLocale } from "next-intl";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useIsAuthenticated,
-} from "@/store/hooks";
-import { setElections } from "@/store/slices/electionSlice";
-import BannerSlider from "@/components/BannerSlider/BannerSlider";
-import "./Home.scss";
-import { IElection } from "@/models/IElection";
+import './Home.scss';
+
+import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+
+import BannerSlider from '@/components/BannerSlider/BannerSlider';
+import ElectionCard from '@/components/ElectionCard/ElectionCard';
+import { IElection } from '@/models/IElection';
+import { ElectionService } from '@/services/electionService';
+import { useAppDispatch, useAppSelector, useIsAuthenticated } from '@/store/hooks';
+import { setElections } from '@/store/slices/electionSlice';
 
 type FilterOption = "all" | "available";
 
@@ -77,7 +75,10 @@ export default function Home() {
 
       <h2>{t("currentElections")}</h2>
 
-      <div className="elections-list" aria-live="polite">
+      <div
+        className="elections-list"
+        aria-live="polite"
+      >
         {errorMessage ? (
           <div className="status-message error">{errorMessage}</div>
         ) : elections.length === 0 ? (

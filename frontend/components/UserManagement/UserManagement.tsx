@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { IUser } from '@/models/IUser';
-import { useTranslations } from 'next-intl';
 import './UserManagement.scss';
-import UserUpdateModal from '@/components/UserUpdateModal/UserUpdateModal';
-import { FaPlus, FaTrash, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { FaArrowLeft, FaArrowRight, FaPlus, FaTrash } from 'react-icons/fa';
+
+import UserUpdateModal from '@/components/UserUpdateModal/UserUpdateModal';
+import { IUser } from '@/models/IUser';
 import { AdminService } from '@/services/adminService';
 
 export default function UserManagement() {

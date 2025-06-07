@@ -1,4 +1,5 @@
-import "./Support.scss";
+import './Support.scss';
+
 export default function Support() {
   return (
     <>

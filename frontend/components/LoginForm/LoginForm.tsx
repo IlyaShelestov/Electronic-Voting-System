@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { ILogin } from "@/models/ILogin";
-import Link from "next/link";
+import './LoginForm.scss';
 
-import "./LoginForm.scss";
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import React, { useState } from 'react';
+
+import { ILogin } from '@/models/ILogin';
 
 interface LoginFormProps {
   onSubmit: (loginData: ILogin) => void;

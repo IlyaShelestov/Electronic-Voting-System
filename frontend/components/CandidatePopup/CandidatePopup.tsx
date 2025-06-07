@@ -1,8 +1,11 @@
 "use client";
 
-import { ICandidate } from "@/models/ICandidate";
-import "./CandidatePopup.scss";
-import { useState } from "react";
+import './CandidatePopup.scss';
+
+import { useState } from 'react';
+
+import { ICandidate } from '@/models/ICandidate';
+
 interface CandidatePopupProps {
   candidate: ICandidate | null;
   onClose: () => void;

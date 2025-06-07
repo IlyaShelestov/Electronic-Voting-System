@@ -1,13 +1,15 @@
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { ToastContainer } from "react-toastify";
-import ContentLayout from "@/app/ContentLayout";
-import { AuthProvider } from "@/providers/AuthProvider";
-import MultiProvider from "@/providers/MultiProvider";
-import "@/styles/globals.scss";
-import type { Metadata } from "next";
-import QueryProvider from "@/providers/QueryClientProvider";
-import { getLocale } from "next-intl/server";
+import '@/styles/globals.scss';
 
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
+import { ToastContainer } from 'react-toastify';
+
+import ContentLayout from '@/app/ContentLayout';
+import { AuthProvider } from '@/providers/AuthProvider';
+import MultiProvider from '@/providers/MultiProvider';
+import QueryProvider from '@/providers/QueryClientProvider';
+
+import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "eVote",
   icons: {
