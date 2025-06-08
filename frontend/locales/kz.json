@@ -82,7 +82,43 @@
     "currentElections": "Актуалды",
     "viewCandidates": "Кандидаттарды қарау",
     "date": "Күні",
-    "votes": "Дауыс"
+    "votes": "Дауыс",
+    "filterBy": "Сүзгі",
+    "sortBy": "Сұрыптау",
+    "allElections": "Барлық сайлаулар",
+    "availableElections": "Актуалды сайлаулар",
+    "noElections": "Сайлаулар жоқ",
+    "noAvailableElections": "Актуалды сайлаулар жоқ",
+    "authRequired": "Қолжетімді сайлауларды көру үшін жүйеге кіруіңіз керек",
+    "noElectionsFound": "Сайлаулар табылмады",
+    "loadingElections": "Сайлаулар жүктелуде...",
+    "byDate": "Күні бойынша",
+    "byVotes": "Дауыс саны бойынша",
+    "byName": "Аты бойынша",
+    "searchPlaceholder": "Іздеу",
+    "farthestDate": "Ең алыс күн"
+  },
+  "votePage": {
+    "title": "Дауыс беру",
+    "selectElection": "Сайлау таңдау",
+    "loadingCandidates": "Кандидаттар жүктелуде...",
+    "alreadyVoted": "Сіз бұл сайлауда дауыс бердіңіз.",
+    "vote": "Дауыс беру"
+  },
+  "profilePage": {
+    "title": "Профиль"
+  },
+  "managerPage": {
+    "title": "Менеджер панелі"
+  },
+  "instructionsPage": {
+    "title": "Нұсқаулық"
+  },
+  "supportPage": {
+    "title": "Тех. қолдау"
+  },
+  "aboutPage": {
+    "title": "Біз туралы"
   },
   "sidebar": {
     "title": "Навигация",

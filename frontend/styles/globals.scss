@@ -98,3 +98,27 @@ select {
     border-color: $button_light;
   }
 }
+
+input {
+  padding: 8px;
+  border: 1px solid $border_light;
+  border-radius: 12px;
+  background-color: $general_light;
+  font-size: 16px;
+  width: 100%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: $button_hover_dark;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $button_light;
+  }
+
+  &::placeholder {
+    color: $general_dark;
+    opacity: 0.7;
+  }
+}

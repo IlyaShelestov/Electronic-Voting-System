@@ -14,25 +14,29 @@
 }
 
 .otp-modal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   text-align: center;
-}
 
-.otp-modal__content h2 {
-  margin-bottom: 20px;
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .otp-modal__content input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 .otp-modal__content button {

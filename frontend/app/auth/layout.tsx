@@ -12,6 +12,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   if (isAuthenticated) {
     redirect("/");
   }
-  
+
   return <div className="auth">{children}</div>;
 }

@@ -1,5 +1,9 @@
 @use "@/styles/variables" as *;
 
+.userManagement {
+  width: 100%;
+}
+
 .userManagement__title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -80,15 +84,10 @@
 }
 
 .filters input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
 .filters input:focus {
-  border-color: #007bff;
   outline: none;
 }
 
@@ -101,18 +100,15 @@
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   font-size: 1rem;
-  background-color: #fff;
   cursor: pointer;
   transition: border-color 0.3s ease;
 }
 
 .filters select:focus {
-  border-color: #007bff;
   outline: none;
 }
 
 .filters .fa-plus {
-  color: #007bff;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
 }
@@ -123,22 +119,13 @@
 }
 
 .search-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  font-size: 1rem;
   margin-bottom: 1rem;
   width: 100%;
   transition: border-color 0.3s ease;
 }
 
 .search-input:focus {
-  border-color: #007bff;
   outline: none;
-}
-
-.search-input::placeholder {
-  color: #aaa;
 }
 
 .pagination {
@@ -221,6 +208,5 @@
 }
 
 .filter-item input:focus {
-  border-color: #007bff;
   outline: none;
 }

@@ -82,7 +82,43 @@
     "currentElections": "Current",
     "viewCandidates": "View Candidates",
     "date": "Date",
-    "votes": "Votes"
+    "votes": "Votes",
+    "filterBy": "Filter",
+    "sortBy": "Sort",
+    "allElections": "All Elections",
+    "availableElections": "Available Elections",
+    "noElections": "No elections",
+    "noAvailableElections": "No available elections",
+    "authRequired": "Authentication is required to view available elections",
+    "noElectionsFound": "No elections found",
+    "loadingElections": "Loading elections...",
+    "byDate": "By date",
+    "byVotes": "By votes",
+    "byName": "By name",
+    "searchPlaceholder": "Search",
+    "farthestDate": "Farthest date"
+  },
+  "votePage": {
+    "title": "Vote",
+    "selectElection": "Select an election",
+    "loadingCandidates": "Loading candidates...",
+    "alreadyVoted": "You have already voted in this election.",
+    "vote": "Vote"
+  },
+  "profilePage": {
+    "title": "Profile"
+  },
+  "managerPage": {
+    "title": "Manager Panel"
+  },
+  "instructionsPage": {
+    "title": "Instructions"
+  },
+  "supportPage": {
+    "title": "Support"
+  },
+  "aboutPage": {
+    "title": "About Us"
   },
   "sidebar": {
     "title": "Navigation",

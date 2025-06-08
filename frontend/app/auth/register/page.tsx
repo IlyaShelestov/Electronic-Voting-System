@@ -1,6 +1,7 @@
 "use client";
+import './Register.scss';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -12,16 +13,19 @@ import { AuthService } from '@/services/authService';
 import { OtpService } from '@/services/otpService';
 
 export default function RegisterPage() {
-  const locale = useLocale();
   const router = useRouter();
   const t = useTranslations("registrationPage");
 
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
-  const [pendingUserData, setPendingUserData] = useState<IUser & { password: string } | null>(null);
+  const [pendingUserData, setPendingUserData] = useState<
+    (IUser & { password: string }) | null
+  >(null);
+  const [email, setEmail] = useState("");
 
   const handleOnSubmit = async (registerData: IUser & { password: string }) => {
     try {
       await OtpService.sendOtp(registerData.email);
+      setEmail(registerData.email);
       setPendingUserData(registerData);
       setIsOtpModalOpen(true);
     } catch (err: any) {
@@ -51,11 +55,15 @@ export default function RegisterPage() {
       <RegisterForm onSubmit={handleOnSubmit} />
       <p className="text-center">
         {t("alreadyHaveAccount")}{" "}
-        <Link href={`/auth/login`} className="text-blue-500">
+        <Link
+          href={`/auth/login`}
+          className="text-blue-500"
+        >
           {t("login")}
         </Link>
       </p>
       <OtpModal
+        email={email}
         isOpen={isOtpModalOpen}
         onClose={() => setIsOtpModalOpen(false)}
         onSubmit={handleOtpSubmit}

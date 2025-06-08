@@ -1,5 +1,4 @@
 "use client";
-import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 
@@ -14,7 +13,6 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useAppDispatch();
@@ -50,9 +48,5 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     initializeAuth();
   }, [dispatch, pathname, router]);
 
-  return (
-    <>
-    {children}
-    </>
-  );
+  return <>{children}</>;
 };

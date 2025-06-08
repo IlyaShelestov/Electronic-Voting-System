@@ -2,17 +2,15 @@
 
 import './Login.scss';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import LoginForm from '@/components/LoginForm/LoginForm';
 import { ILogin } from '@/models/ILogin';
 import { AuthService } from '@/services/authService';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { RootState } from '@/store/reduxStore';
 import { setLoading } from '@/store/slices/loadingSlice';
 import { removeAuthToken } from '@/utils/tokenHelper';
 import { useMutation } from '@tanstack/react-query';
@@ -20,7 +18,6 @@ import { useMutation } from '@tanstack/react-query';
 export default function LoginPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const locale = useLocale();
   const t = useTranslations("loginPage");
   const auth = useTranslations("auth");
 
@@ -68,10 +65,10 @@ export default function LoginPage() {
   return (
     <>
       <h1 className="text-3xl font-bold text-center">{t("title")}</h1>
-       <LoginForm onSubmit={handleOnSubmit} />
+      <LoginForm onSubmit={handleOnSubmit} />
       <p>
         {auth("alreadyHaveAccount")}{" "}
-        <Link href={`/${locale}/auth/register`}>{auth("register")}</Link>
+        <Link href={`/auth/register`}>{auth("register")}</Link>
       </p>
     </>
   );

@@ -11,7 +11,9 @@ import OtpModal from '@/components/OtpModal/OtpModal';
 import { ICandidate } from '@/models/ICandidate';
 import { IElection } from '@/models/IElection';
 import { ElectionService } from '@/services/electionService';
+import { OtpService } from '@/services/otpService';
 import { VoteService } from '@/services/voteService';
+import { useEmail } from '@/store/hooks';
 
 export default function VotePage() {
   const t = useTranslations("votePage");
@@ -28,6 +30,7 @@ export default function VotePage() {
   const [loading, setLoading] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const email = useEmail();
 
   useEffect(() => {
     const fetchElections = async () => {
@@ -107,7 +110,13 @@ export default function VotePage() {
       toast.warn("Выберите кандидата перед голосованием!");
       return;
     }
-    setIsOtpModalOpen(true);
+    try {
+      await OtpService.sendOtp(email);
+      setIsOtpModalOpen(true);
+    } catch (error) {
+      console.error("Ошибка при отправке OTP:", error);
+      toast.error("Не удалось отправить OTP. Попробуйте снова.");
+    }
   };
 
   const handleOtpSubmit = async (otp: string) => {
@@ -186,6 +195,7 @@ export default function VotePage() {
           </button>
         </div>
         <OtpModal
+          email={email}
           isOpen={isOtpModalOpen}
           onClose={() => setIsOtpModalOpen(false)}
           onSubmit={handleOtpSubmit}
