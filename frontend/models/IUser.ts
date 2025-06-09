@@ -1,3 +1,5 @@
+import { UserRoleEnum } from "./UserRole";
+
 export interface IUser {
   user_id?: number;
   iin: string;
@@ -8,5 +10,7 @@ export interface IUser {
   city_id: number;
   phone_number: string;
   email: string;
-  role?: "user" | "admin" | "manager" | "candidate";
+  role: UserRoleEnum;
+  created_at?: string;
+  updated_at?: string;
 }
