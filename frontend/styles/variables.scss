@@ -1,4 +1,5 @@
-$general_dark: #222831;
+// Base Colors
+$general_dark: #131313;
 $general_light: #f4f4f4;
 $button_light: #00adb5;
 $button_hover_light: #393e46;
@@ -10,6 +11,163 @@ $selected: #dfdcdc;
 $navbar: #f5f0f0;
 $button_danger: #ff5722;
 
+// Enhanced Color Variations
+
+// General Colors
+$general_dark_hover: lighten($general_dark, 10%);
+$general_dark_active: lighten($general_dark, 5%);
+$general_dark_focus: rgba($general_dark, 0.8);
+
+$general_light_hover: darken($general_light, 5%);
+$general_light_active: darken($general_light, 10%);
+$general_light_focus: rgba($general_light, 0.9);
+
+// Button Light Colors
+$button_light_hover: darken($button_light, 8%);
+$button_light_active: darken($button_light, 15%);
+$button_light_focus: rgba($button_light, 0.2);
+$button_light_disabled: rgba($button_light, 0.4);
+
+// Button Hover Light Colors
+$button_hover_light_hover: lighten($button_hover_light, 8%);
+$button_hover_light_active: darken($button_hover_light, 8%);
+$button_hover_light_focus: rgba($button_hover_light, 0.2);
+$button_hover_light_disabled: rgba($button_hover_light, 0.4);
+
+// Button Dark Colors
+$button_dark_hover: lighten($button_dark, 10%);
+$button_dark_active: darken($button_dark, 10%);
+$button_dark_focus: rgba($button_dark, 0.2);
+$button_dark_disabled: rgba($button_dark, 0.4);
+
+// Button Hover Dark Colors
+$button_hover_dark_hover: lighten($button_hover_dark, 10%);
+$button_hover_dark_active: darken($button_hover_dark, 10%);
+$button_hover_dark_focus: rgba($button_hover_dark, 0.2);
+$button_hover_dark_disabled: rgba($button_hover_dark, 0.4);
+
+// Border Colors
+$border_dark_hover: lighten($border_dark, 15%);
+$border_dark_active: lighten($border_dark, 8%);
+$border_dark_focus: rgba($border_dark, 0.6);
+
+$border_light_hover: darken($border_light, 15%);
+$border_light_active: darken($border_light, 25%);
+$border_light_focus: rgba($border_light, 0.6);
+
+// Danger Colors
+$button_danger_hover: darken($button_danger, 8%);
+$button_danger_active: darken($button_danger, 15%);
+$button_danger_focus: rgba($button_danger, 0.2);
+$button_danger_disabled: rgba($button_danger, 0.4);
+
+// Success Colors (for approve actions)
+$button_success: #4caf50;
+$button_success_hover: darken($button_success, 8%);
+$button_success_active: darken($button_success, 15%);
+$button_success_focus: rgba($button_success, 0.2);
+$button_success_disabled: rgba($button_success, 0.4);
+
+// Warning Colors (for pending actions)
+$button_warning: #ff9800;
+$button_warning_hover: darken($button_warning, 8%);
+$button_warning_active: darken($button_warning, 15%);
+$button_warning_focus: rgba($button_warning, 0.2);
+$button_warning_disabled: rgba($button_warning, 0.4);
+
+// Info Colors (for informational elements)
+$button_info: #2196f3;
+$button_info_hover: darken($button_info, 8%);
+$button_info_active: darken($button_info, 15%);
+$button_info_focus: rgba($button_info, 0.2);
+$button_info_disabled: rgba($button_info, 0.4);
+
+// Selected & Navbar Variations
+$selected_hover: darken($selected, 5%);
+$selected_active: darken($selected, 10%);
+$selected_focus: rgba($selected, 0.8);
+
+$navbar_hover: darken($navbar, 3%);
+$navbar_active: darken($navbar, 6%);
+$navbar_focus: rgba($navbar, 0.95);
+
+// Text Colors
+$text_primary: $general_dark;
+$text_secondary: lighten($general_dark, 30%);
+$text_muted: lighten($general_dark, 50%);
+$text_disabled: lighten($general_dark, 60%);
+$text_inverse: $general_light;
+
+// Background Colors
+$bg_primary: white;
+$bg_secondary: $general_light;
+$bg_tertiary: lighten($general_light, 2%);
+$bg_overlay: rgba($general_dark, 0.5);
+$bg_modal: rgba($general_dark, 0.8);
+
+// Shadow Colors
+$shadow_light: rgba($general_dark, 0.1);
+$shadow_medium: rgba($general_dark, 0.15);
+$shadow_heavy: rgba($general_dark, 0.25);
+$shadow_focus: rgba($button_light, 0.25);
+
+// Gradient Colors
+$gradient_primary: linear-gradient(135deg, $button_light, $button_light_hover);
+$gradient_secondary: linear-gradient(
+  135deg,
+  $button_hover_light,
+  $button_hover_light_hover
+);
+$gradient_danger: linear-gradient(135deg, $button_danger, $button_danger_hover);
+$gradient_success: linear-gradient(
+  135deg,
+  $button_success,
+  $button_success_hover
+);
+$gradient_warning: linear-gradient(
+  135deg,
+  $button_warning,
+  $button_warning_hover
+);
+$gradient_info: linear-gradient(135deg, $button_info, $button_info_hover);
+
+// Sizes
 $header_height: 80px;
 $sidebar_width: 280px;
 $sidebar_height: 100vh;
+
+// Border Radius
+$border_radius_small: 4px;
+$border_radius_medium: 8px;
+$border_radius_large: 12px;
+$border_radius_pill: 50px;
+
+// Transitions
+$transition_fast: 0.15s ease;
+$transition_normal: 0.3s ease;
+$transition_slow: 0.5s ease;
+
+// Z-index layers
+$z_dropdown: 1000;
+$z_sticky: 1020;
+$z_fixed: 1030;
+$z_modal_backdrop: 1040;
+$z_modal: 1050;
+$z_popover: 1060;
+$z_tooltip: 1070;
+$z_toast: 1080;
+
+// Breakpoints
+$breakpoint_xs: 480px;
+$breakpoint_sm: 768px;
+$breakpoint_md: 1024px;
+$breakpoint_lg: 1200px;
+$breakpoint_xl: 1440px;
+
+// Spacing
+$spacing_xs: 4px;
+$spacing_sm: 8px;
+$spacing_md: 16px;
+$spacing_lg: 24px;
+$spacing_xl: 32px;
+$spacing_xxl: 48px;

@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box !important;
+  transition: all 0.3s linear;
 }
 
 body {
@@ -120,5 +121,48 @@ input {
   &::placeholder {
     color: $general_dark;
     opacity: 0.7;
+  }
+}
+
+input,
+select {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  &:focus {
+    box-shadow: 0 0 6px rgba(0, 173, 181, 0.25);
+  }
+}
+
+label {
+  font-weight: 600;
+  color: $general_dark;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+select,
+input {
+  all: unset;
+  padding: 12px 16px;
+  border: 2px solid $border_light;
+  border-radius: 12px;
+  background: $general_light;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+  color: $general_dark;
+
+  &:focus {
+    border-color: $button_light;
+    box-shadow: 0 0 0 4px rgba($button_light, 0.1);
+    transform: translateY(-1px);
+    background: white;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($general_dark, 0.1);
+    border-color: $border_dark;
   }
 }
