@@ -1,0 +1,111 @@
+@use "@/styles/variables" as *;
+
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing_lg;
+  align-items: center;
+  width: 100%;
+
+  &__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing_sm;
+    padding: $spacing_md;
+    background: $bg_primary;
+    border-radius: $border_radius_large;
+    box-shadow: 0 2px 12px $shadow_light;
+    margin-bottom: $spacing_md;
+
+    a {
+      padding: $spacing_md $spacing_lg;
+      border-radius: $border_radius_medium;
+      background-color: $bg_secondary;
+      color: $text_primary;
+      border: 2px solid transparent;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: $transition_normal;
+      position: relative;
+      overflow: hidden;
+      min-width: 120px;
+      text-align: center;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: $transition_normal;
+      }
+
+      &:hover {
+        background-color: $button_light_hover;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px $shadow_medium;
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &.active {
+        background: $gradient_primary;
+        color: white;
+        border-color: $button_light;
+        font-weight: 600;
+        box-shadow: 0 4px 16px $button_light_focus;
+      }
+    }
+  }
+
+  & > *:not(.admin-page__links) {
+    width: 100%;
+    padding: 0 $spacing_md;
+  }
+}
+
+@media (max-width: $breakpoint_md) {
+  .admin-page {
+    &__links {
+      flex-direction: column;
+      gap: $spacing_xs;
+      padding: $spacing_sm;
+
+      a {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+
+    & > *:not(.admin-page__links) {
+      padding: 0 $spacing_sm;
+    }
+  }
+}
+
+@media (max-width: $breakpoint_sm) {
+  .admin-page {
+    gap: $spacing_md;
+
+    &__links {
+      margin-bottom: $spacing_sm;
+
+      a {
+        padding: $spacing_sm $spacing_md;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
