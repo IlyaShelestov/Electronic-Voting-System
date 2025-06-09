@@ -1,6 +1,6 @@
-import { AuthResponse } from '@/models/IAuthResponse';
-import { IUser } from '@/models/IUser';
-import { apiClient } from '@/services/apiClient';
+import { AuthResponse } from "@/models/IAuthResponse";
+import { IUser } from "@/models/IUser";
+import { apiClient } from "@/services/apiClient";
 
 export class AuthService {
   private static apiEndpoint = "/auth";
