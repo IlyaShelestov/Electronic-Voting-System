@@ -1,9 +1,9 @@
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider } from "next-intl";
 
-import ReduxProvider from '@/providers/StoreProvider';
+import { AuthProvider } from "@/providers/AuthProvider";
+import ReduxProvider from "@/providers/StoreProvider";
 
-import { AuthProvider } from './AuthProvider';
-import QueryProvider from './QueryClientProvider';
+import QueryProvider from "./QueryClientProvider";
 
 export default function MultiProvider({
   children,

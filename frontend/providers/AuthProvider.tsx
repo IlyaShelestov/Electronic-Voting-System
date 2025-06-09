@@ -1,52 +1,26 @@
 "use client";
-import { usePathname, useRouter } from 'next/navigation';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from "react";
 
-import { UserService } from '@/services/userService';
-import { useAppDispatch } from '@/store/hooks';
-import { setLoading } from '@/store/slices/loadingSlice';
-import { login, logout } from '@/store/slices/userSlice';
-import { getAuthToken, isTokenExpired, removeAuthToken } from '@/utils/tokenHelper';
+import { useAuthRedux } from "@/store/hooks/useAuthRedux";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const dispatch = useAppDispatch();
+  const { initializeAuth } = useAuthRedux();
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      dispatch(setLoading({ key: "auth", value: true }));
-
-      const token = getAuthToken();
-
-      if (token && !isTokenExpired(token)) {
-        try {
-          const user = await UserService.getUser();
-          if (user) {
-            dispatch(login(user));
-          } else {
-            handleLogout();
-          }
-        } catch (error) {
-          handleLogout();
-        } finally {
-          dispatch(setLoading({ key: "auth", value: false }));
-        }
+    const initAuth = async () => {
+      try {
+        await initializeAuth();
+      } catch (error) {
+        console.error("Failed to initialize authentication:", error);
       }
     };
 
-    const handleLogout = () => {
-      removeAuthToken();
-      dispatch(logout());
-      router.push("/");
-    };
-
-    initializeAuth();
-  }, [dispatch, pathname, router]);
+    initAuth();
+  }, [initializeAuth]);
 
   return <>{children}</>;
 };
