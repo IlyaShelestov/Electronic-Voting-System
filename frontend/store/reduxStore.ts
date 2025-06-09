@@ -1,9 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import electionReducer from './slices/electionSlice';
-import loadingReducer from './slices/loadingSlice';
-import userReducer from './slices/userSlice';
-import voteReducer from './slices/voteSlice';
+import electionReducer from "./slices/electionSlice";
+import loadingReducer from "./slices/loadingSlice";
+import userReducer from "./slices/userSlice";
+import voteReducer from "./slices/voteSlice";
 
 export const makeStore = () => {
   return configureStore({
