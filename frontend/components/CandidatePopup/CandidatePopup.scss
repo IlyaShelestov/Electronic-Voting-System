@@ -1,80 +1,354 @@
+@use "@/styles/variables.scss" as *;
+
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .popup-content {
   background: white;
-  width: 60%;
-  max-width: 1600px;
-  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
   border-radius: 20px;
   position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-header {
-  margin-right: 20px;
-  float: left;
-  h2 {
-    text-align: center;
-  }
-}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid rgba($general_dark, 0.1);
+  background: rgba($button_light, 0.02);
 
-.candidate-image {
-  border-radius: 50%;
-  margin-bottom: 10px;
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .candidate-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba($button_light, 0.3);
+    }
+
+    .candidate-basic-info {
+      .candidate-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: $general_dark;
+        margin: 0 0 4px 0;
+      }
+
+      .candidate-party {
+        font-size: 16px;
+        color: lighten($general_dark, 20%);
+        font-weight: 500;
+        margin: 0;
+        padding: 4px 12px;
+        background: rgba($button_light, 0.1);
+        border-radius: 12px;
+        display: inline-block;
+
+        &.independent {
+          background: rgba($general_dark, 0.1);
+          color: $general_dark;
+        }
+      }
+    }
+  }
+
+  .close-btn {
+    background: rgba($general_dark, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: $general_dark;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba($general_dark, 0.2);
+      transform: scale(1.1);
+    }
+  }
 }
 
 .popup-body {
-  margin-top: 15px;
-  text-align-last: left;
-  h3 {
+  padding: 32px;
+  overflow-y: auto;
+  flex: 1;
+
+  .info-section {
+    margin-bottom: 32px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: $general_dark;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba($button_light, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &::before {
+        content: attr(data-icon);
+        font-size: 18px;
+        color: $button_light;
+      }
+    }
+
+    .info-content {
+      .info-item {
+        display: flex;
+        margin-bottom: 12px;
+        align-items: flex-start;
+        gap: 12px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .info-label {
+          font-weight: 600;
+          color: $general_dark;
+          min-width: 120px;
+          flex-shrink: 0;
+        }
+
+        .info-value {
+          color: lighten($general_dark, 15%);
+          line-height: 1.5;
+          flex: 1;
+
+          &.not-available {
+            color: lighten($general_dark, 40%);
+            font-style: italic;
+          }
+
+          a {
+            color: $button_light;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .biography-text {
+        color: lighten($general_dark, 15%);
+        line-height: 1.6;
+        text-align: justify;
+        background: rgba($general_dark, 0.02);
+        padding: 16px;
+        border-radius: 8px;
+        border-left: 4px solid $button_light;
+      }
+
+      .resources-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .resource-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba($button_light, 0.05);
+          border-radius: 8px;
+          border: 1px solid rgba($button_light, 0.2);
+
+          .resource-icon {
+            width: 20px;
+            height: 20px;
+            color: $button_light;
+          }
+
+          .resource-link {
+            color: $button_light;
+            text-decoration: none;
+            font-weight: 500;
+            flex: 1;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba($general_dark, 0.02);
+          border-radius: 8px;
+
+          .contact-icon {
+            width: 20px;
+            height: 20px;
+            color: $button_light;
+          }
+
+          .contact-info {
+            .contact-type {
+              font-size: 12px;
+              color: lighten($general_dark, 30%);
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              margin-bottom: 2px;
+            }
+
+            .contact-value {
+              color: $general_dark;
+              font-weight: 500;
+
+              a {
+                color: $button_light;
+                text-decoration: none;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .empty-section {
     text-align: center;
-    font-size: 24px;
+    padding: 24px;
+    color: lighten($general_dark, 40%);
+    font-style: italic;
+    background: rgba($general_dark, 0.02);
+    border-radius: 8px;
   }
-  hr {
-    margin: 20px 0;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .popup-overlay {
+    padding: 10px;
+  }
+
+  .popup-content {
+    max-height: 95vh;
+  }
+
+  .popup-header {
+    padding: 20px 24px;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+
+    .header-content {
+      flex-direction: column;
+      gap: 12px;
+
+      .candidate-image {
+        width: 60px;
+        height: 60px;
+      }
+
+      .candidate-basic-info {
+        text-align: center;
+
+        .candidate-name {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+  }
+
+  .popup-body {
+    padding: 24px 20px;
+
+    .info-section {
+      margin-bottom: 24px;
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .info-content {
+        .info-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+
+          .info-label {
+            min-width: auto;
+            font-size: 14px;
+          }
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
   }
 }
 
-.media-gallery {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
+@media (max-width: 480px) {
+  .popup-header {
+    padding: 16px 20px;
 
-.candidate-video {
-  width: 100%;
-  max-height: 200px;
-  border-radius: 5px;
-}
+    .header-content {
+      .candidate-basic-info .candidate-name {
+        font-size: 18px;
+      }
+    }
+  }
 
-.vote-btn {
-  display: block;
-  width: 100%;
-  background: #00adb5;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 15px;
+  .popup-body {
+    padding: 20px 16px;
+  }
 }
