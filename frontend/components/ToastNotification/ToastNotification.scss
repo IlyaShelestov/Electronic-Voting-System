@@ -18,15 +18,15 @@
     }
 
     &.Toastify__toast--error {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      background: $gradient_danger; 
       color: white;
-      border-color: #dc2626;
+      border-color: $button_danger;
     }
 
     &.Toastify__toast--info {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      background: $gradient_primary;
       color: white;
-      border-color: #2563eb;
+      border-color: $button_light;
     }
 
     &.Toastify__toast--warning {

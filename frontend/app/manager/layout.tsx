@@ -11,10 +11,8 @@ export default function ManagerLayout({
   const t = useTranslations("managerPage");
   return (
     <ManagerProtectedRoute>
-      <div className="manager-layout">
-        <h1>{t("title")}</h1>
-        {children}
-      </div>
+      <h1>{t("title")}</h1>
+      {children}
     </ManagerProtectedRoute>
   );
 }

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
-import { ErrorMessage } from "@/components/ui/ValidationComponents";
+import { ErrorMessage } from "@/components/ValidationComponent/ValidationComponents";
 import { IUser } from "@/models/IUser";
 import { UserService } from "@/services/userService";
 import { useLoading } from "@/store/hooks/useLoading";

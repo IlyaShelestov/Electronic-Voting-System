@@ -3,12 +3,13 @@
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
-import { ErrorMessage, FormErrors } from "@/components/ui/ValidationComponents";
+import { ErrorMessage, FormErrors } from "@/components/ValidationComponent/ValidationComponents";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { ICity } from "@/models/ICity";
 import { IUser } from "@/models/IUser";
 import { LocationsService } from "@/services/locationsService";
 import { RegisterFormData, registerSchema } from "@/utils/validationSchemas";
+import { ValidatedInput } from "../ValidateIdnput/ValidatedInput";
 
 interface RegisterFormProps {
   onSubmit: (userData: IUser & { password: string }) => Promise<void>;
@@ -77,73 +78,55 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="iin">{t("iin")}</label>
-        <input
-          type="text"
+        <ValidatedInput
           name="iin"
-          placeholder={t("iin")}
+          placeholder={t("iinPlaceholder") || "Enter IIN"}
           value={formData.iin}
           onChange={handleChange}
-          className={getFieldError("iin") ? "error" : ""}
+          error={getFieldError("iin")}
           disabled={isSubmitting}
+          required
+          label={t("iin") || "IIN"}
         />
-        <ErrorMessage message={getFieldError("iin")} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="first_name">{t("firstName")}</label>
-        <input
-          type="text"
+        <ValidatedInput
           name="first_name"
-          placeholder={t("firstName")}
+          placeholder={t("firstNamePlaceholder") || "Enter first name"}
           value={formData.first_name}
           onChange={handleChange}
-          className={getFieldError("first_name") ? "error" : ""}
+          error={getFieldError("first_name")}
           disabled={isSubmitting}
-        />
-        <ErrorMessage message={getFieldError("first_name")} />
+          required
+          label={t("firstName") || "First Name"}
+        />  
       </div>
 
       <div className="form-group">
-        <label htmlFor="last_name">{t("lastName")}</label>
-        <input
-          type="text"
+        <ValidatedInput
           name="last_name"
-          placeholder={t("lastName")}
+          placeholder={t("lastNamePlaceholder") || "Enter last name"}
           value={formData.last_name}
           onChange={handleChange}
-          className={getFieldError("last_name") ? "error" : ""}
+          error={getFieldError("last_name")}
           disabled={isSubmitting}
+          required
+          label={t("lastName") || "Last Name"}
         />
-        <ErrorMessage message={getFieldError("last_name")} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="patronymic">{t("patronymic")}</label>
-        <input
-          type="text"
+        <ValidatedInput
           name="patronymic"
-          placeholder={t("patronymic")}
+          placeholder={t("patronymicPlaceholder") || "Enter patronymic"}
           value={formData.patronymic || ""}
           onChange={handleChange}
-          className={getFieldError("patronymic") ? "error" : ""}
+          error={getFieldError("patronymic")}
           disabled={isSubmitting}
+          required
+          label={t("patronymic") || "Patronymic"}
         />
-        <ErrorMessage message={getFieldError("patronymic")} />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="date_of_birth">{t("dateOfBirth")}</label>
-        <input
-          type="date"
-          name="date_of_birth"
-          placeholder={t("dateOfBirth")}
-          value={formData.date_of_birth}
-          onChange={handleChange}
-          className={getFieldError("date_of_birth") ? "error" : ""}
-          disabled={isSubmitting}
-        />
-        <ErrorMessage message={getFieldError("date_of_birth")} />
       </div>
 
       <div className="form-group">
@@ -169,45 +152,44 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="phone_number">{t("phoneNumber")}</label>
-        <input
-          type="text"
+        <ValidatedInput
           name="phone_number"
-          placeholder={t("phoneNumber")}
+          placeholder={t("phoneNumberPlaceholder") || "Enter phone number"}
           value={formData.phone_number}
           onChange={handleChange}
-          className={getFieldError("phone_number") ? "error" : ""}
+          error={getFieldError("phone_number")}
           disabled={isSubmitting}
+          required
+          label={t("phoneNumber") || "Phone Number"}
         />
-        <ErrorMessage message={getFieldError("phone_number")} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="email">{t("email")}</label>
-        <input
-          type="email"
+        <ValidatedInput
           name="email"
-          placeholder={t("email")}
+          type="email"
+          placeholder={t("emailPlaceholder") || "Enter email"}
           value={formData.email}
           onChange={handleChange}
-          className={getFieldError("email") ? "error" : ""}
+          error={getFieldError("email")}
           disabled={isSubmitting}
+          required
+          label={t("email") || "Email"}
         />
-        <ErrorMessage message={getFieldError("email")} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="password">{t("password")}</label>
-        <input
-          type="password"
+        <ValidatedInput
           name="password"
-          placeholder={t("password")}
+          type="password"
+          placeholder={t("passwordPlaceholder") || "Enter password"}
           value={formData.password}
           onChange={handleChange}
-          className={getFieldError("password") ? "error" : ""}
+          error={getFieldError("password")}
           disabled={isSubmitting}
+          required
+          label={t("password") || "Password"}
         />
-        <ErrorMessage message={getFieldError("password")} />
       </div>
 
       <button

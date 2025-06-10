@@ -24,7 +24,7 @@ interface EditableField {
 
 export default function ProfilePage() {
   const { user, isLoading: authLoading, refetch, updateUser } = useAuth();
-  const t = useTranslations("profile");
+  const t = useTranslations("profilePage");
   const tPage = useTranslations("profilePage");
   const { isLoading, withLoading } = useLoading();
 

@@ -10,7 +10,7 @@ import {
   getPasswordStrength,
 } from "@/utils/validationHelpers";
 
-import { ErrorMessage } from "./ValidationComponents";
+import { ErrorMessage } from "../ValidationComponent/ValidationComponents";
 
 interface ValidatedInputProps {
   type?: string;

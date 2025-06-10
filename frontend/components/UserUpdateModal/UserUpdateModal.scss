@@ -21,8 +21,7 @@
   border-radius: $border_radius_large;
   box-shadow: 0 20px 60px $shadow_heavy;
   max-width: 700px;
-  width: 90%;
-  margin: $spacing_lg;
+  width: 100%;
   max-height: 90vh;
   overflow-y: auto;
 
@@ -150,7 +149,6 @@ button[type="submit"] {
 // Responsive design
 @media (max-width: $breakpoint_sm) {
   .modal-content {
-    padding: $spacing_lg;
     margin: 10px;
 
     h2 {

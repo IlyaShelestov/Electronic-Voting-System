@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useState } from "react";
 
-import { ValidatedInput } from "@/components/ui/ValidatedInput";
+import { ValidatedInput } from "@/components/ValidateIdnput/ValidatedInput";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { ILogin } from "@/models/ILogin";
 import { LoginFormData, loginSchema } from "@/utils/validationSchemas";

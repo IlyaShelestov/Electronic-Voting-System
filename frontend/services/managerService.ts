@@ -6,13 +6,12 @@ import { apiClient } from "./apiClient";
 import { ElectionService } from "./electionService";
 
 export class ManagerService {
-  private static apiEndpoint = "/manager";
-  public static async createElection(electionData: IElection) {
+  private static apiEndpoint = "/manager";  public static async createElection(electionData: IElection) {
     const response = await apiClient.post(
       `${this.apiEndpoint}/elections`,
       electionData
     );
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error("Failed to create election");
     }
     return response.data;
@@ -27,13 +26,12 @@ export class ManagerService {
     }
     return response.data;
   }
-
   public static async createCandidate(candidateData: ICandidate) {
     const response = await apiClient.post(
       `${this.apiEndpoint}/candidates`,
       candidateData
     );
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error("Failed to create candidate");
     }
     return response.data;
@@ -62,23 +60,21 @@ export class ManagerService {
     }
     return response.data;
   }
-
   public static async attachCandidate(electionId: number, candidateId: number) {
     const response = await apiClient.post(
-      `${this.apiEndpoint}/elections/${electionId}/candidates/${candidateId}`
+      `${this.apiEndpoint}/candidates/attach`,
+      { election_id: electionId, candidate_id: candidateId }
     );
     if (response.status !== 200) {
       throw new Error("Failed to attach candidate");
     }
     return response.data;
-  }
-
-  public static async createEvent(eventData: IEvent) {
+  }  public static async createEvent(eventData: IEvent) {
     const response = await apiClient.post(
-      `${this.apiEndpoint}/events`,
+      `${this.apiEndpoint}/events/0`, // Backend expects ID in URL even for creation
       eventData
     );
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error("Failed to create event");
     }
     return response.data;

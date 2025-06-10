@@ -3,7 +3,7 @@ import "./UserUpdateModal.scss";
 
 import { useState } from "react";
 
-import { ErrorMessage, FormErrors } from "@/components/ui/ValidationComponents";
+import { ErrorMessage, FormErrors } from "@/components/ValidationComponent/ValidationComponents";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { IUser } from "@/models/IUser";
 import { UserRoleEnum } from "@/models/UserRole";

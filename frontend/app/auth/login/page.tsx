@@ -19,16 +19,14 @@ export default function LoginPage() {
   const { login, isLoading, error, clearAuthError } = useAuth();
 
   useEffect(() => {
-    // Clear any previous errors when component mounts
     clearAuthError();
   }, [clearAuthError]);
+
   const handleOnSubmit = async (loginData: ILogin) => {
     try {
       await login(loginData);
-      // The login function now handles success toast
       router.push("/");
     } catch (error) {
-      // The login function now handles error toast
       console.error("Login error:", error);
     }
   };
