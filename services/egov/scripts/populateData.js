@@ -10,7 +10,10 @@ async function populateData() {
     // Admin and Manager
     let citizenValues = `
       ('111111111111', '+77220000000', 'admin@example.com'),
-      ('222222222222', '+77220000001', 'manager@example.com')`;
+      ('222222222222', '+77220000001', 'manager@example.com'),
+      ('121212121212', '+77756822509', 'shelestov2905@gmail.com'),
+      ('131313131313', '+77762559598', 'ersultanserimbetov@gmail.com'),
+      ('141414141414', '+77473216395', 'ra1esentaev@gmail.com')`;
 
     // 12 Candidates
     for (let i = 0; i < 12; i++) {
