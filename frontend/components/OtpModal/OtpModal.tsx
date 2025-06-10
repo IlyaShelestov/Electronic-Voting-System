@@ -1,8 +1,8 @@
 "use client";
-import './OtpModal.scss';
+import "./OtpModal.scss";
 
-import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import { useTranslations } from "next-intl";
+import React, { useState } from "react";
 
 interface OtpModalProps {
   isOpen: boolean;
@@ -17,27 +17,63 @@ const OtpModal: React.FC<OtpModalProps> = ({
   onSubmit,
   email,
 }) => {
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(Array(6).fill(""));
   const t = useTranslations("otpModal");
 
+  const handleInputChange = (index: number, value: string) => {
+    if (value.length > 1) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      nextInput?.focus();
+    }
+  };
+
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
+    }
+  };
+
   const handleSubmit = () => {
-    onSubmit(otp);
-    setOtp("");
+    const otpString = otp.join("");
+    if (otpString.length === 6) {
+      onSubmit(otpString);
+      setOtp(Array(6).fill(""));
+    }
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="otp-modal">
+      {" "}
       <div className="otp-modal__content">
         <h2>{t("title")}</h2>
         <p>{t("description", { email: email })}</p>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          placeholder={t("placeholder")}
-        />
+        <div className="otp-inputs">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              id={`otp-${index}`}
+              type="text"
+              value={digit}
+              onChange={(e) => handleInputChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              className="otp-digit"
+              maxLength={1}
+              placeholder="0"
+            />
+          ))}
+        </div>
         <div>
           <button
             className="submit-btn"

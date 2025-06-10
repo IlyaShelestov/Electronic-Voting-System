@@ -62,7 +62,6 @@ export default function Sidebar() {
   const tabs = [
     { icon: HomeIcon, path: "/", title: t("home") },
     { icon: VoteIcon, path: "/vote", title: t("vote") },
-    { icon: InstructionsIcon, path: "/instructions", title: t("instructions") },
     { icon: ProfileIcon, path: "/profile", title: t("profile") },
     { icon: SupportIcon, path: "/support", title: t("support") },
     { icon: AboutUsIcon, path: "/about", title: t("about") },

@@ -39,6 +39,30 @@
   padding: 10px;
 }
 
+.otp-inputs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.otp-digit {
+  width: 50px !important;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 0 !important;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $button_light;
+  }
+}
+
 .otp-modal__content button {
   padding: 10px 20px;
   margin: 5px;

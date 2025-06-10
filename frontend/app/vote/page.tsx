@@ -35,7 +35,7 @@ export default function VotePage() {
   useEffect(() => {
     const fetchElections = async () => {
       try {
-        const data = await ElectionService.getAll();
+        const data = await ElectionService.getAvailable();
         setElections(data);
       } catch (error) {
         toast.error("Ошибка загрузки выборов.");
@@ -190,10 +190,11 @@ export default function VotePage() {
                   {candidates.map((candidate) => (
                     <div
                       key={candidate.candidate_id}
-                      className={`candidate-card ${selectedCandidate === candidate.candidate_id
-                        ? "selected"
-                        : ""
-                        }`}
+                      className={`candidate-card ${
+                        selectedCandidate === candidate.candidate_id
+                          ? "selected"
+                          : ""
+                      }`}
                       onClick={() =>
                         setSelectedCandidate(candidate.candidate_id ?? null)
                       }
@@ -214,7 +215,8 @@ export default function VotePage() {
                       <div className="candidate-info">
                         <h4 className="candidate-name">
                           {candidate.first_name} {candidate.last_name}
-                        </h4>                        {candidate.party && (
+                        </h4>{" "}
+                        {candidate.party && (
                           <p className="candidate-party">{candidate.party}</p>
                         )}
                       </div>
@@ -247,8 +249,9 @@ export default function VotePage() {
             <div className="vote-actions">
               <button
                 onClick={handleVote}
-                className={`vote-button ${selectedCandidate ? "enabled" : "disabled"
-                  }`}
+                className={`vote-button ${
+                  selectedCandidate ? "enabled" : "disabled"
+                }`}
                 disabled={!selectedCandidate}
               >
                 <span className="button-icon">🗳️</span>
@@ -256,10 +259,14 @@ export default function VotePage() {
               </button>
               {selectedCandidate && (
                 <p className="vote-confirmation">
-                  {t("confirmVote")} {
-                    candidates.find(c => c.candidate_id === selectedCandidate)?.first_name
-                  } {
-                    candidates.find(c => c.candidate_id === selectedCandidate)?.last_name
+                  {t("confirmVote")}{" "}
+                  {
+                    candidates.find((c) => c.candidate_id === selectedCandidate)
+                      ?.first_name
+                  }{" "}
+                  {
+                    candidates.find((c) => c.candidate_id === selectedCandidate)
+                      ?.last_name
                   }
                 </p>
               )}
