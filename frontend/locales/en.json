@@ -170,13 +170,18 @@
     "byName": "By name",
     "searchPlaceholder": "Search",
     "farthestDate": "Farthest date"
-  },
-  "votePage": {
+  },  "votePage": {
     "title": "Vote",
+    "subtitle": "Choose your election and candidate to cast your vote securely",
     "selectElection": "Select an election",
+    "chooseElection": "Choose an election...",
+    "selectCandidate": "Select your candidate",
+    "candidates": "candidates",
     "loadingCandidates": "Loading candidates...",
     "alreadyVoted": "You have already voted in this election.",
-    "vote": "Vote"
+    "voteRecorded": "Your vote has been recorded successfully.",
+    "vote": "Cast Vote",
+    "confirmVote": "Confirm your vote for"
   },
   "profilePage": {
     "title": "Profile",

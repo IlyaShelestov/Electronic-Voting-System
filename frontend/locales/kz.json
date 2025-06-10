@@ -131,14 +131,19 @@
     "byVotes": "Дауыс саны бойынша",
     "byName": "Аты бойынша",
     "searchPlaceholder": "Іздеу",
-    "farthestDate": "Ең алыс күн"
-  },
+    "farthestDate": "Ең алыс күн"  },
   "votePage": {
     "title": "Дауыс беру",
+    "subtitle": "Қауіпсіз дауыс беру үшін сайлау мен кандидатты таңдаңыз",
     "selectElection": "Сайлау таңдау",
+    "chooseElection": "Сайлау таңдаңыз...",
+    "selectCandidate": "Кандидатты таңдаңыз",
+    "candidates": "кандидаттар",
     "loadingCandidates": "Кандидаттар жүктелуде...",
     "alreadyVoted": "Сіз бұл сайлауда дауыс бердіңіз.",
-    "vote": "Дауыс беру"
+    "voteRecorded": "Сіздің дауысыңыз сәтті жазылды.",
+    "vote": "Дауыс беру",
+    "confirmVote": "Дауысыңызды растаңыз"
   },
   "profilePage": {
     "title": "Профиль",

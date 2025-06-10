@@ -12,7 +12,7 @@ export default function CandidateCard(
     return (
         <div
             key={candidate.candidate_id}
-            onClick={() => setSelectedCandidateId(candidate.candidate_id)}
+            onClick={() => setSelectedCandidateId(candidate.candidate_id ?? 0)}
             className={`candidate-card ${selectedCandidateId === candidate.candidate_id ? "selected" : ""}`}
         >
             <h3 className="candidate-name">

@@ -262,14 +262,19 @@
     "byVotes": "По голосам",
     "byName": "По имени",
     "searchPlaceholder": "Поиск",
-    "farthestDate": "Самая дальняя дата"
-  },
+    "farthestDate": "Самая дальняя дата"  },
   "votePage": {
-    "title": "Отдать свой голос",
-    "selectElection": "Выбрать выборы",
+    "title": "Голосование",
+    "subtitle": "Выберите выборы и кандидата для безопасного голосования",
+    "selectElection": "Выберите выборы",
+    "chooseElection": "Выберите выборы...",
+    "selectCandidate": "Выберите кандидата",
+    "candidates": "кандидатов",
     "loadingCandidates": "Загрузка кандидатов...",
-    "alreadyVoted": "Вы уже проголосовали на этих выборах.",
-    "vote": "Проголосовать"
+    "alreadyVoted": "Вы уже проголосовали в этих выборах.",
+    "voteRecorded": "Ваш голос успешно записан.",
+    "vote": "Проголосовать",
+    "confirmVote": "Подтвердите ваш голос за"
   },
   "profilePage": {
     "title": "Профиль",

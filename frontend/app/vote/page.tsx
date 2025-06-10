@@ -33,7 +33,7 @@ export default function VotePage() {
   const email = useEmail();
 
   useEffect(() => {
-    const fetchElections = async () => {
+    const fetchElections = async () => {  
       try {
         const data = await ElectionService.getAll();
         setElections(data);
@@ -137,70 +137,147 @@ export default function VotePage() {
       toast.warn("Выберите кандидата перед голосованием!");
     }
   };
-
   return (
-    <>
-      <h1 className="vote-title">{t("title")}</h1>
+    <div className="vote-page">
+      <div className="vote-header">
+        <h1 className="vote-title">{t("title")}</h1>
+        <p className="vote-subtitle">{t("subtitle")}</p>
+      </div>
 
       <div className="vote-container">
-        <div className="vote-box">
-          <label htmlFor="election-select">{t("selectElection")}</label>
-          <select
-            id="election-select"
-            value={selectedElection ?? ""}
-            onChange={handleElectionChange}
-          >
-            <option value="">{t("selectElection")}</option>
-            {elections.map((election) => (
-              <option
-                key={election.election_id}
-                value={election.election_id}
+        <div className="vote-card">
+          <div className="election-selection">
+            <div className="selection-header">
+              <h2>{t("selectElection")}</h2>
+              <span className="selection-icon">🗳️</span>
+            </div>
+            <div className="select-wrapper">
+              <select
+                id="election-select"
+                value={selectedElection ?? ""}
+                onChange={handleElectionChange}
+                className="election-select"
               >
-                {election.title}
-              </option>
-            ))}
-          </select>
+                <option value="">{t("chooseElection")}</option>
+                {elections.map((election) => (
+                  <option
+                    key={election.election_id}
+                    value={election.election_id}
+                  >
+                    {election.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-          {loading ? (
-            <p>{t("loadingCandidates")}</p>
-          ) : !hasVoted ? (
-            <ul className="candidate-list">
-              {candidates.map((candidate) => (
-                <li key={candidate.candidate_id}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="candidate"
-                      value={candidate.candidate_id}
-                      checked={selectedCandidate === candidate.candidate_id}
-                      onChange={() =>
+          {selectedElection && (
+            <div className="candidates-section">
+              <div className="candidates-header">
+                <h3>{t("selectCandidate")}</h3>
+                <span className="candidates-count">
+                  {candidates.length} {t("candidates")}
+                </span>
+              </div>
+
+              {loading ? (
+                <div className="loading-container">
+                  <div className="loading-spinner"></div>
+                  <p>{t("loadingCandidates")}</p>
+                </div>
+              ) : !hasVoted ? (
+                <div className="candidate-grid">
+                  {candidates.map((candidate) => (
+                    <div
+                      key={candidate.candidate_id}
+                      className={`candidate-card ${
+                        selectedCandidate === candidate.candidate_id
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() =>
                         setSelectedCandidate(candidate.candidate_id ?? null)
                       }
-                    />
-                    {candidate.first_name + " " + candidate.last_name}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>{t("alreadyVoted")}</p>
+                    >
+                      <div className="candidate-avatar">
+                        {candidate.avatar_url ? (
+                          <img
+                            src={candidate.avatar_url}
+                            alt={`${candidate.first_name} ${candidate.last_name}`}
+                          />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {candidate.first_name?.charAt(0)}
+                            {candidate.last_name?.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                      <div className="candidate-info">
+                        <h4 className="candidate-name">
+                          {candidate.first_name} {candidate.last_name}
+                        </h4>
+                        {candidate.party && (
+                          <p className="candidate-party">{candidate.party}</p>
+                        )}
+
+                      </div>
+                      <div className="candidate-radio">
+                        <input
+                          type="radio"
+                          name="candidate"
+                          value={candidate.candidate_id}
+                          checked={selectedCandidate === candidate.candidate_id}
+                          onChange={() =>
+                            setSelectedCandidate(candidate.candidate_id ?? null)
+                          }
+                        />
+                        <div className="radio-custom"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="already-voted">
+                  <div className="voted-icon">✅</div>
+                  <h3>{t("alreadyVoted")}</h3>
+                  <p>{t("voteRecorded")}</p>
+                </div>
+              )}
+            </div>
           )}
 
-          <button
-            onClick={handleVote}
-            className="vote-button"
-            disabled={!selectedCandidate}
-          >
-            {t("vote")}
-          </button>
+          {selectedElection && !hasVoted && (
+            <div className="vote-actions">
+              <button
+                onClick={handleVote}
+                className={`vote-button ${
+                  selectedCandidate ? "enabled" : "disabled"
+                }`}
+                disabled={!selectedCandidate}
+              >
+                <span className="button-icon">🗳️</span>
+                {t("vote")}
+              </button>
+              {selectedCandidate && (
+                <p className="vote-confirmation">
+                  {t("confirmVote")} {
+                    candidates.find(c => c.candidate_id === selectedCandidate)?.first_name
+                  } {
+                    candidates.find(c => c.candidate_id === selectedCandidate)?.last_name
+                  }
+                </p>
+              )}
+            </div>
+          )}
         </div>
-        <OtpModal
-          email={email}
-          isOpen={isOtpModalOpen}
-          onClose={() => setIsOtpModalOpen(false)}
-          onSubmit={handleOtpSubmit}
-        />
       </div>
-    </>
+
+      <OtpModal
+        email={email}
+        isOpen={isOtpModalOpen}
+        onClose={() => setIsOtpModalOpen(false)}
+        onSubmit={handleOtpSubmit}
+      />
+    </div>
   );
 }
