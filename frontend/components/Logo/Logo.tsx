@@ -1,4 +1,6 @@
-import './Logo.scss';
+"use client";
+
+import "./Logo.scss";
 
 const Logo = () => {
   return (

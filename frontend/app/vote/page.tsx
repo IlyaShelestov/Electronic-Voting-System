@@ -1,19 +1,19 @@
 "use client";
 
-import './Vote.scss';
+import "./Vote.scss";
 
-import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-import OtpModal from '@/components/OtpModal/OtpModal';
-import { ICandidate } from '@/models/ICandidate';
-import { IElection } from '@/models/IElection';
-import { ElectionService } from '@/services/electionService';
-import { OtpService } from '@/services/otpService';
-import { VoteService } from '@/services/voteService';
-import { useEmail } from '@/store/hooks';
+import OtpModal from "@/components/OtpModal/OtpModal";
+import { ICandidate } from "@/models/ICandidate";
+import { IElection } from "@/models/IElection";
+import { ElectionService } from "@/services/electionService";
+import { OtpService } from "@/services/otpService";
+import { VoteService } from "@/services/voteService";
+import { useEmail } from "@/store/hooks";
 
 export default function VotePage() {
   const t = useTranslations("votePage");

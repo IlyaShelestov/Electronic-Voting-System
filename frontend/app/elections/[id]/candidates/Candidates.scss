@@ -1,18 +1,13 @@
 @use "@/styles/variables.scss" as *;
+
 .candidates-container {
   width: 100%;
   text-align: center;
 }
 
-.title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
 .date-range {
   font-size: 16px;
-  color: #555;
+  color: $general_dark;
   margin-bottom: 14px;
 }
 
@@ -29,30 +24,22 @@
   gap: 50px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .vote-button {
   background: $general_light;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  margin-top: 20px;
 }
 
-.vote-button:hover {
+.vote-button:hover:not(:disabled) {
   border: 2px solid $button_light;
-  background: $general_light;
   font-weight: bold;
-  color: $button_light;
+  color: $general_dark;
 }
 
 .vote-button:disabled {
-  background: $general_light;
-  color: $general_dark;
   cursor: not-allowed;
-  transform: none;
 }

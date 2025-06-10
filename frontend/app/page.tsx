@@ -1,16 +1,16 @@
 "use client";
 
-import './Home.scss';
+import "./Home.scss";
 
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
-import BannerSlider from '@/components/BannerSlider/BannerSlider';
-import ElectionCard from '@/components/ElectionCard/ElectionCard';
-import { IElection } from '@/models/IElection';
-import { ElectionService } from '@/services/electionService';
-import { useAppDispatch, useIsAuthenticated } from '@/store/hooks';
-import { setElections } from '@/store/slices/electionSlice';
+import BannerSlider from "@/components/BannerSlider/BannerSlider";
+import ElectionCard from "@/components/ElectionCard/ElectionCard";
+import { IElection } from "@/models/IElection";
+import { ElectionService } from "@/services/electionService";
+import { useAppDispatch, useIsAuthenticated } from "@/store/hooks";
+import { setElections } from "@/store/slices/electionSlice";
 
 type SortOption =
   | "byNameAsc"
@@ -27,9 +27,9 @@ export default function Home() {
   const isAuthenticated = useIsAuthenticated();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>(""); // State for search input
-  const [sort, setSort] = useState<SortOption>("byDateAsc"); // State for sorting
-  const [filter, setFilter] = useState<FilterOption>("all"); // State for filter option
+  const [search, setSearch] = useState<string>("");
+  const [sort, setSort] = useState<SortOption>("byDateAsc");
+  const [filter, setFilter] = useState<FilterOption>("all");
 
   const slides = [
     { src: "/images/default-banner.png", alt: t("bannerAlt") },

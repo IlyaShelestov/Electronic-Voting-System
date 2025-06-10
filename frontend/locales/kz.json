@@ -91,13 +91,6 @@
     "rejectError": "Сұранысты қабылдамау қатесі",
     "patronymic": "Әкесінің аты",
     "cityId": "Қала ID",
-    "phoneNumber": "Телефон нөмірі",
-    "email": "Электрондық пошта",
-    "firstName": "Аты",
-    "lastName": "Тегі",
-    "role": "Рөл",
-    "searchPlaceholder": "Аты немесе email бойынша іздеу",
-    "usersPerPage": "Беттегі пайдаланушылар саны",
     "filterPlaceholder": {
       "name": "Аты бойынша іздеу",
       "email": "Email бойынша іздеу",

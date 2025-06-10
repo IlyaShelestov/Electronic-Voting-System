@@ -1,46 +1,53 @@
 "use client";
 
-import './Sidebar.scss';
+import "./Sidebar.scss";
 
-import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-import { AboutUsIcon } from '@/icons/AboutUsIcon';
-import { AdminIcon } from '@/icons/AdminIcon';
-import { HomeIcon } from '@/icons/HomeIcon';
-import { InstructionsIcon } from '@/icons/InstructionsIcon';
-import { LeftArrowIcon } from '@/icons/LeftArrowIcon';
-import { ManagerIcon } from '@/icons/ManagerIcon';
-import { ProfileIcon } from '@/icons/ProfileIcon';
-import { SupportIcon } from '@/icons/SupportIcon';
-import { VoteIcon } from '@/icons/VoteIcon';
-import { AuthService } from '@/services/authService';
-import { useAppDispatch, useAppSelector, useIsAuthenticated } from '@/store/hooks';
-import { logout } from '@/store/slices/userSlice';
+import { useAuth } from "@/hooks/useAuth";
+import { AboutUsIcon } from "@/icons/AboutUsIcon";
+import { AdminIcon } from "@/icons/AdminIcon";
+import { HomeIcon } from "@/icons/HomeIcon";
+import { InstructionsIcon } from "@/icons/InstructionsIcon";
+import { LeftArrowIcon } from "@/icons/LeftArrowIcon";
+import { ManagerIcon } from "@/icons/ManagerIcon";
+import { ProfileIcon } from "@/icons/ProfileIcon";
+import { SupportIcon } from "@/icons/SupportIcon";
+import { VoteIcon } from "@/icons/VoteIcon";
+import { AuthService } from "@/services/authService";
+import { useLoading } from "@/store/hooks/useLoading";
 
-import Logo from '../Logo/Logo';
+import LoadingButton from "../LoadingButton/LoadingButton";
+import Logo from "../Logo/Logo";
 
 export default function Sidebar() {
-  const isAuthenticated = useIsAuthenticated();
-  const dispatch = useAppDispatch();
-  const router = useRouter();
+  const { user, isAuthenticated, logout: authLogout } = useAuth();
   const pathname = usePathname();
   const t = useTranslations("sidebar");
-  const role = useAppSelector((state) => state.user.user?.role);
+  const role = user?.role;
+  const { isLoading, withLoading } = useLoading();
 
   const [isOpen, setIsOpen] = useState(true);
+  const [loadingNavItem, setLoadingNavItem] = useState<string | null>(null);
 
   const handleLogout = async () => {
-    try {
-      await AuthService.logout();
-    } catch (error) {
-      console.error("Failed to logout cleanly:", error);
-    } finally {
-      dispatch(logout());
-      router.push(`/`);
-    }
+    await withLoading("logout", async () => {
+      try {
+        await authLogout(); // This now handles toast notifications
+      } catch (error) {
+        console.error("Failed to logout cleanly:", error);
+      }
+    });
+  };
+
+  const handleNavigation = async (path: string) => {
+    setLoadingNavItem(path);
+    setTimeout(() => {
+      setLoadingNavItem(null);
+    }, 300);
   };
 
   const toggleSidebar = () => {
@@ -84,33 +91,48 @@ export default function Sidebar() {
               {tabs.map(({ icon: Icon, path, title }, index) => {
                 const fullPath = `${path}`;
                 const isActive = pathname === fullPath;
+                const isItemLoading = loadingNavItem === path;
+
                 return (
                   <li
                     key={index}
-                    className={isActive ? "active" : ""}
+                    className={`${isActive ? "active" : ""} ${
+                      isItemLoading ? "loading" : ""
+                    }`}
                   >
                     <Link
                       href={fullPath}
                       aria-current={isActive ? "page" : undefined}
+                      onClick={() => handleNavigation(path)}
                     >
-                      <Icon
-                        {...(isActive ? iconStyles.active : iconStyles.default)}
-                      />
-                      <span>{title}</span>
+                      <div className="nav-item-content">
+                        <Icon
+                          {...(isActive
+                            ? iconStyles.active
+                            : iconStyles.default)}
+                        />
+                        <span>{title}</span>
+                        {isItemLoading && (
+                          <div className="nav-item-spinner"></div>
+                        )}
+                      </div>
                     </Link>
                   </li>
                 );
               })}
             </ul>
 
-            <button
+            <LoadingButton
               className="logout"
               onClick={handleLogout}
-              aria-label="Logout"
+              isLoading={isLoading("logout")}
+              variant="danger"
+              size="medium"
+              loadingText={t("loggingOut")}
             >
               <LeftArrowIcon {...iconStyles.default} />
               <span>{t("logout")}</span>
-            </button>
+            </LoadingButton>
           </nav>
         </div>
       </aside>

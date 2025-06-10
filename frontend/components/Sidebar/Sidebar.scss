@@ -1,53 +1,70 @@
 @use "@/styles/variables.scss" as *;
-.sidebar {
-  grid-area: sidebar;
-  position: fixed;
-  transition: all 0.8s ease-in-out;
-  max-height: $sidebar_height;
-  height: 100%;
-  max-width: $sidebar_width;
-  width: 100%;
-  overflow-y: auto;
-  left: -$sidebar_width;
-  top: 0;
-  transition: left 1s ease-in-out;
 
-  .sidebar-content {
-    background: $navbar;
-    padding: 1rem;
-    height: 100%;
-    padding-top: 0;
-    font-size: 18px;
-    font-weight: 500;
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: $sidebar_height;
+  width: $sidebar_width;
+  z-index: 10;
+  transition: transform 0.3s ease;
+
+  &-content {
+    background-color: $navbar;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    padding-top: 0;
+    padding-bottom: 10px;
   }
 
-  &.open {
-    left: 0;
+  .logo {
+    margin-bottom: 20px;
   }
 
   ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+
     li {
+      margin-bottom: 10px;
       border-radius: 12px;
-      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+
       a {
-        padding: 10px 15px;
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 15px;
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
         cursor: pointer;
+        position: relative;
       }
+
       &.active {
         background-color: $selected;
         color: $button_light;
         font-weight: bold;
       }
-      &:hover {
+
+      &.loading {
+        .nav-item-content {
+          opacity: 0.7;
+        }
+      }
+
+      &:hover:not(.loading) {
         background-color: $selected;
         transition: all 0.2s ease-out;
+        transform: translateX(5px);
       }
     }
   }
@@ -59,20 +76,51 @@
     flex: 1;
   }
 
-  .logout {
-    border: none;
-    cursor: pointer;
+  .nav-item-content {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: transparent;
-    padding: 10px 15px;
-    border-radius: 12px;
-    color: $button_hover_light;
+    width: 100%;
+    position: relative;
+  }
 
-    &:hover {
+  .nav-item-spinner {
+    position: absolute;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba($button_light, 0.3);
+    border-top: 2px solid $button_light;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .logout {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    background-color: transparent;
+    color: $button_hover_light;
+    border-radius: 12px;
+
+    &:hover:not(:disabled) {
       background: $button_danger;
+      color: white;
       transition: all 0.3s ease-in;
     }
+
+    &.loading-button--loading {
+      background: rgba($button_danger, 0.8);
+      color: white;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

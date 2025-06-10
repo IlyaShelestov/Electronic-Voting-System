@@ -40,6 +40,7 @@
   outline: none;
   position: relative;
   transition: all 0.3s ease;
+  padding: 12px;
 }
 
 .candidate-list input[type="radio"]:checked {
@@ -54,16 +55,12 @@
 }
 
 .vote-button {
-  background: $button_light;
-  color: white;
-  border: none;
+  color: $general_dark;
+  border: 1px solid $general_light;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 12px 20px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s;
-}
-
-.vote-button:hover {
-  background: $button_hover_light;
 }

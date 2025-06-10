@@ -1,16 +1,16 @@
 "use client";
 
-import './ElectionCard.scss';
+import "./ElectionCard.scss";
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useTranslations } from 'use-intl';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useTranslations } from "use-intl";
 
-import ElectionChart from '@/components/ElectionChart/ElectionChart';
-import { RightArrowCircle } from '@/icons/RightArrowCircle';
-import { IElection } from '@/models/IElection';
-import { IReport } from '@/models/IReport';
-import { ElectionService } from '@/services/electionService';
+import ElectionChart from "@/components/ElectionChart/ElectionChart";
+import { RightArrowCircle } from "@/icons/RightArrowCircle";
+import { IElection } from "@/models/IElection";
+import { IReport } from "@/models/IReport";
+import { ElectionService } from "@/services/electionService";
 
 interface Props {
   election: IElection;

@@ -1,0 +1,154 @@
+@import "../../styles/variables.scss";
+
+.stat-card {
+  background: $bg_primary;
+  border-radius: $border_radius_large;
+  padding: $spacing_lg;
+  box-shadow: 0 2px 12px $shadow_light;
+  transition: $transition_normal;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+
+  &--primary::before {
+    background: $button_light;
+  }
+
+  &--warning::before {
+    background: $button_warning;
+  }
+
+  &--success::before {
+    background: $button_success;
+  }
+
+  &--danger::before {
+    background: $button_danger;
+  }
+
+  &--info::before {
+    background: $button_info;
+  }
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px $shadow_medium;
+      border-color: $border_light_hover;
+    }
+  }
+
+  &:not(&--clickable):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px $shadow_medium;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing_md;
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: $bg_secondary;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px $shadow_light;
+  }
+
+  &__trend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    &--positive {
+      color: $button_success;
+    }
+
+    &--negative {
+      color: $button_danger;
+    }
+  }
+
+  &__trend-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  &__trend-period {
+    color: $text_muted;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  &__content {
+    text-align: left;
+  }
+
+  &__value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: $text_primary;
+    margin: 0 0 $spacing_xs 0;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  &__title {
+    color: $text_secondary;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint_sm) {
+  .stat-card {
+    padding: $spacing_md;
+
+    &__icon {
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+    }
+
+    &__value {
+      font-size: 1.75rem;
+    }
+
+    &__title {
+      font-size: 0.8rem;
+    }
+
+    &__trend {
+      font-size: 0.7rem;
+    }
+
+    &__trend-value {
+      font-size: 0.8rem;
+    }
+  }
+}

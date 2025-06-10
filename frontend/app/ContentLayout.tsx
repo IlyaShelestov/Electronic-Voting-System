@@ -1,28 +1,32 @@
 "use client";
-import React from 'react';
+import React from "react";
 
-import Footer from '@/components/Footer/Footer';
-import Header from '@/components/Header/Header';
-import LoadingCircle from '@/components/LoadingCircle/LoadingCircle';
-import Main from '@/components/Main/Main';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import { useAppDispatch, useIsAuthenticated, usePageLoading } from '@/store/hooks';
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import LoadingCircle from "@/components/LoadingCircle/LoadingCircle";
+import Main from "@/components/Main/Main";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { usePageLoading } from "@/store/hooks";
+import { useAuthRedux } from "@/store/hooks/useAuthRedux";
 
-export default function ContentLayout({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useIsAuthenticated();
-  const isLoading = usePageLoading();
-
+export default function ContentLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isAuthenticated, isLoading: authLoading } = useAuthRedux();
+  const pageLoading = usePageLoading();
   return (
     <>
       {isAuthenticated && <Sidebar />}
-      <div className={`content ${isAuthenticated ? 'authenticated' : ''}`}>
+      <div className={`content ${isAuthenticated ? "authenticated" : ""}`}>
         <Header />
         <Main>
-          {isLoading && <LoadingCircle />}
-          {!isLoading && children}  
+          {(authLoading || pageLoading) && <LoadingCircle />}
+          {!authLoading && !pageLoading && children}
         </Main>
         <Footer />
       </div>
     </>
   );
-};
+}

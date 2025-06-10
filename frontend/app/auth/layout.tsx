@@ -1,13 +1,13 @@
 "use client";
-import './Auth.scss';
+import "./Auth.scss";
 
-import { redirect } from 'next/navigation';
-import { ReactNode } from 'react';
+import { redirect } from "next/navigation";
+import { ReactNode } from "react";
 
-import { useIsAuthenticated } from '@/store/hooks';
+import { useAuthRedux } from "@/store/hooks/useAuthRedux";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
-  const isAuthenticated = useIsAuthenticated();
+  const { isAuthenticated } = useAuthRedux();
 
   if (isAuthenticated) {
     redirect("/");

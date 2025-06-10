@@ -1,19 +1,19 @@
 "use client";
 
-import './Header.scss';
+import "./Header.scss";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
-import { Locale } from '@/i18n/config';
-import { useAppSelector } from '@/store/hooks';
-import { setUserLocale } from '@/utils/locale';
+import { useAuth } from "@/hooks/useAuth";
+import { Locale } from "@/i18n/config";
+import { setUserLocale } from "@/utils/locale";
 
-import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwitcher';
-import Logo from '../Logo/Logo';
+import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
+import Logo from "../Logo/Logo";
 
 const Header = () => {
-  const user = useAppSelector((state) => state.user.user);
+  const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -24,7 +24,6 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-
         {!user ? (
           <Link href={`/`}>
             <Logo />
@@ -38,9 +37,7 @@ const Header = () => {
           </Link>
         )}
 
-        <LanguageSwitcher
-          onChange={handleLocaleChange}
-        />
+        <LanguageSwitcher onChange={handleLocaleChange} />
       </div>
     </header>
   );

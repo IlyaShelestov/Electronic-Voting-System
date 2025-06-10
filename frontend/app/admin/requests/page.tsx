@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { IRequest, IRequestWithUserData } from "@/models/IRequest";
 import { IUser } from "@/models/IUser";
-import { RequestStatus } from "@/models/RequestStatus";
+import { RequestStatusEnum } from "@/models/RequestStatus";
 import { AdminService } from "@/services/adminService";
 import { useLoading } from "@/store/hooks/useLoading";
 
@@ -21,7 +21,7 @@ export default function RequestsPage() {
     IRequestWithUserData[]
   >([]);
   const [users, setUsers] = useState<IUser[]>([]);
-  const [statusFilter, setStatusFilter] = useState<RequestStatus | "all">(
+  const [statusFilter, setStatusFilter] = useState<RequestStatusEnum | "all">(
     "all"
   );
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -99,7 +99,7 @@ export default function RequestsPage() {
         setRequests((prev) =>
           prev.map((request) =>
             request.request_id === requestId
-              ? { ...request, status: "approved" as RequestStatus }
+              ? { ...request, status: "approved" as RequestStatusEnum }
               : request
           )
         );
@@ -117,7 +117,7 @@ export default function RequestsPage() {
         setRequests((prev) =>
           prev.map((request) =>
             request.request_id === requestId
-              ? { ...request, status: "rejected" as RequestStatus }
+              ? { ...request, status: "rejected" as RequestStatusEnum }
               : request
           )
         );
@@ -168,7 +168,7 @@ export default function RequestsPage() {
             id="status-filter"
             value={statusFilter}
             onChange={(e) =>
-              setStatusFilter(e.target.value as RequestStatus | "all")
+              setStatusFilter(e.target.value as RequestStatusEnum | "all")
             }
           >
             <option value="all">{t("allRequests")}</option>

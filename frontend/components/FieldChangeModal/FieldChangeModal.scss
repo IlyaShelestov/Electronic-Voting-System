@@ -1,0 +1,172 @@
+@use "@/styles/variables.scss" as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $bg_modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z_modal;
+  backdrop-filter: blur(4px);
+}
+
+.field-change-modal {
+  background: $bg_primary;
+  border-radius: $border_radius_large;
+  box-shadow: 0 20px 60px $shadow_heavy;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid $border_light;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing_lg;
+    border-bottom: 1px solid $border_light;
+    background: $bg_secondary;
+    border-radius: $border_radius_large $border_radius_large 0 0;
+
+    h2 {
+      margin: 0;
+      color: $text_primary;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: $text_secondary;
+      padding: $spacing_xs;
+      border-radius: $border_radius_medium;
+      transition: $transition_normal;
+
+      &:hover {
+        background: $button_danger_focus;
+        color: $button_danger;
+      }
+    }
+  }
+
+  .modal-content {
+    padding: $spacing_lg;
+
+    .field-group {
+      margin-bottom: $spacing_lg;
+
+      label {
+        display: block;
+        margin-bottom: $spacing_sm;
+        font-weight: 600;
+        color: $text_primary;
+        font-size: 14px;
+      }
+
+      .current-value {
+        background: $bg_secondary;
+        padding: $spacing_md;
+        border-radius: $border_radius_medium;
+        border: 1px solid $border_light;
+        color: $text_secondary;
+        font-style: italic;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: $spacing_md;
+        border: 2px solid $border_light;
+        border-radius: $border_radius_medium;
+        font-size: 14px;
+        transition: $transition_normal;
+        background: $bg_primary;
+        color: $text_primary;
+
+        &:focus {
+          outline: none;
+          border-color: $button_light;
+          box-shadow: 0 0 0 3px $button_light_focus;
+        }
+
+        &:hover {
+          border-color: $border_light_hover;
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+    }
+
+    .error-message {
+      background: $button_danger_focus;
+      color: $button_danger;
+      padding: $spacing_md;
+      border-radius: $border_radius_medium;
+      margin-bottom: $spacing_lg;
+      border: 1px solid rgba($button_danger, 0.3);
+      font-size: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: $spacing_md;
+      justify-content: flex-end;
+      margin-top: $spacing_xl;
+
+      .cancel-btn {
+        padding: $spacing_md $spacing_lg;
+        background: $bg_secondary;
+        color: $text_primary;
+        border: 1px solid $border_light;
+        border-radius: $border_radius_medium;
+        cursor: pointer;
+        font-weight: 600;
+        transition: $transition_normal;
+
+        &:hover {
+          background: $border_light_hover;
+          border-color: $border_light_active;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint_sm) {
+  .field-change-modal {
+    max-width: 95%;
+    margin: $spacing_md;
+
+    .modal-header {
+      padding: $spacing_md;
+
+      h2 {
+        font-size: 18px;
+      }
+    }
+
+    .modal-content {
+      padding: $spacing_md;
+
+      .modal-actions {
+        flex-direction: column;
+
+        .cancel-btn,
+        .loading-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

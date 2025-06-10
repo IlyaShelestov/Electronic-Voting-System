@@ -1,0 +1,122 @@
+@use "@/styles/variables.scss" as *;
+
+.loading-button {
+  position: relative;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  // Sizes
+  &--small {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  &--medium {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  &--large {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  // Variants
+  &--primary {
+    background: $button_light;
+    color: white;
+    box-shadow: 0 4px 15px rgba($button_light, 0.3);
+
+    &:hover:not(:disabled) {
+      background: darken($button_light, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($button_light, 0.4);
+    }
+  }
+
+  &--secondary {
+    background: $button_hover_light;
+    color: white;
+    box-shadow: 0 4px 15px rgba($button_hover_light, 0.3);
+
+    &:hover:not(:disabled) {
+      background: darken($button_hover_light, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($button_hover_light, 0.4);
+    }
+  }
+
+  &--danger {
+    background: $button_danger;
+    color: white;
+    box-shadow: 0 4px 15px rgba($button_danger, 0.3);
+
+    &:hover:not(:disabled) {
+      background: darken($button_danger, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($button_danger, 0.4);
+    }
+  }
+
+  &--success {
+    background: #059669;
+    color: white;
+    box-shadow: 0 4px 15px rgba(#059669, 0.3);
+
+    &:hover:not(:disabled) {
+      background: darken(#059669, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(#059669, 0.4);
+    }
+  }
+
+  &--loading {
+    transform: none !important;
+
+    &:hover {
+      transform: none !important;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  &__text {
+    white-space: nowrap;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
