@@ -10,7 +10,7 @@ export interface IUser {
   city_id: number;
   phone_number: string;
   email: string;
-  role: UserRoleEnum;
+  role?: UserRoleEnum;
   created_at?: string;
   updated_at?: string;
 }

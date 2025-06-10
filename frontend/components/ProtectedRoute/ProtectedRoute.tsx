@@ -9,7 +9,6 @@ import { useAuthRedux } from "@/store/hooks/useAuthRedux";
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRole?: UserRoleEnum;
-  requiredPermissions?: string[];
   fallbackUrl?: string;
   showLoading?: boolean;
 }
@@ -17,12 +16,10 @@ interface ProtectedRouteProps {
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredRole,
-  requiredPermissions = [],
   fallbackUrl = "/auth/login",
   showLoading = true,
 }) => {
-  const { isAuthenticated, isLoading, hasRole, hasAllPermissions } =
-    useAuthRedux();
+  const { isAuthenticated, isLoading, hasRole } = useAuthRedux();
 
   if (isLoading && showLoading) {
     return (
@@ -39,15 +36,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (requiredRole && !hasRole(requiredRole)) {
     redirect("/auth/login");
-    return null;
-  }
-
-  // Check permission requirements
-  if (
-    requiredPermissions.length > 0 &&
-    !hasAllPermissions(requiredPermissions)
-  ) {
-    redirect("/");
     return null;
   }
 

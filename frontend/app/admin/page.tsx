@@ -91,7 +91,7 @@ export default function AdminPage() {
       const processedUserStats: IUserStats = {
         total: users.length,
         byRole: users.reduce((acc, user) => {
-          acc[user.role] = (acc[user.role] || 0) + 1;
+          acc[user.role ?? "unknown"] = (acc[user.role ?? "unknown"] || 0) + 1;
           return acc;
         }, {} as { [key: string]: number }),
         recentRegistrations: users.filter(

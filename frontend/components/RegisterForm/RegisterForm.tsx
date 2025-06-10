@@ -1,11 +1,14 @@
 "use client";
 
-import { useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import { useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
 
-import { ICity } from '@/models/ICity';
-import { IUser } from '@/models/IUser';
-import { LocationsService } from '@/services/locationsService';
+import { ErrorMessage, FormErrors } from "@/components/ui/ValidationComponents";
+import { useFormValidation } from "@/hooks/useFormValidation";
+import { ICity } from "@/models/ICity";
+import { IUser } from "@/models/IUser";
+import { LocationsService } from "@/services/locationsService";
+import { RegisterFormData, registerSchema } from "@/utils/validationSchemas";
 
 interface RegisterFormProps {
   onSubmit: (userData: IUser & { password: string }) => Promise<void>;
@@ -13,7 +16,7 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [cities, setCities] = useState<ICity[]>([]);
-  const [formData, setFormData] = useState<IUser & { password: string }>({
+  const [formData, setFormData] = useState<RegisterFormData>({
     iin: "",
     first_name: "",
     last_name: "",
@@ -24,6 +27,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     email: "",
     password: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { validate, getFieldError, validateField, errors } =
+    useFormValidation(registerSchema);
 
   const t = useTranslations("auth");
 
@@ -38,24 +44,36 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
     fetchCities();
   }, []);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
     if (name === "city_id") {
-      setFormData({ ...formData, city_id: parseInt(value) });
+      const cityId = parseInt(value);
+      setFormData((prev) => ({ ...prev, city_id: cityId }));
+      validateField("city_id", cityId);
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      validateField(name as keyof RegisterFormData, value);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(formData);
-  };
+    setIsSubmitting(true);
 
+    const isValid = validate(formData);
+    if (isValid) {
+      try {
+        await onSubmit(formData);
+      } catch (error) {
+        console.error("Registration failed:", error);
+      }
+    }
+
+    setIsSubmitting(false);
+  };
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -66,8 +84,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("iin")}
           value={formData.iin}
           onChange={handleChange}
+          className={getFieldError("iin") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("iin")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="first_name">{t("firstName")}</label>
         <input
@@ -76,8 +98,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("firstName")}
           value={formData.first_name}
           onChange={handleChange}
+          className={getFieldError("first_name") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("first_name")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="last_name">{t("lastName")}</label>
         <input
@@ -86,8 +112,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("lastName")}
           value={formData.last_name}
           onChange={handleChange}
+          className={getFieldError("last_name") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("last_name")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="patronymic">{t("patronymic")}</label>
         <input
@@ -96,8 +126,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("patronymic")}
           value={formData.patronymic || ""}
           onChange={handleChange}
+          className={getFieldError("patronymic") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("patronymic")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="date_of_birth">{t("dateOfBirth")}</label>
         <input
@@ -106,15 +140,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("dateOfBirth")}
           value={formData.date_of_birth}
           onChange={handleChange}
+          className={getFieldError("date_of_birth") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("date_of_birth")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="city_id">{t("city")}</label>
         <select
           name="city_id"
           value={formData.city_id}
           onChange={handleChange}
+          className={getFieldError("city_id") ? "error" : ""}
+          disabled={isSubmitting}
         >
+          <option value={0}>{t("selectCity") || "Select a city"}</option>
           {cities.map((city) => (
             <option
               key={city.city_id}
@@ -124,7 +165,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
             </option>
           ))}
         </select>
+        <ErrorMessage message={getFieldError("city_id")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="phone_number">{t("phoneNumber")}</label>
         <input
@@ -133,8 +176,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("phoneNumber")}
           value={formData.phone_number}
           onChange={handleChange}
+          className={getFieldError("phone_number") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("phone_number")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="email">{t("email")}</label>
         <input
@@ -143,8 +190,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("email")}
           value={formData.email}
           onChange={handleChange}
+          className={getFieldError("email") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("email")} />
       </div>
+
       <div className="form-group">
         <label htmlFor="password">{t("password")}</label>
         <input
@@ -153,9 +204,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           placeholder={t("password")}
           value={formData.password}
           onChange={handleChange}
+          className={getFieldError("password") ? "error" : ""}
+          disabled={isSubmitting}
         />
+        <ErrorMessage message={getFieldError("password")} />
       </div>
-      <button type="submit">{t("register")}</button>
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? t("registering") || "Registering..." : t("register")}
+      </button>
     </form>
   );
 };

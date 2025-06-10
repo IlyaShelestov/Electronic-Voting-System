@@ -6,9 +6,11 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import { ErrorMessage } from "@/components/ui/ValidationComponents";
 import { IUser } from "@/models/IUser";
 import { UserService } from "@/services/userService";
 import { useLoading } from "@/store/hooks/useLoading";
+import { getFieldValidationSchema } from "@/utils/validationSchemas";
 
 interface FieldChangeModalProps {
   isOpen: boolean;
@@ -33,6 +35,7 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
   const { isLoading, withLoading } = useLoading();
   const [newValue, setNewValue] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const allowedFields = [
     "phone_number",
@@ -43,9 +46,41 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
     "patronymic",
   ];
 
+  const validateField = (fieldName: string, value: string): string | null => {
+    try {
+      const schema = getFieldValidationSchema(fieldName);
+      let processedValue: any = value;
+
+      // Convert city_id to number for validation
+      if (fieldName === "city_id") {
+        processedValue = parseInt(value) || 0;
+      }
+
+      schema.parse(processedValue);
+      return null;
+    } catch (error: any) {
+      return error.errors?.[0]?.message || "Invalid value";
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewValue(value);
+
+    // Clear previous errors
+    setError(null);
+    setValidationError(null);
+
+    // Validate on change for immediate feedback
+    if (value.trim()) {
+      const validationErr = validateField(fieldName, value);
+      setValidationError(validationErr);
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setValidationError(null);
 
     if (!newValue.trim()) {
       setError(t("newValueRequired"));
@@ -62,6 +97,13 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
       return;
     }
 
+    // Validate the field before submission
+    const validationErr = validateField(fieldName, newValue);
+    if (validationErr) {
+      setValidationError(validationErr);
+      return;
+    }
+
     await withLoading("sendRequest", async () => {
       try {
         await UserService.sendFieldChangeRequest({
@@ -75,23 +117,7 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
       } catch (error: any) {
         if (error.response?.status === 400) {
           const errorMessage = error.response.data?.message;
-          if (errorMessage?.includes("Invalid email format")) {
-            setError(t("invalidEmailFormat"));
-          } else if (errorMessage?.includes("Invalid phone number format")) {
-            setError(t("invalidPhoneFormat"));
-          } else if (errorMessage?.includes("Invalid first name format")) {
-            setError(t("invalidFirstNameFormat"));
-          } else if (errorMessage?.includes("Invalid last name format")) {
-            setError(t("invalidLastNameFormat"));
-          } else if (errorMessage?.includes("Invalid patronymic format")) {
-            setError(t("invalidPatronymicFormat"));
-          } else if (
-            errorMessage?.includes("New value is the same as current value")
-          ) {
-            setError(t("valueUnchanged"));
-          } else {
-            setError(errorMessage || t("requestFailed"));
-          }
+          setError(errorMessage || t("requestFailed"));
         } else if (error.response?.status === 403) {
           setError(t("fieldNotEditable"));
         } else {
@@ -101,10 +127,10 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
       }
     });
   };
-
   const handleClose = () => {
     setNewValue("");
     setError(null);
+    setValidationError(null);
     onClose();
   };
 
@@ -168,22 +194,21 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
           <div className="field-group">
             <label>{t("currentValue")}:</label>
             <div className="current-value">{currentValue || t("notSet")}</div>
-          </div>
-
+          </div>{" "}
           <div className="field-group">
             <label htmlFor="new-value">{t("newValue")}*:</label>
             <input
               id="new-value"
               type={getInputType()}
               value={newValue}
-              onChange={(e) => setNewValue(e.target.value)}
+              onChange={handleInputChange}
               placeholder={getPlaceholder()}
+              className={validationError ? "error" : ""}
               required
             />
+            <ErrorMessage message={validationError} />
           </div>
-
           {error && <div className="error-message">{error}</div>}
-
           <div className="modal-actions">
             <button
               type="button"

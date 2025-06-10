@@ -1,12 +1,101 @@
+@use "@/styles/variables.scss" as *;
+
 .error-message {
-  color: #ff5722;
+  color: $button_danger;
   font-size: 14px;
   margin-left: 5px;
   margin-top: 5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "⚠";
+    margin-right: 6px;
+    font-size: 16px;
+  }
 }
 
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: $spacing_lg;
+
+  .form-group {
+    position: relative;
+
+    input,
+    select {
+      padding: 12px 16px;
+      border: 2px solid $border_light;
+      border-radius: $border_radius_medium;
+      font-size: 16px;
+      transition: $transition_normal;
+      background-color: $bg_primary;
+
+      &:focus {
+        outline: none;
+        border-color: $button_light;
+        box-shadow: 0 0 0 3px $button_light_focus;
+      }
+
+      &.error {
+        border-color: $button_danger;
+        background-color: rgba($button_danger, 0.1);
+
+        &:focus {
+          border-color: $button_danger_hover;
+          box-shadow: 0 0 0 3px $button_danger_focus;
+        }
+      }
+
+      &:disabled {
+        background-color: $bg_secondary;
+        border-color: $border_light_hover;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    }
+
+    label {
+      font-weight: 600;
+      color: $text_primary;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+  }
+
+  button[type="submit"] {
+    background: $gradient_info;
+    color: $text_inverse;
+    border: none;
+    padding: 14px $spacing_lg;
+    border-radius: $border_radius_medium;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition_normal;
+    margin-top: $spacing_sm;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px $button_light_focus;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
 }

@@ -7,7 +7,7 @@
   justify-content: center;
   border-radius: 12px;
   padding: 28px 36px;
-  background-color: $selected;
+  background-color: $navbar;
   width: 100%;
   max-width: 600px;
   text-align: center;
@@ -32,6 +32,7 @@
       justify-content: center;
       text-align: left;
       width: 100%;
+      position: relative;
 
       label {
         font-size: 24px;
@@ -52,8 +53,8 @@
     button {
       width: 100%;
       text-align: center;
+      background: $gradient_info;
       padding: 22px;
-      background-color: $general_dark;
       border-radius: 12px;
       font-size: 24px;
       font-weight: 600;
@@ -62,6 +63,23 @@
       transition: all 0.4s ease;
       &:hover {
         opacity: 0.8;
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px $button_light_focus;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      &:focus {
+        outline: 2px solid $button_light;
+        outline-offset: 2px;
       }
     }
   }

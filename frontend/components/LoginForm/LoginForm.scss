@@ -1,11 +1,110 @@
 @use "@/styles/variables.scss" as *;
+
 .form-group {
   display: flex;
   flex-direction: column;
-
-  a {
-    margin-top: 10px;
+  position: relative;
+  .forgot-password-link {
+    margin-top: $spacing_sm;
     align-self: flex-end;
     text-decoration: none;
+    color: $button_light;
+    font-size: 14px;
+    font-weight: 600;
+    transition: $transition_fast;
+
+    &:hover {
+      color: $button_light_hover;
+      text-decoration: underline;
+    }
+  }
+
+  input.error {
+    border: 2px solid $button_danger;
+    background-color: rgba($button_danger, 0.1);
+
+    &:focus {
+      outline: none;
+      border-color: $button_danger_hover;
+      box-shadow: 0 0 0 3px $button_danger_focus;
+    }
+  }
+
+  input {
+    padding: 12px 16px;
+    border: 2px solid $border_light;
+    border-radius: $border_radius_medium;
+    font-size: 16px;
+    transition: $transition_normal;
+
+    &:focus {
+      outline: none;
+      border-color: $button_light;
+      box-shadow: 0 0 0 3px $button_light_focus;
+    }
+
+    &:disabled {
+      background-color: $bg_secondary;
+      border-color: $border_light_hover;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  label {
+    font-weight: 600;
+    color: $text_primary;
+    margin-bottom: 6px;
+  }
+}
+
+.login-submit-button {
+  background: $gradient_info;
+  color: $text_inverse;
+  border: none;
+  border-radius: $border_radius_medium;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition_normal;
+  width: 100%;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px $button_light_focus;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:focus {
+    outline: 2px solid $button_light;
+    outline-offset: 2px;
+  }
+}
+
+// Loading button animation
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  &:hover {
+    transform: none;
+  }
+}
+
+// Responsive design
+@media (max-width: $breakpoint_sm) {
+  .form-group {
+    gap: 12px;
+  }
+
+  .login-submit-button {
+    padding: 12px $spacing_lg;
+    font-size: 15px;
   }
 }

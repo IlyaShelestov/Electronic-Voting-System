@@ -29,22 +29,10 @@ $button_light_focus: rgba($button_light, 0.2);
 $button_light_disabled: rgba($button_light, 0.4);
 
 // Button Hover Light Colors
-$button_hover_light_hover: lighten($button_hover_light, 8%);
+$button_hover_light_hover: darken($button_hover_light, 8%);
 $button_hover_light_active: darken($button_hover_light, 8%);
 $button_hover_light_focus: rgba($button_hover_light, 0.2);
 $button_hover_light_disabled: rgba($button_hover_light, 0.4);
-
-// Button Dark Colors
-$button_dark_hover: lighten($button_dark, 10%);
-$button_dark_active: darken($button_dark, 10%);
-$button_dark_focus: rgba($button_dark, 0.2);
-$button_dark_disabled: rgba($button_dark, 0.4);
-
-// Button Hover Dark Colors
-$button_hover_dark_hover: lighten($button_hover_dark, 10%);
-$button_hover_dark_active: darken($button_hover_dark, 10%);
-$button_hover_dark_focus: rgba($button_hover_dark, 0.2);
-$button_hover_dark_disabled: rgba($button_hover_dark, 0.4);
 
 // Border Colors
 $border_dark_hover: lighten($border_dark, 15%);
@@ -62,7 +50,7 @@ $button_danger_focus: rgba($button_danger, 0.2);
 $button_danger_disabled: rgba($button_danger, 0.4);
 
 // Success Colors (for approve actions)
-$button_success: #4caf50;
+$button_success: #7de581;
 $button_success_hover: darken($button_success, 8%);
 $button_success_active: darken($button_success, 15%);
 $button_success_focus: rgba($button_success, 0.2);
@@ -74,13 +62,6 @@ $button_warning_hover: darken($button_warning, 8%);
 $button_warning_active: darken($button_warning, 15%);
 $button_warning_focus: rgba($button_warning, 0.2);
 $button_warning_disabled: rgba($button_warning, 0.4);
-
-// Info Colors (for informational elements)
-$button_info: #2196f3;
-$button_info_hover: darken($button_info, 8%);
-$button_info_active: darken($button_info, 15%);
-$button_info_focus: rgba($button_info, 0.2);
-$button_info_disabled: rgba($button_info, 0.4);
 
 // Selected & Navbar Variations
 $selected_hover: darken($selected, 5%);
@@ -129,7 +110,7 @@ $gradient_warning: linear-gradient(
   $button_warning,
   $button_warning_hover
 );
-$gradient_info: linear-gradient(135deg, $button_info, $button_info_hover);
+$gradient_info: linear-gradient(135deg, $button_light, $button_light_hover);
 
 // Sizes
 $header_height: 80px;
