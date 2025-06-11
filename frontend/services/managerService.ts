@@ -6,7 +6,8 @@ import { apiClient } from "./apiClient";
 import { ElectionService } from "./electionService";
 
 export class ManagerService {
-  private static apiEndpoint = "/manager";  public static async createElection(electionData: IElection) {
+  private static apiEndpoint = "/manager";
+  public static async createElection(electionData: IElection) {
     const response = await apiClient.post(
       `${this.apiEndpoint}/elections`,
       electionData
@@ -51,6 +52,7 @@ export class ManagerService {
     candidateId: number,
     candidateData: ICandidate
   ) {
+    console.log("Updating candidate:", candidateId, candidateData);
     const response = await apiClient.put(
       `${this.apiEndpoint}/candidates/${candidateId}`,
       candidateData
@@ -69,7 +71,8 @@ export class ManagerService {
       throw new Error("Failed to attach candidate");
     }
     return response.data;
-  }  public static async createEvent(eventData: IEvent) {
+  }
+  public static async createEvent(eventData: IEvent) {
     const response = await apiClient.post(
       `${this.apiEndpoint}/events/0`, // Backend expects ID in URL even for creation
       eventData

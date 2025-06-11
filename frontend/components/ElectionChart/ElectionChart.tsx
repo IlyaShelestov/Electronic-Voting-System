@@ -1,15 +1,21 @@
 "use client";
 
-import 'chartjs-adapter-date-fns';
+import "chartjs-adapter-date-fns";
 
 import {
-    CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, TimeScale,
-    Tooltip
-} from 'chart.js';
-import dynamic from 'next/dynamic';
-import { useTranslations } from 'use-intl';
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  TimeScale,
+  Tooltip,
+} from "chart.js";
+import dynamic from "next/dynamic";
+import { useTranslations } from "use-intl";
 
-import { IReport } from '@/models/IReport';
+import { IReport } from "@/models/IReport";
 
 ChartJS.register(
   LineElement,
@@ -55,7 +61,7 @@ export default function ElectionChart({ reportData }: ElectionChartProps) {
             },
             y: {
               beginAtZero: true,
-              title: { display: true, text: t("votes") },
+              title: { display: true, text: t("totalVotes") },
             },
           },
         }}
@@ -84,12 +90,19 @@ function transformReportToChartData(report: IReport[]) {
           new Date(a.voted_day).getTime() - new Date(b.voted_day).getTime()
       );
 
+    // Calculate cumulative vote counts
+    let cumulativeTotal = 0;
+    const cumulativeData = candidateData.map((item) => {
+      cumulativeTotal += Number(item.vote_count);
+      return {
+        x: new Date(item.voted_day),
+        y: cumulativeTotal,
+      };
+    });
+
     return {
       label: `${candidateData[0]?.party} (ID: ${candidateId})`,
-      data: candidateData.map((item) => ({
-        x: new Date(item.voted_day),
-        y: Number(item.vote_count),
-      })),
+      data: cumulativeData,
       borderColor: candidateColors[index % candidateColors.length],
       backgroundColor: candidateColors[index % candidateColors.length],
       tension: 0.4,

@@ -8,7 +8,7 @@
     "forgotPassword": "Забыли пароль?",
     "password": "Пароль",
     "passwordPlaceholder": "Введите пароль",
-    "iin": "ИИН",
+
     "iinPlaceholder": "Введите ИИН",
     "firstName": "Имя",
     "firstNamePlaceholder": "Введите имя",
@@ -32,7 +32,8 @@
     "title": "Выборы",
     "viewCandidates": "Посмотреть кандидатов",
     "date": "Дата",
-    "votes": "Голоса"
+    "votes": "Голоса",
+    "totalVotes": "Всего голосов"
   },
   "loginPage": {
     "title": "Вход в систему",
@@ -44,6 +45,31 @@
     "title": "Регистрация",
     "alreadyHaveAccount": "У вас уже есть аккаунт?",
     "login": "Войти"
+  },
+  "votePage": {
+    "title": "Голосование",
+    "subtitle": "Выберите выборы и кандидата для безопасного голосования",
+    "selectElection": "Выберите выборы",
+    "chooseElection": "Выберите выборы...",
+    "selectCandidate": "Выберите кандидата",
+    "candidates": "кандидатов",
+    "loadingCandidates": "Загрузка кандидатов...",
+    "alreadyVoted": "Вы уже проголосовали на этих выборах.",
+    "voteRecorded": "Ваш голос успешно записан.",
+    "vote": "Проголосовать",
+    "confirmVote": "Подтвердите свой голос за",
+    "verifyToken": "Проверить токен",
+    "tokenVerification": "Проверка токена",
+    "enterToken": "Введите токен голосования",
+    "tokenPlaceholder": "Введите токен...",
+    "verifyVote": "Проверить голос",
+    "tokenValid": "Токен действителен",
+    "tokenInvalid": "Токен недействителен",
+    "voteDetails": "Детали голосования",
+    "verificationSuccess": "Ваш голос успешно проверен!",
+    "verificationError": "Ошибка проверки токена",
+    "tokenNotFound": "Токен не найден",
+    "tokenRequired": "Пожалуйста, введите токен"
   },
   "adminPage": {
     "title": "Панель администратора",
@@ -310,19 +336,7 @@
     "viewAllEvents": "Посмотреть все события",
     "eventDate": "Дата"
   },
-  "votePage": {
-    "title": "Голосование",
-    "subtitle": "Выберите выборы и кандидата для безопасного голосования",
-    "selectElection": "Выберите выборы",
-    "chooseElection": "Выберите выборы...",
-    "selectCandidate": "Выберите кандидата",
-    "candidates": "кандидатов",
-    "loadingCandidates": "Загрузка кандидатов...",
-    "alreadyVoted": "Вы уже проголосовали в этих выборах.",
-    "voteRecorded": "Ваш голос успешно записан.",
-    "vote": "Проголосовать",
-    "confirmVote": "Подтвердите ваш голос за"
-  },
+
   "profilePage": {
     "title": "Профиль",
     "profileInformation": "Информация профиля",

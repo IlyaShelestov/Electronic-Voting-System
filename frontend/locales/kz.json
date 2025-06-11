@@ -32,7 +32,8 @@
     "title": "Сайлау",
     "viewCandidates": "Кандидаттарды қарау",
     "date": "Күні",
-    "votes": "Дауыс"
+    "votes": "Дауыс",
+    "totalVotes": "Барлық дауыс"
   },
   "loginPage": {
     "title": "Жүйеге кіру",
@@ -148,7 +149,19 @@
     "alreadyVoted": "Сіз бұл сайлауда дауыс бердіңіз.",
     "voteRecorded": "Сіздің дауысыңыз сәтті жазылды.",
     "vote": "Дауыс беру",
-    "confirmVote": "Дауысыңызды растаңыз"
+    "confirmVote": "Дауысыңызды растаңыз",
+    "verifyToken": "Токенді тексеру",
+    "tokenVerification": "Токен тексеруі",
+    "enterToken": "Дауыс беру токенін енгізіңіз",
+    "tokenPlaceholder": "Токенді енгізіңіз...",
+    "verifyVote": "Дауысты тексеру",
+    "tokenValid": "Токен жарамды",
+    "tokenInvalid": "Токен жарамсыз",
+    "voteDetails": "Дауыс беру мәліметтері",
+    "verificationSuccess": "Сіздің дауысыңыз сәтті тексерілді!",
+    "verificationError": "Токенді тексеру қатесі",
+    "tokenNotFound": "Токен табылмады",
+    "tokenRequired": "Токенді енгізіңіз"
   },
   "profilePage": {
     "title": "Профиль",

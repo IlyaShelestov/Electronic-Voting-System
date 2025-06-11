@@ -40,6 +40,10 @@ export default function Home() {
     { src: "/images/default-banner.png", alt: t("bannerAlt") },
     { src: "/images/default-banner.png", alt: t("bannerAlt") },
     { src: "/images/default-banner.png", alt: t("bannerAlt") },
+    { src: "/images/default-banner.png", alt: t("bannerAlt") },
+    { src: "/images/default-banner.png", alt: t("bannerAlt") },
+    { src: "/images/default-banner.png", alt: t("bannerAlt") },
+    { src: "/images/default-banner.png", alt: t("bannerAlt") },
   ];
   const [availableElections, setAvailableElections] = useState<IElection[]>([]);
   const [allElections, setAllElections] = useState<IElection[]>([]);
@@ -110,7 +114,7 @@ export default function Home() {
     const fetchUpcomingEvents = async () => {
       try {
         const events = await EventService.getUpcoming();
-        setUpcomingEvents(events.slice(0, 3)); // Show only first 3 upcoming events
+        setUpcomingEvents(events.slice(0, 3));
       } catch (error) {
         console.error("Failed to fetch upcoming events:", error);
       }

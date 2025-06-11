@@ -32,7 +32,8 @@
     "title": "Elections",
     "viewCandidates": "View Candidates",
     "date": "Date",
-    "votes": "Votes"
+    "votes": "Votes",
+    "totalVotes": "Total Votes"
   },
   "loginPage": {
     "title": "Login",
@@ -267,8 +268,7 @@
     "visitWebsite": "Visit Website",
     "viewResource": "View Resource",
     "contactCandidate": "Contact Candidate"
-  },
-  "votePage": {
+  },  "votePage": {
     "title": "Vote",
     "subtitle": "Choose your election and candidate to cast your vote securely",
     "selectElection": "Select an election",
@@ -279,7 +279,19 @@
     "alreadyVoted": "You have already voted in this election.",
     "voteRecorded": "Your vote has been recorded successfully.",
     "vote": "Cast Vote",
-    "confirmVote": "Confirm your vote for"
+    "confirmVote": "Confirm your vote for",
+    "verifyToken": "Verify Token",
+    "tokenVerification": "Token Verification",
+    "enterToken": "Enter your vote token",
+    "tokenPlaceholder": "Enter token...",
+    "verifyVote": "Verify Vote",
+    "tokenValid": "Token is valid",
+    "tokenInvalid": "Token is invalid",
+    "voteDetails": "Vote Details",
+    "verificationSuccess": "Your vote has been successfully verified!",
+    "verificationError": "Token verification failed",
+    "tokenNotFound": "Token not found",
+    "tokenRequired": "Please enter a token"
   },
   "validation": {
     "iinFormat": "IIN must be exactly 12 digits",

@@ -1,0 +1,270 @@
+@use "@/styles/variables.scss" as *;
+
+.token-verification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.token-verification-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.token-verification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid $border_light;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $general_dark;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: $general_dark;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $general_light;
+    }
+  }
+}
+
+.token-verification-content {
+  padding: 24px;
+}
+
+.token-input-section {
+  margin-bottom: 24px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: $general_dark;
+  }
+
+  .token-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid $border_light;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $button_light;
+    }
+
+    &:disabled {
+      background-color: $general_light;
+      cursor: not-allowed;
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  .verify-button {
+    width: 100%;
+    padding: 12px 24px;
+    background-color: $button_light;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &:hover:not(:disabled) {
+      background-color: darken($button_light, 10%);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff40;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.verification-result {
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  margin-top: 16px;
+
+  &.success {
+    background-color: #f0f9ff;
+    border: 1px solid #0ea5e9;
+  }
+
+  &.error {
+    background-color: #fef2f2;
+    border: 1px solid #ef4444;
+  }
+
+  .status-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.25rem;
+    
+    .success & {
+      color: #0ea5e9;
+    }
+    
+    .error & {
+      color: #ef4444;
+    }
+  }
+}
+
+.vote-details {
+  text-align: left;
+  margin-top: 16px;
+
+  h4 {
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    color: $general_dark;
+    border-bottom: 1px solid $border_light;
+    padding-bottom: 8px;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      font-weight: 500;
+      color: $general_dark;
+    }
+
+    .value {
+      color: #6b7280;
+      font-family: monospace;
+      
+      &.token-display {
+        font-size: 0.9rem;
+        background-color: #f9fafb;
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid #e5e7eb;
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+.token-verification-footer {
+  padding: 16px 24px;
+  border-top: 1px solid $border_light;
+  text-align: right;
+
+  .close-footer-btn {
+    padding: 8px 24px;
+    background-color: $general_light;
+    color: $general_dark;
+    border: 1px solid $border_light;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: darken($general_light, 5%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .token-verification-modal {
+    margin: 10px;
+    max-width: none;
+  }
+
+  .token-verification-header,
+  .token-verification-content,
+  .token-verification-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .vote-details .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

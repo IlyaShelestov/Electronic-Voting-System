@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import OtpModal from "@/components/OtpModal/OtpModal";
+import TokenVerification from "@/components/TokenVerification/TokenVerification";
 import { ICandidate } from "@/models/ICandidate";
 import { IElection } from "@/models/IElection";
 import { ElectionService } from "@/services/electionService";
@@ -26,10 +27,11 @@ export default function VotePage() {
   const [candidates, setCandidates] = useState<ICandidate[]>([]);
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null
-  );
-  const [loading, setLoading] = useState(false);
+  );  const [loading, setLoading] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [isTokenVerificationOpen, setIsTokenVerificationOpen] = useState(false);
+  const [voteToken, setVoteToken] = useState<string | null>(null);
   const email = useEmail();
 
   useEffect(() => {
@@ -118,16 +120,23 @@ export default function VotePage() {
       toast.error("Не удалось отправить OTP. Попробуйте снова.");
     }
   };
-
   const handleOtpSubmit = async (otp: string) => {
     if (selectedCandidate !== null) {
       try {
-        await VoteService.castVote(
+        const result = await VoteService.castVote(
           Number(selectedElection),
           selectedCandidate,
           otp
         );
+        
         setIsOtpModalOpen(false);
+        setHasVoted(true);
+        
+        // Store the vote token for display
+        if (result.token) {
+          setVoteToken(result.token);
+        }
+        
         toast.success("Ваш голос успешно принят!");
       } catch (error) {
         console.error("Ошибка голосования:", error);
@@ -138,10 +147,17 @@ export default function VotePage() {
     }
   };
   return (
-    <div className="vote-page">
-      <div className="vote-header">
+    <div className="vote-page">      <div className="vote-header">
         <h1 className="vote-title">{t("title")}</h1>
         <p className="vote-subtitle">{t("subtitle")}</p>
+        <div className="header-actions">
+          <button
+            onClick={() => setIsTokenVerificationOpen(true)}
+            className="verify-token-header-btn"
+          >
+            🔍 {t("verifyToken")}
+          </button>
+        </div>
       </div>
 
       <div className="vote-container">
@@ -234,12 +250,37 @@ export default function VotePage() {
                       </div>
                     </div>
                   ))}
-                </div>
-              ) : (
+                </div>              ) : (
                 <div className="already-voted">
                   <div className="voted-icon">✅</div>
                   <h3>{t("alreadyVoted")}</h3>
                   <p>{t("voteRecorded")}</p>
+                  
+                  {voteToken && (
+                    <div className="vote-token-display">
+                      <h4>Your Vote Token:</h4>
+                      <div className="token-container">
+                        <code className="token-code">{voteToken}</code>
+                        <button
+                          onClick={() => navigator.clipboard.writeText(voteToken)}
+                          className="copy-token-btn"
+                          title="Copy token"
+                        >
+                          📋
+                        </button>
+                      </div>
+                      <p className="token-note">
+                        Save this token to verify your vote later
+                      </p>
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={() => setIsTokenVerificationOpen(true)}
+                    className="verify-token-btn"
+                  >
+                    {t("verifyToken")}
+                  </button>
                 </div>
               )}
             </div>
@@ -273,13 +314,16 @@ export default function VotePage() {
             </div>
           )}
         </div>
-      </div>
-
-      <OtpModal
+      </div>      <OtpModal
         email={email}
         isOpen={isOtpModalOpen}
         onClose={() => setIsOtpModalOpen(false)}
         onSubmit={handleOtpSubmit}
+      />
+      
+      <TokenVerification
+        isOpen={isTokenVerificationOpen}
+        onClose={() => setIsTokenVerificationOpen(false)}
       />
     </div>
   );
