@@ -92,7 +92,7 @@ const OtpModal: React.FC<OtpModalProps> = ({
               onKeyDown={(e) => handleKeyDown(index, e)}
               className={`otp-digit ${error ? "error" : ""}`}
               maxLength={1}
-              placeholder="0"
+              placeholder=""
             />
           ))}
         </div>

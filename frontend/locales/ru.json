@@ -8,7 +8,7 @@
     "forgotPassword": "Забыли пароль?",
     "password": "Пароль",
     "passwordPlaceholder": "Введите пароль",
-
+    "iin": "ИИН",
     "iinPlaceholder": "Введите ИИН",
     "firstName": "Имя",
     "firstNamePlaceholder": "Введите имя",
@@ -137,7 +137,6 @@
       "phoneNumber": "Номер телефона"
     }
   },
-
   "validation": {
     "iinFormat": "ИИН должен состоять ровно из 12 цифр",
     "iinChecksum": "Недопустимый ИИН: ошибка проверки контрольной суммы",
@@ -336,7 +335,6 @@
     "viewAllEvents": "Посмотреть все события",
     "eventDate": "Дата"
   },
-
   "profilePage": {
     "title": "Профиль",
     "profileInformation": "Информация профиля",

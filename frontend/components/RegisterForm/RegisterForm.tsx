@@ -83,7 +83,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <FormErrors errors={errors} />
 
       <div className="form-group">
         <ValidatedInput

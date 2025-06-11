@@ -30,10 +30,18 @@ export default function VotePage() {
   );
   const [loading, setLoading] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
-  const [isTokenVerificationOpen, setIsTokenVerificationOpen] = useState(false);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);  const [isTokenVerificationOpen, setIsTokenVerificationOpen] = useState(false);
   const [voteToken, setVoteToken] = useState<string | null>(null);
+  const [tokenCopied, setTokenCopied] = useState(false);
   const email = useEmail();
+
+  // Load saved token from localStorage on component mount
+  useEffect(() => {
+    const savedToken = localStorage.getItem(`voteToken_${selectedElection}`);
+    if (savedToken) {
+      setVoteToken(savedToken);
+    }
+  }, [selectedElection]);
 
   useEffect(() => {
     const fetchElections = async () => {
@@ -120,12 +128,11 @@ export default function VotePage() {
       console.error("Ошибка при отправке OTP:", error);
       toast.error("Не удалось отправить OTP. Попробуйте снова.");
     }
-  };
-  const handleOtpSubmit = async (otp: string) => {
-    if (selectedCandidate !== null) {
+  };  const handleOtpSubmit = async (otp: string) => {
+    if (selectedCandidate !== null && selectedElection !== null) {
       try {
         const result = await VoteService.castVote(
-          Number(selectedElection),
+          selectedElection,
           selectedCandidate,
           otp
         );
@@ -133,18 +140,36 @@ export default function VotePage() {
         setIsOtpModalOpen(false);
         setHasVoted(true);
 
-        // Store the vote token for display
+        // Handle the vote token
         if (result.token) {
           setVoteToken(result.token);
+          // Save token to localStorage for persistence
+          localStorage.setItem(`voteToken_${selectedElection}`, result.token);
+          toast.success("Ваш голос успешно принят! Токен сохранен.");
+        } else {
+          console.warn("No token received from server");
+          toast.success("Ваш голос успешно принят!");
         }
-
-        toast.success("Ваш голос успешно принят!");
       } catch (error) {
         console.error("Ошибка голосования:", error);
         toast.error("Ошибка голосования. Пожалуйста, попробуйте еще раз.");
       }
     } else {
       toast.warn("Выберите кандидата перед голосованием!");
+    }
+  };
+
+  const copyTokenToClipboard = async () => {
+    if (voteToken) {
+      try {
+        await navigator.clipboard.writeText(voteToken);
+        setTokenCopied(true);
+        toast.success("Токен скопирован в буфер обмена!");
+        setTimeout(() => setTokenCopied(false), 2000);
+      } catch (error) {
+        console.error("Failed to copy token:", error);
+        toast.error("Не удалось скопировать токен");
+      }
     }
   };
   return (
@@ -257,26 +282,27 @@ export default function VotePage() {
                 <div className="already-voted">
                   <div className="voted-icon">✅</div>
                   <h3>{t("alreadyVoted")}</h3>
-                  <p>{t("voteRecorded")}</p>
-
-                  {voteToken && (
+                  <p>{t("voteRecorded")}</p>                  {voteToken && (
                     <div className="vote-token-display">
-                      <h4>Your Vote Token:</h4>
+                      <h4>🔐 Ваш токен голосования:</h4>
                       <div className="token-container">
                         <code className="token-code">{voteToken}</code>
                         <button
-                          onClick={() =>
-                            navigator.clipboard.writeText(voteToken)
-                          }
-                          className="copy-token-btn"
-                          title="Copy token"
+                          onClick={copyTokenToClipboard}
+                          className={`copy-token-btn ${tokenCopied ? 'copied' : ''}`}
+                          title="Скопировать токен"
                         >
-                          📋
+                          {tokenCopied ? '✅' : '📋'}
                         </button>
                       </div>
-                      <p className="token-note">
-                        Save this token to verify your vote later
-                      </p>
+                      <div className="token-info">
+                        <p className="token-note">
+                          💡 <strong>Важно:</strong> Сохраните этот токен для проверки вашего голоса в будущем
+                        </p>
+                        <p className="token-warning">
+                          ⚠️ Не передавайте этот токен третьим лицам
+                        </p>
+                      </div>
                     </div>
                   )}
 
