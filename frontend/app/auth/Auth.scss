@@ -54,7 +54,7 @@
       width: 100%;
       text-align: center;
       background: $gradient_info;
-      padding: 22px;
+      padding: 14px $spacing_lg;
       border-radius: 12px;
       font-size: 24px;
       font-weight: 600;
@@ -75,7 +75,6 @@
         transform: none;
         box-shadow: none;
       }
-
     }
   }
 

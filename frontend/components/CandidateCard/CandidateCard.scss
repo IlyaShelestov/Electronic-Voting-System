@@ -21,13 +21,19 @@
 
     // Subtle background pattern
     &::before {
-      content: '';
+      content: "";
+      z-index: -1;
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(45deg, transparent 30%, rgba($button_light, 0.02) 50%, transparent 70%);
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba($button_light, 0.02) 50%,
+        transparent 70%
+      );
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -54,13 +60,22 @@
 
     &.selected {
       border-color: $button_light;
-      background: linear-gradient(145deg, rgba($button_light, 0.03) 0%, rgba($button_light, 0.08) 100%);
+      background: linear-gradient(
+        145deg,
+        rgba($button_light, 0.03) 0%,
+        rgba($button_light, 0.08) 100%
+      );
       transform: translateY(-8px) scale(1.02);
       box-shadow: 0 20px 40px rgba($button_light, 0.25);
 
       &::before {
         opacity: 1;
-        background: linear-gradient(45deg, transparent 30%, rgba($button_light, 0.05) 50%, transparent 70%);
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba($button_light, 0.05) 50%,
+          transparent 70%
+        );
       }
 
       .selection-indicator {
@@ -109,7 +124,11 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: linear-gradient(135deg, $button_light 0%, darken($button_light, 10%) 100%);
+      background: linear-gradient(
+        135deg,
+        $button_light 0%,
+        darken($button_light, 10%) 100%
+      );
       display: flex;
       align-items: center;
       justify-content: center;
@@ -165,13 +184,21 @@
       font-weight: 600;
       margin: 0;
       padding: 8px 16px;
-      background: linear-gradient(135deg, rgba($general_dark, 0.05) 0%, rgba($general_dark, 0.08) 100%);
+      background: linear-gradient(
+        135deg,
+        rgba($general_dark, 0.05) 0%,
+        rgba($general_dark, 0.08) 100%
+      );
       border-radius: 20px;
       display: inline-block;
       border: 1px solid rgba($general_dark, 0.1);
 
       &.independent {
-        background: linear-gradient(135deg, rgba($button_light, 0.1) 0%, rgba($button_light, 0.15) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba($button_light, 0.1) 0%,
+          rgba($button_light, 0.15) 100%
+        );
         color: $button_light;
         border-color: rgba($button_light, 0.2);
       }
@@ -221,7 +248,11 @@
       }
 
       .select-btn {
-        background: linear-gradient(135deg, $button_light 0%, darken($button_light, 10%) 100%);
+        background: linear-gradient(
+          135deg,
+          $button_light 0%,
+          darken($button_light, 10%) 100%
+        );
         color: white;
         border: none;
         padding: 14px 20px;
@@ -235,7 +266,11 @@
         letter-spacing: 0.5px;
 
         &:hover {
-          background: linear-gradient(135deg, darken($button_light, 5%) 0%, darken($button_light, 15%) 100%);
+          background: linear-gradient(
+            135deg,
+            darken($button_light, 5%) 0%,
+            darken($button_light, 15%) 100%
+          );
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba($button_light, 0.4);
         }
@@ -329,7 +364,6 @@
     }
   }
 }
-
 
 // Responsive design
 @media (max-width: 768px) {

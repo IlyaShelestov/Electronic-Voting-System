@@ -1,5 +1,6 @@
 import "./ValidatedInput.scss";
 
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -47,12 +48,17 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const t = useTranslations();
 
   const inputState = getInputState(focused, value, error ?? null, false);
   const passwordStrength =
     showPasswordStrength && type === "password" && value
       ? getPasswordStrength(value)
       : null;
+
+  // Translate error message if it's a translation key
+  const translatedError =
+    error && error.startsWith("validation.") ? t(error) : error;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (formatOnChange) {
@@ -103,10 +109,10 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
           disabled={disabled}
           autoComplete={autoComplete}
           className={`validated-input__field ${
-            error ? "validated-input__field--error" : ""
+            translatedError ? "validated-input__field--error" : ""
           }`}
-          aria-invalid={getAriaInvalid(!!error)}
-          aria-describedby={getAriaDescribedBy(name, !!error)}
+          aria-invalid={getAriaInvalid(!!translatedError)}
+          aria-describedby={getAriaDescribedBy(name, !!translatedError)}
         />
 
         {type === "password" && value && (
@@ -114,7 +120,9 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
             type="button"
             className="validated-input__password-toggle"
             onClick={togglePasswordVisibility}
-            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-label={
+              showPassword ? t("common.hidePassword") : t("common.showPassword")
+            }
           >
             {showPassword ? (
               <svg
@@ -151,7 +159,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
           </button>
         )}
 
-        {inputState === "valid" && !error && value && (
+        {inputState === "valid" && !translatedError && value && (
           <div className="validated-input__success-icon">
             <svg
               width="20"
@@ -175,9 +183,9 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
             />
           </div>
           <div className="password-strength__text">
-            Password strength:{" "}
+            {t("validation.passwordStrength")}:{" "}
             <span className={`strength-${passwordStrength.strength}`}>
-              {passwordStrength.strength}
+              {t(`validation.strength.${passwordStrength.strength}`)}
             </span>
           </div>
           {passwordStrength.feedback.length > 0 && (
@@ -190,7 +198,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
         </div>
       )}
 
-      <ErrorMessage message={error} />
+      <ErrorMessage message={translatedError} />
     </div>
   );
 };

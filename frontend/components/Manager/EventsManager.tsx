@@ -1,13 +1,13 @@
 "use client";
 
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import "./EventsManager.scss";
 
-import LoadingCircle from '@/components/LoadingCircle/LoadingCircle';
-import { IEvent } from '@/models/IEvent';
-import { ManagerService } from '@/services/managerService';
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
-import './EventsManager.scss';
+import LoadingCircle from "@/components/LoadingCircle/LoadingCircle";
+import { IEvent } from "@/models/IEvent";
+import { ManagerService } from "@/services/managerService";
 
 const EventsManager = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -15,9 +15,9 @@ const EventsManager = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingEvent, setEditingEvent] = useState<IEvent | null>(null);
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    event_date: '',
+    title: "",
+    description: "",
+    event_date: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const t = useTranslations("managerPage");
@@ -32,7 +32,7 @@ const EventsManager = () => {
       const eventsData = await ManagerService.getEvents();
       setEvents(eventsData);
     } catch (error) {
-      console.error('Failed to fetch events:', error);
+      console.error("Failed to fetch events:", error);
     } finally {
       setLoading(false);
     }
@@ -40,9 +40,9 @@ const EventsManager = () => {
 
   const resetForm = () => {
     setFormData({
-      title: '',
-      description: '',
-      event_date: '',
+      title: "",
+      description: "",
+      event_date: "",
     });
     setEditingEvent(null);
   };
@@ -55,8 +55,12 @@ const EventsManager = () => {
     }
 
     try {
-      setSubmitting(true);      if (editingEvent && editingEvent.event_id) {
-        await ManagerService.updateEvent(editingEvent.event_id, formData as IEvent);
+      setSubmitting(true);
+      if (editingEvent && editingEvent.event_id) {
+        await ManagerService.updateEvent(
+          editingEvent.event_id,
+          formData as IEvent
+        );
       } else {
         await ManagerService.createEvent(formData as IEvent);
       }
@@ -64,7 +68,7 @@ const EventsManager = () => {
       resetForm();
       await fetchData();
     } catch (error) {
-      console.error('Failed to save event:', error);
+      console.error("Failed to save event:", error);
       alert(editingEvent ? t("updateEventError") : t("createEventError"));
     } finally {
       setSubmitting(false);
@@ -76,7 +80,7 @@ const EventsManager = () => {
     setFormData({
       title: event.title,
       description: event.description,
-      event_date: event.event_date.split('T')[0], // Convert to YYYY-MM-DD format
+      event_date: event.event_date.split("T")[0], // Convert to YYYY-MM-DD format
     });
     setShowCreateForm(true);
   };
@@ -90,7 +94,7 @@ const EventsManager = () => {
       await ManagerService.deleteEvent(eventId);
       await fetchData();
     } catch (error) {
-      console.error('Failed to delete event:', error);
+      console.error("Failed to delete event:", error);
       alert(t("deleteEventError"));
     }
   };
@@ -99,11 +103,16 @@ const EventsManager = () => {
     const now = new Date();
     const event = new Date(eventDate);
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const eventDay = new Date(event.getFullYear(), event.getMonth(), event.getDate());
+    const eventDay = new Date(
+      event.getFullYear(),
+      event.getMonth(),
+      event.getDate()
+    );
 
-    if (eventDay > today) return { status: 'upcoming', label: t("upcoming") };
-    if (eventDay.getTime() === today.getTime()) return { status: 'today', label: t("today") };
-    return { status: 'past', label: t("past") };
+    if (eventDay > today) return { status: "upcoming", label: t("upcoming") };
+    if (eventDay.getTime() === today.getTime())
+      return { status: "today", label: t("today") };
+    return { status: "past", label: t("past") };
   };
 
   if (loading) {
@@ -140,13 +149,18 @@ const EventsManager = () => {
                 ×
               </button>
             </div>
-            <form onSubmit={handleCreateEvent} className="event-form">
+            <form
+              onSubmit={handleCreateEvent}
+              className="event-form"
+            >
               <div className="form-group">
                 <label>{t("eventTitle")} *</label>
                 <input
                   type="text"
                   value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
                   placeholder={t("enterEventTitle")}
                   required
                 />
@@ -155,7 +169,9 @@ const EventsManager = () => {
                 <label>{t("eventDescription")} *</label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
                   placeholder={t("enterEventDescription")}
                   rows={4}
                   required
@@ -166,7 +182,9 @@ const EventsManager = () => {
                 <input
                   type="date"
                   value={formData.event_date}
-                  onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, event_date: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -186,7 +204,13 @@ const EventsManager = () => {
                   className="btn-primary"
                   disabled={submitting}
                 >
-                  {submitting ? (editingEvent ? t("updating") : t("creating")) : (editingEvent ? t("update") : t("create"))}
+                  {submitting
+                    ? editingEvent
+                      ? t("updating")
+                      : t("creating")
+                    : editingEvent
+                    ? t("update")
+                    : t("create")}
                 </button>
               </div>
             </form>
@@ -213,7 +237,10 @@ const EventsManager = () => {
             {events.map((event) => {
               const status = getEventStatus(event.event_date);
               return (
-                <div key={event.event_id} className="event-card">
+                <div
+                  key={event.event_id}
+                  className="event-card"
+                >
                   <div className="event-header">
                     <h3>{event.title}</h3>
                     <span className={`status ${status.status}`}>
@@ -222,8 +249,10 @@ const EventsManager = () => {
                   </div>
                   <div className="event-details">
                     <div className="event-date">
-                      <strong>{t("eventDate")}:</strong> {new Date(event.event_date).toLocaleDateString()}
-                    </div>                    <div className="event-description">
+                      <strong>{t("eventDate")}:</strong>{" "}
+                      {new Date(event.event_date).toLocaleDateString()}
+                    </div>
+                    <div className="event-description">
                       <strong>{t("description")}:</strong>
                       <p>{event.description}</p>
                     </div>
@@ -234,9 +263,12 @@ const EventsManager = () => {
                       onClick={() => handleEditEvent(event)}
                     >
                       {t("edit")}
-                    </button>                    <button
+                    </button>{" "}
+                    <button
                       className="btn-danger"
-                      onClick={() => event.event_id && handleDeleteEvent(event.event_id)}
+                      onClick={() =>
+                        event.event_id && handleDeleteEvent(event.event_id)
+                      }
                     >
                       {t("delete")}
                     </button>

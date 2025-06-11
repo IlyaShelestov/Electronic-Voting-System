@@ -145,7 +145,6 @@ export const useAuthRedux = () => {
 
   const initializeAuth = useCallback(() => {
     return dispatch(initializeAuthAsync());
-    return dispatch(initializeAuthAsync());
   }, [dispatch]);
   const updateUser = useCallback(
     async (userData: Partial<IUser>) => {

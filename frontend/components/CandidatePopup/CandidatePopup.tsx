@@ -1,11 +1,11 @@
 "use client";
 
-import './CandidatePopup.scss';
+import "./CandidatePopup.scss";
 
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
-import { ICandidate } from '@/models/ICandidate';
+import { ICandidate } from "@/models/ICandidate";
 
 interface CandidatePopupProps {
   candidate: ICandidate | null;
@@ -17,7 +17,9 @@ export default function CandidatePopup({
   onClose,
 }: CandidatePopupProps) {
   const t = useTranslations("candidatePopup");
-  const [imgSrc, setImgSrc] = useState(candidate?.avatar_url || "/images/default-candidate.png");
+  const [imgSrc, setImgSrc] = useState(
+    candidate?.avatar_url || "/images/default-candidate.png"
+  );
 
   if (!candidate) return null;
 
@@ -28,9 +30,19 @@ export default function CandidatePopup({
   };
 
   return (
-    <div className="popup-overlay" onClick={handleOverlayClick}>
-      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose} aria-label={t("close")}>
+    <div
+      className="popup-overlay"
+      onClick={handleOverlayClick}
+    >
+      <div
+        className="popup-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="close-btn"
+          onClick={onClose}
+          aria-label={t("close")}
+        >
           ✖
         </button>
 
@@ -77,7 +89,9 @@ export default function CandidatePopup({
               {candidate.phone_number && (
                 <div className="info-item">
                   <strong>{t("phone")}:</strong>
-                  <a href={`tel:${candidate.phone_number}`}>{candidate.phone_number}</a>
+                  <a href={`tel:${candidate.phone_number}`}>
+                    {candidate.phone_number}
+                  </a>
                 </div>
               )}
             </div>
@@ -121,7 +135,9 @@ export default function CandidatePopup({
               {candidate.date_of_birth && (
                 <div className="info-item">
                   <strong>{t("dateOfBirth")}:</strong>
-                  <span>{new Date(candidate.date_of_birth).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(candidate.date_of_birth).toLocaleDateString()}
+                  </span>
                 </div>
               )}
               {candidate.city_id && (
@@ -146,7 +162,10 @@ export default function CandidatePopup({
         </div>
 
         <div className="popup-footer">
-          <button className="close-footer-btn" onClick={onClose}>
+          <button
+            className="close-footer-btn"
+            onClick={onClose}
+          >
             {t("close")}
           </button>
         </div>

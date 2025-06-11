@@ -51,6 +51,15 @@ apiClient.interceptors.response.use(
           })
         );
       }
+
+      if (status === 429) {
+        // Handle rate limiting errors
+        console.warn("Too many requests, rate limit exceeded");
+        return Promise.reject({
+          message: "Too many requests, please try again later.",
+          status: 429,
+        });
+      }
     }
 
     // Re-throw the error so it can be handled by the calling code

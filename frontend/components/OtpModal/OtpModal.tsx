@@ -18,14 +18,20 @@ const OtpModal: React.FC<OtpModalProps> = ({
   email,
 }) => {
   const [otp, setOtp] = useState(Array(6).fill(""));
+  const [error, setError] = useState<string>("");
   const t = useTranslations("otpModal");
+  const vt = useTranslations("validation");
 
   const handleInputChange = (index: number, value: string) => {
+    // Only allow digits
+    if (value && !/^\d$/.test(value)) return;
+
     if (value.length > 1) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
+    setError(""); // Clear error when user types
 
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
@@ -45,17 +51,31 @@ const OtpModal: React.FC<OtpModalProps> = ({
 
   const handleSubmit = () => {
     const otpString = otp.join("");
-    if (otpString.length === 6) {
-      onSubmit(otpString);
-      setOtp(Array(6).fill(""));
+    if (otpString.length !== 6) {
+      setError(vt("otpIncomplete"));
+      return;
     }
+
+    if (!/^\d{6}$/.test(otpString)) {
+      setError(vt("otpDigitsOnly"));
+      return;
+    }
+
+    onSubmit(otpString);
+    setOtp(Array(6).fill(""));
+    setError("");
+  };
+
+  const handleClose = () => {
+    setOtp(Array(6).fill(""));
+    setError("");
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="otp-modal">
-      {" "}
       <div className="otp-modal__content">
         <h2>{t("title")}</h2>
         <p>{t("description", { email: email })}</p>
@@ -65,15 +85,18 @@ const OtpModal: React.FC<OtpModalProps> = ({
               key={index}
               id={`otp-${index}`}
               type="text"
+              inputMode="numeric"
+              pattern="\d*"
               value={digit}
               onChange={(e) => handleInputChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="otp-digit"
+              className={`otp-digit ${error ? "error" : ""}`}
               maxLength={1}
               placeholder="0"
             />
           ))}
         </div>
+        {error && <div className="otp-error">{error}</div>}
         <div>
           <button
             className="submit-btn"
@@ -83,7 +106,7 @@ const OtpModal: React.FC<OtpModalProps> = ({
           </button>
           <button
             className="cancel-btn"
-            onClick={onClose}
+            onClick={handleClose}
           >
             {t("cancel")}
           </button>

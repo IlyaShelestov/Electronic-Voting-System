@@ -3,12 +3,17 @@
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
-import { ErrorMessage, FormErrors } from "@/components/ValidationComponent/ValidationComponents";
+import {
+  ErrorMessage,
+  FormErrors,
+} from "@/components/ValidationComponent/ValidationComponents";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { ICity } from "@/models/ICity";
 import { IUser } from "@/models/IUser";
+import { UserRoleEnum } from "@/models/UserRole";
 import { LocationsService } from "@/services/locationsService";
 import { RegisterFormData, registerSchema } from "@/utils/validationSchemas";
+
 import { ValidatedInput } from "../ValidateIdnput/ValidatedInput";
 
 interface RegisterFormProps {
@@ -27,6 +32,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     phone_number: "",
     email: "",
     password: "",
+    role: UserRoleEnum.USER,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { validate, getFieldError, validateField, errors } =
@@ -77,6 +83,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   };
   return (
     <form onSubmit={handleSubmit}>
+      <FormErrors errors={errors} />
+
       <div className="form-group">
         <ValidatedInput
           name="iin"
@@ -100,7 +108,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           disabled={isSubmitting}
           required
           label={t("firstName") || "First Name"}
-        />  
+        />
       </div>
 
       <div className="form-group">
@@ -126,6 +134,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           disabled={isSubmitting}
           required
           label={t("patronymic") || "Patronymic"}
+        />
+      </div>
+
+      <div className="form-group">
+        <ValidatedInput
+          name="date_of_birth"
+          type="date"
+          placeholder={t("dateOfBirthPlaceholder") || "Select date of birth"}
+          value={formData.date_of_birth}
+          onChange={handleChange}
+          error={getFieldError("date_of_birth")}
+          disabled={isSubmitting}
+          required
+          label={t("dateOfBirth") || "Date of Birth"}
         />
       </div>
 
@@ -188,6 +210,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           error={getFieldError("password")}
           disabled={isSubmitting}
           required
+          showPasswordStrength={true}
           label={t("password") || "Password"}
         />
       </div>

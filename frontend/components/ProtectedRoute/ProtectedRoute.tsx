@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import * as React from "react";
 
 import { UserRoleEnum } from "@/models/UserRole";
@@ -31,12 +31,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (!isAuthenticated) {
     redirect(fallbackUrl);
-    return null;
   }
 
   if (requiredRole && !hasRole(requiredRole)) {
     redirect("/auth/login");
-    return null;
   }
 
   return <>{children}</>;

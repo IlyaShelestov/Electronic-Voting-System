@@ -32,7 +32,8 @@ export default function CandidatesPage() {
   const [hasVoted, setHasVoted] = useState(false);
   const [canVoteLocation, setCanVoteLocation] = useState(false);
   const [isElectionActive, setIsElectionActive] = useState(false);
-  const isAuthenticated = useIsAuthenticated(); useEffect(() => {
+  const isAuthenticated = useIsAuthenticated();
+  useEffect(() => {
     const fetchElectionData = async () => {
       if (!id) return;
 
@@ -55,7 +56,7 @@ export default function CandidatesPage() {
           try {
             const [votingStatus, locationCheck] = await Promise.all([
               VoteService.checkVotedStatus(Number(id)),
-              VoteService.checkVoteLocation(Number(id))
+              VoteService.checkVoteLocation(Number(id)),
             ]);
             setHasVoted(votingStatus.hasVoted);
             setCanVoteLocation(!!locationCheck);
@@ -75,10 +76,13 @@ export default function CandidatesPage() {
     fetchElectionData();
   }, [id, isAuthenticated, t]);
 
-  const handleCandidateSelect = (candidateId: number, candidate: ICandidate) => {
+  const handleCandidateSelect = (
+    candidateId: number,
+    candidate: ICandidate
+  ) => {
     setSelectedCandidateId(candidateId);
     // Also store the full candidate object for easy access
-    const selectedCand = candidates.find(c => c.candidate_id === candidateId);
+    const selectedCand = candidates.find((c) => c.candidate_id === candidateId);
     if (selectedCand) {
       setSelectedCandidate(selectedCand);
     }
@@ -86,6 +90,10 @@ export default function CandidatesPage() {
 
   const handleViewCandidateInfo = (candidate: ICandidate) => {
     setSelectedCandidate(candidate);
+  };
+
+  const handleCloseCandidatePopup = () => {
+    setSelectedCandidate(null);
   };
 
   const getVoteButtonText = () => {
@@ -98,11 +106,13 @@ export default function CandidatesPage() {
   };
 
   const getVoteButtonDisabled = () => {
-    return !isAuthenticated ||
+    return (
+      !isAuthenticated ||
       hasVoted ||
       !isElectionActive ||
       !canVoteLocation ||
-      !selectedCandidateId;
+      !selectedCandidateId
+    );
   };
 
   const handleVote = async () => {
@@ -134,7 +144,8 @@ export default function CandidatesPage() {
 
     // Redirect to vote page with election and candidate info
     router.push(`/vote?electionId=${id}&candidateId=${selectedCandidateId}`);
-  }; if (loading) {
+  };
+  if (loading) {
     return (
       <div className="candidates-container">
         <div className="container-inner">
@@ -157,9 +168,9 @@ export default function CandidatesPage() {
             <p>{t("electionNotFoundDescription")}</p>
             <button
               className="return-button"
-              onClick={() => router.push('/elections')}
+              onClick={() => router.push("/elections")}
             >
-              Return to Elections
+              ← {t("backToElections")}
             </button>
           </div>
         </div>
@@ -174,18 +185,27 @@ export default function CandidatesPage() {
           <div className="header-content">
             <h1 className="title">{election.title}</h1>
             <div className="date-range">
-              📅 {formatTimestamp(election.start_date)} - {formatTimestamp(election.end_date)}
+              📅 {formatTimestamp(election.start_date)} -{" "}
+              {formatTimestamp(election.end_date)}
             </div>
 
             <div className="election-status">
-              <span className={`status-badge ${isElectionActive ? 'active' : 'inactive'}`}>
+              <span
+                className={`status-badge ${
+                  isElectionActive ? "active" : "inactive"
+                }`}
+              >
                 {isElectionActive ? `🟢 ${t("active")}` : `🔴 ${t("inactive")}`}
               </span>
               {isAuthenticated && hasVoted && (
-                <span className="status-badge voted">✅ {t("youHaveVoted")}</span>
+                <span className="status-badge voted">
+                  ✅ {t("youHaveVoted")}
+                </span>
               )}
               {isAuthenticated && !canVoteLocation && (
-                <span className="status-badge ineligible">📍 {t("locationIneligible")}</span>
+                <span className="status-badge ineligible">
+                  📍 {t("locationIneligible")}
+                </span>
               )}
             </div>
           </div>
@@ -203,7 +223,10 @@ export default function CandidatesPage() {
             <div className="no-candidates">
               <div className="icon">👥</div>
               <p className="message">{t("noCandidatesFound")}</p>
-              <p className="description">Check back later as candidates may be added before the election begins.</p>
+              <p className="description">
+                Check back later as candidates may be added before the election
+                begins.
+              </p>
             </div>
           ) : (
             <div className="candidates-list">
@@ -212,10 +235,17 @@ export default function CandidatesPage() {
                   key={candidate.candidate_id}
                   candidate={candidate}
                   selectedCandidateId={selectedCandidateId ?? 0}
-                  setSelectedCandidateId={(id) => handleCandidateSelect(id, candidate)}
+                  setSelectedCandidateId={(id) =>
+                    handleCandidateSelect(id, candidate)
+                  }
                   setSelectedCandidate={handleViewCandidateInfo}
                   showDetailedInfo={true}
-                  isSelectable={isAuthenticated && !hasVoted && isElectionActive && canVoteLocation}
+                  isSelectable={
+                    isAuthenticated &&
+                    !hasVoted &&
+                    isElectionActive &&
+                    canVoteLocation
+                  }
                 />
               ))}
             </div>
@@ -230,32 +260,41 @@ export default function CandidatesPage() {
                 <h3>{t("selectedCandidate")}</h3>
                 <div className="candidate-summary">
                   {candidates
-                    .filter(c => c.candidate_id === selectedCandidateId)
-                    .map(candidate => (
-                      <div key={candidate.candidate_id} className="candidate-summary-card">
+                    .filter((c) => c.candidate_id === selectedCandidateId)
+                    .map((candidate) => (
+                      <div
+                        key={candidate.candidate_id}
+                        className="candidate-summary-card"
+                      >
                         {candidate.avatar_url && (
                           <img
                             src={candidate.avatar_url}
                             alt={`${candidate.first_name} ${candidate.last_name}`}
                             className="candidate-avatar-small"
                             onError={(e) => {
-                              e.currentTarget.src = "/images/default-candidate.png";
+                              e.currentTarget.src =
+                                "/images/default-candidate.png";
                             }}
                           />
                         )}
                         <div className="candidate-details">
-                          <h4>{candidate.first_name} {candidate.last_name}</h4>
-                          {candidate.party && <div className="party">🏛️ {candidate.party}</div>}
+                          <h4>
+                            {candidate.first_name} {candidate.last_name}
+                          </h4>
+                          {candidate.party && (
+                            <div className="party">🏛️ {candidate.party}</div>
+                          )}
                         </div>
                       </div>
-                    ))
-                  }
+                    ))}
                 </div>
               </div>
             )}
 
             <button
-              className={`vote-button ${getVoteButtonDisabled() ? 'disabled' : 'enabled'}`}
+              className={`vote-button ${
+                getVoteButtonDisabled() ? "disabled" : "enabled"
+              }`}
               onClick={handleVote}
               disabled={getVoteButtonDisabled()}
             >
@@ -265,29 +304,36 @@ export default function CandidatesPage() {
             {/* Voting eligibility messages */}
             <div className="voting-info">
               {!isAuthenticated && (
-                <div className="info-message">{t("loginToSeeVotingOptions")}</div>
+                <div className="info-message">
+                  {t("loginToSeeVotingOptions")}
+                </div>
               )}
               {isAuthenticated && !isElectionActive && (
-                <div className="warning-message">{t("electionNotActiveMessage")}</div>
+                <div className="warning-message">
+                  {t("electionNotActiveMessage")}
+                </div>
               )}
               {isAuthenticated && !canVoteLocation && (
-                <div className="warning-message">{t("locationNotEligibleMessage")}</div>
+                <div className="warning-message">
+                  {t("locationNotEligibleMessage")}
+                </div>
               )}
               {isAuthenticated && hasVoted && (
-                <div className="success-message">{t("voteAlreadyCastMessage")}</div>
+                <div className="success-message">
+                  {t("voteAlreadyCastMessage")}
+                </div>
               )}
             </div>
           </div>
         )}
 
         {/* Back to elections button */}
-        <div style={{ textAlign: 'center', marginTop: '32px' }}>
+        <div style={{ textAlign: "center", marginTop: "32px" }}>
           <button
             className="return-button"
-            onClick={() => router.push('/elections')}
-
+            onClick={() => router.push("/")}
           >
-            ← Back to Elections
+            ← {t("backToHome")}
           </button>
         </div>
       </div>
@@ -296,7 +342,7 @@ export default function CandidatesPage() {
       {selectedCandidate && (
         <CandidatePopup
           candidate={selectedCandidate}
-          onClose={() => setSelectedCandidate(null)}
+          onClose={handleCloseCandidatePopup}
         />
       )}
     </div>

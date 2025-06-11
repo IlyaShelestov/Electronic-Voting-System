@@ -67,7 +67,8 @@
         color: #333;
       }
 
-      input, textarea {
+      input,
+      textarea {
         width: 100%;
         padding: 10px;
         border: 1px solid #ddd;
@@ -117,6 +118,8 @@
       padding: 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
         transform: translateY(-2px);
@@ -163,7 +166,9 @@
 
       .event-details {
         margin-bottom: 20px;
-
+        display: flex;
+        flex-direction: column;
+        flex: 1;
         .event-date {
           margin-bottom: 10px;
           font-size: 14px;

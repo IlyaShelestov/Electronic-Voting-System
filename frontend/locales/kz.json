@@ -288,6 +288,50 @@
     "viewFullProfile": "Толық профилді қарау",
     "closeProfile": "Профилді жабу"
   },
+
+  "validation": {
+    "iinFormat": "ЖСН дәл 12 саннан тұруы керек",
+    "iinChecksum": "Жарамсыз ЖСН: бақылау қосындысы тексерілмеді",
+    "dateFormat": "Күнді ГГГГ-АА-КК форматында енгізіңіз",
+    "dateInFuture": "Туған күн болашақта болмауы тиіс",
+    "ageMinimum": "Сіз кем дегенде 18 жаста болуыңыз керек",
+    "passwordRequired": "Құпия сөз қажет",
+    "passwordTooLong": "Құпия сөз тым ұзақ",
+    "firstNameMinLength": "Атыңыз кемінде 2 таңбадан тұруы керек",
+    "firstNameMaxLength": "Атыңыз 20 таңбадан аспауы керек",
+    "firstNameFormat": "Атыңыз бас әріппен басталып, дефис болуы мүмкін",
+    "lastNameMinLength": "Тегіңіз кемінде 2 таңбадан тұруы керек",
+    "lastNameMaxLength": "Тегіңіз 20 таңбадан аспауы керек",
+    "lastNameFormat": "Тегіңіз бас әріппен басталуы керек",
+    "patronymicInvalid": "Әкесінің аты 2–20 таңбадан тұруы және бас әріппен басталуы керек",
+    "cityRequired": "Қала таңдалуы қажет",
+    "cityInvalid": "Қала ID жарамды сан болуы керек",
+    "phoneFormat": "Телефон нөмірі +7 немесе 8 цифрымен басталып, жалпы 11 цифрдан тұруы керек",
+    "emailInvalid": "Жарамды электрондық пошта адресін енгізіңіз",
+    "emailTooLong": "Электрондық пошта 255 таңбадан аспауы керек",
+    "passwordMinLength": "Құпия сөз кемінде 9 таңбадан тұруы керек",
+    "passwordMustContainLetter": "Құпия сөзде кемінде бір әріп болуы керек",
+    "passwordMustContainNumber": "Құпия сөзде кемінде бір сан болуы керек",
+    "passwordMustContainSpecial": "Құпия сөзде арнайы таңба болуы керек (@$!%*?&)",
+    "passwordTooWeak": "Құпия сөз тым әлсіз. Күштірек құпия сөз енгізіңіз.",
+    "roleInvalid": "Жарамсыз рөл таңдалды",
+    "fieldNameRequired": "Өріс атауы қажет",
+    "newValueRequired": "Жаңа мән бос болмауы керек",
+    "valueRequired": "Мән енгізілуі қажет",
+    "passwordStrength": "Құпия сөздің беріктігі",
+    "strength": {
+      "weak": "Әлсіз",
+      "fair": "Орташа",
+      "good": "Жақсы",
+      "strong": "Мықты"
+    },
+    "otpIncomplete": "Барлық 6 санды енгізіңіз",
+    "otpDigitsOnly": "Код тек сандардан тұруы керек"
+  },
+  "common": {
+    "showPassword": "Құпия сөзді көрсету",
+    "hidePassword": "Құпия сөзді жасыру"
+  },
   "candidatePopup": {
     "candidateProfile": "Кандидат профилі",
     "personalInfo": "Жеке ақпарат",
