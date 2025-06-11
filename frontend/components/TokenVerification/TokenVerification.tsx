@@ -23,12 +23,17 @@ interface VoteDetails {
   election_title?: string;
 }
 
-export default function TokenVerification({ isOpen, onClose }: TokenVerificationProps) {
+export default function TokenVerification({
+  isOpen,
+  onClose,
+}: TokenVerificationProps) {
   const t = useTranslations("votePage");
   const [token, setToken] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [voteDetails, setVoteDetails] = useState<VoteDetails | null>(null);
-  const [verificationStatus, setVerificationStatus] = useState<"idle" | "success" | "error">("idle");
+  const [verificationStatus, setVerificationStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const handleVerify = async () => {
     if (!token.trim()) {
@@ -47,7 +52,7 @@ export default function TokenVerification({ isOpen, onClose }: TokenVerification
     } catch (error: any) {
       console.error("Token verification error:", error);
       setVerificationStatus("error");
-      
+
       if (error.response?.status === 404) {
         toast.error(t("tokenNotFound"));
       } else {
@@ -76,7 +81,7 @@ export default function TokenVerification({ isOpen, onClose }: TokenVerification
       <div className="token-verification-modal">
         <div className="token-verification-header">
           <h2>{t("tokenVerification")}</h2>
-          <button 
+          <button
             className="close-button"
             onClick={handleClose}
             aria-label="Close"
@@ -130,11 +135,15 @@ export default function TokenVerification({ isOpen, onClose }: TokenVerification
                 </div>
                 <div className="detail-item">
                   <span className="label">Voted At:</span>
-                  <span className="value">{formatDate(voteDetails.voted_at)}</span>
+                  <span className="value">
+                    {formatDate(voteDetails.voted_at)}
+                  </span>
                 </div>
                 <div className="detail-item">
                   <span className="label">Token:</span>
-                  <span className="value token-display">{voteDetails.token}</span>
+                  <span className="value token-display">
+                    {voteDetails.token}
+                  </span>
                 </div>
               </div>
             </div>
@@ -149,7 +158,10 @@ export default function TokenVerification({ isOpen, onClose }: TokenVerification
         </div>
 
         <div className="token-verification-footer">
-          <button onClick={handleClose} className="close-footer-btn">
+          <button
+            onClick={handleClose}
+            className="close-footer-btn"
+          >
             Close
           </button>
         </div>

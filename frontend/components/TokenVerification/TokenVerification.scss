@@ -143,8 +143,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .verification-result {
@@ -171,11 +175,11 @@
   h3 {
     margin: 0 0 16px 0;
     font-size: 1.25rem;
-    
+
     .success & {
       color: #0ea5e9;
     }
-    
+
     .error & {
       color: #ef4444;
     }
@@ -213,7 +217,7 @@
     .value {
       color: #6b7280;
       font-family: monospace;
-      
+
       &.token-display {
         font-size: 0.9rem;
         background-color: #f9fafb;

@@ -268,7 +268,8 @@
     "visitWebsite": "Visit Website",
     "viewResource": "View Resource",
     "contactCandidate": "Contact Candidate"
-  },  "votePage": {
+  },
+  "votePage": {
     "title": "Vote",
     "subtitle": "Choose your election and candidate to cast your vote securely",
     "selectElection": "Select an election",
