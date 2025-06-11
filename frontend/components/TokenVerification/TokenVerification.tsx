@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+import { ElectionService } from "@/services/electionService";
 import { VoteService } from "@/services/voteService";
 
 interface TokenVerificationProps {
@@ -34,7 +35,6 @@ export default function TokenVerification({
   const [verificationStatus, setVerificationStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
-
   const handleVerify = async () => {
     if (!token.trim()) {
       toast.warn(t("tokenRequired"));
@@ -45,8 +45,30 @@ export default function TokenVerification({
     setVerificationStatus("idle");
 
     try {
-      const result = await VoteService.checkVoteToken(token.trim());
-      setVoteDetails(result);
+      // First, get the basic vote information
+      const voteResult = await VoteService.checkVoteToken(token.trim());
+
+      // Now fetch election and candidate details
+      const [election, candidates] = await Promise.all([
+        ElectionService.getById(voteResult.election_id),
+        ElectionService.getCandidates(voteResult.election_id),
+      ]);
+
+      // Find the specific candidate
+      const candidate = candidates.find(
+        (c) => c.candidate_id === voteResult.candidate_id
+      );
+
+      // Combine all the information
+      const enrichedVoteDetails: VoteDetails = {
+        ...voteResult,
+        election_title: election.title,
+        candidate_name: candidate
+          ? `${candidate.first_name} ${candidate.last_name}`
+          : "Unknown Candidate",
+      };
+
+      setVoteDetails(enrichedVoteDetails);
       setVerificationStatus("success");
       toast.success(t("verificationSuccess"));
     } catch (error: any) {
@@ -113,8 +135,7 @@ export default function TokenVerification({
                 t("verifyVote")
               )}
             </button>
-          </div>
-
+          </div>{" "}
           {verificationStatus === "success" && voteDetails && (
             <div className="verification-result success">
               <div className="status-icon">✅</div>
@@ -122,25 +143,25 @@ export default function TokenVerification({
               <div className="vote-details">
                 <h4>{t("voteDetails")}</h4>
                 <div className="detail-item">
-                  <span className="label">Vote ID:</span>
-                  <span className="value">{voteDetails.vote_id}</span>
+                  <span className="label">{t("electionTitle")}:</span>
+                  <span className="value">{voteDetails.election_title}</span>
                 </div>
                 <div className="detail-item">
-                  <span className="label">Election ID:</span>
-                  <span className="value">{voteDetails.election_id}</span>
+                  <span className="label">{t("candidateName")}:</span>
+                  <span className="value">{voteDetails.candidate_name}</span>
                 </div>
                 <div className="detail-item">
-                  <span className="label">Candidate ID:</span>
-                  <span className="value">{voteDetails.candidate_id}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="label">Voted At:</span>
+                  <span className="label">{t("votedAt")}:</span>
                   <span className="value">
                     {formatDate(voteDetails.voted_at)}
                   </span>
                 </div>
                 <div className="detail-item">
-                  <span className="label">Token:</span>
+                  <span className="label">{t("voteId")}:</span>
+                  <span className="value">{voteDetails.vote_id}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="label">{t("token")}:</span>
                   <span className="value token-display">
                     {voteDetails.token}
                   </span>
@@ -148,7 +169,6 @@ export default function TokenVerification({
               </div>
             </div>
           )}
-
           {verificationStatus === "error" && (
             <div className="verification-result error">
               <div className="status-icon">❌</div>

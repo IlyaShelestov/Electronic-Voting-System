@@ -548,4 +548,36 @@
       transform: translateY(-1px);
     }
   }
+
+  // No elections available message
+  .no-elections-message {
+    text-align: center;
+    padding: $spacing_xl;
+    margin: $spacing_lg 0;
+    background: #f8f9fa;
+    border-radius: $border_radius_large;
+    border: 2px dashed #dee2e6;
+
+    .message-icon {
+      font-size: 3rem;
+      margin-bottom: $spacing_md;
+      opacity: 0.7;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text_primary;
+      margin: 0 0 $spacing_sm 0;
+    }
+
+    p {
+      color: $text_secondary;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
 }

@@ -137,7 +137,6 @@ export default function Home() {
     <div className="home-container">
       <h1 className="home-title">{t("title")}</h1>{" "}
       <BannerSlider slides={slides} />
-      {/* Upcoming Events Section */}
       <section className="upcoming-events-section">
         <h2 className="section-title">{t("upcomingEvents")}</h2>
         {upcomingEvents.length > 0 ? (

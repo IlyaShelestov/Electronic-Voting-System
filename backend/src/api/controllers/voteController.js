@@ -46,7 +46,7 @@ exports.castVote = async (req, res) => {
       token,
       userId: userId,
     });
-    res.status(201).json(vote.token);
+    res.status(201).json({ token: vote.token });
   } catch (err) {
     res.status(500).json({ message: "Error casting vote" });
   }

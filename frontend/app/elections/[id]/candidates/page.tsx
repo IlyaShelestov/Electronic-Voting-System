@@ -40,13 +40,50 @@ export default function CandidatesPage() {
       try {
         setLoading(true);
         const electionData = await ElectionService.getById(Number(id));
-        setElection(electionData);
-
-        // Check if election is currently active
+        setElection(electionData); // Check if election is currently active
         const now = new Date();
-        const startDate = new Date(electionData.start_date);
-        const endDate = new Date(electionData.end_date);
-        setIsElectionActive(now >= startDate && now <= endDate);
+
+        // Parse dates more robustly
+        let startDate: Date;
+        let endDate: Date;
+
+        try {
+          // Try to parse the dates, handling various formats
+          startDate = new Date(electionData.start_date);
+          endDate = new Date(electionData.end_date);
+
+          // Check if dates are valid
+          if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            console.error("Invalid date format:", {
+              startDate: electionData.start_date,
+              endDate: electionData.end_date,
+            });
+            setIsElectionActive(false);
+            return;
+          }
+        } catch (error) {
+          console.error("Error parsing election dates:", error);
+          setIsElectionActive(false);
+          return;
+        }
+
+        // Debug logging to understand date parsing
+        console.log("Election dates debug:", {
+          now: now.toISOString(),
+          nowLocal: now.toLocaleString(),
+          startDate: startDate.toISOString(),
+          startDateLocal: startDate.toLocaleString(),
+          endDate: endDate.toISOString(),
+          endDateLocal: endDate.toLocaleString(),
+          startDateRaw: electionData.start_date,
+          endDateRaw: electionData.end_date,
+          isAfterStart: now >= startDate,
+          isBeforeEnd: now <= endDate,
+          isActive: now >= startDate && now <= endDate,
+        });
+
+        const isActive = now >= startDate && now <= endDate;
+        setIsElectionActive(isActive);
 
         const candidatesData = await ElectionService.getCandidates(Number(id));
         setCandidates(candidatesData);

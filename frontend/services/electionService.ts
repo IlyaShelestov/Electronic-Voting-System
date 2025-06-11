@@ -1,17 +1,16 @@
-import { API_URL } from "@/config/env";
 import { ICandidate } from "@/models/ICandidate";
 import { IElection } from "@/models/IElection";
 import { IReport } from "@/models/IReport";
-import { fetchWithCache } from "@/utils/fetchWithCache";
+
+import { apiClient } from "./apiClient";
 
 export class ElectionService {
-  private static apiEndpoint = `${API_URL}/elections`;
+  private static apiEndpoint = "/elections";
   private static reportCache: Map<number, IReport[]> = new Map();
-
   public static async getAll(
     includeReports: boolean = false
   ): Promise<IElection[]> {
-    const elections: IElection[] = await fetchWithCache<IElection[]>(
+    const { data: elections } = await apiClient.get<IElection[]>(
       `${this.apiEndpoint}`
     );
 
@@ -25,7 +24,7 @@ export class ElectionService {
   public static async getAvailable(
     includeReports: boolean = false
   ): Promise<IElection[]> {
-    const elections = await fetchWithCache<IElection[]>(
+    const { data: elections } = await apiClient.get<IElection[]>(
       `${this.apiEndpoint}/available`
     );
 
@@ -50,7 +49,7 @@ export class ElectionService {
     await Promise.all(reportPromises);
   }
   public static async getById(id: number): Promise<IElection> {
-    const election = await fetchWithCache<IElection>(
+    const { data: election } = await apiClient.get<IElection>(
       `${this.apiEndpoint}/${id}`
     );
 
@@ -63,7 +62,10 @@ export class ElectionService {
     return election;
   }
   public static async getCandidates(id: number): Promise<ICandidate[]> {
-    return fetchWithCache<ICandidate[]>(`${this.apiEndpoint}/${id}/candidates`);
+    const { data } = await apiClient.get<ICandidate[]>(
+      `${this.apiEndpoint}/${id}/candidates`
+    );
+    return data;
   }
 
   public static async getReport(id: number): Promise<IReport[]> {
@@ -71,7 +73,7 @@ export class ElectionService {
       return this.reportCache.get(id)!;
     }
 
-    const report = await fetchWithCache<IReport[]>(
+    const { data: report } = await apiClient.get<IReport[]>(
       `${this.apiEndpoint}/${id}/report`
     );
 

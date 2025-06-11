@@ -1,12 +1,13 @@
-import { API_URL } from "@/config/env";
 import { IEvent } from "@/models/IEvent";
-import { fetchWithCache } from "@/utils/fetchWithCache";
+
+import { apiClient } from "./apiClient";
 
 export class EventService {
   private static apiEndpoint = "/events";
 
   public static async getAll(): Promise<IEvent[]> {
-    return await fetchWithCache<IEvent[]>(`${API_URL}${this.apiEndpoint}`);
+    const { data } = await apiClient.get<IEvent[]>(this.apiEndpoint);
+    return data;
   }
 
   public static async getUpcoming(): Promise<IEvent[]> {

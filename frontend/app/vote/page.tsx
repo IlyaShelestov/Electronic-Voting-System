@@ -21,36 +21,64 @@ export default function VotePage() {
   const searchParams = useSearchParams();
   const queryElectionId = searchParams.get("electionId");
   const queryCandidateId = searchParams.get("candidateId");
-
   const [elections, setElections] = useState<IElection[]>([]);
+  const [filteredElections, setFilteredElections] = useState<IElection[]>([]);
   const [selectedElection, setSelectedElection] = useState<number | null>(null);
   const [candidates, setCandidates] = useState<ICandidate[]>([]);
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null
   );
   const [loading, setLoading] = useState(false);
+  const [electionsLoading, setElectionsLoading] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);  const [isTokenVerificationOpen, setIsTokenVerificationOpen] = useState(false);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [isTokenVerificationOpen, setIsTokenVerificationOpen] = useState(false);
   const [voteToken, setVoteToken] = useState<string | null>(null);
   const [tokenCopied, setTokenCopied] = useState(false);
   const email = useEmail();
-
-  // Load saved token from localStorage on component mount
-  useEffect(() => {
-    const savedToken = localStorage.getItem(`voteToken_${selectedElection}`);
-    if (savedToken) {
-      setVoteToken(savedToken);
-    }
-  }, [selectedElection]);
-
   useEffect(() => {
     const fetchElections = async () => {
       try {
+        setElectionsLoading(true);
         const data = await ElectionService.getAvailable();
         setElections(data);
+
+        // Check voting status for each election and filter out already voted elections
+        const electionsWithVoteStatus = await Promise.all(
+          data.map(async (election) => {
+            try {
+              const status = await VoteService.checkVotedStatus(
+                election.election_id!
+              );
+              return {
+                election,
+                hasVoted: !!status.hasVoted,
+              };
+            } catch (error) {
+              console.error(
+                `Error checking vote status for election ${election.election_id}:`,
+                error
+              );
+              // If there's an error checking status, include the election (safer approach)
+              return {
+                election,
+                hasVoted: false,
+              };
+            }
+          })
+        );
+
+        // Filter out elections where user has already voted
+        const availableElections = electionsWithVoteStatus
+          .filter((item) => !item.hasVoted)
+          .map((item) => item.election);
+
+        setFilteredElections(availableElections);
       } catch (error) {
         toast.error("Ошибка загрузки выборов.");
         console.error("Error fetching elections:", error);
+      } finally {
+        setElectionsLoading(false);
       }
     };
 
@@ -115,12 +143,12 @@ export default function VotePage() {
     setSelectedElection(electionId);
     setSelectedCandidate(null);
   };
-
   const handleVote = async () => {
     if (!selectedCandidate) {
       toast.warn("Выберите кандидата перед голосованием!");
       return;
     }
+
     try {
       await OtpService.sendOtp(email);
       setIsOtpModalOpen(true);
@@ -128,7 +156,9 @@ export default function VotePage() {
       console.error("Ошибка при отправке OTP:", error);
       toast.error("Не удалось отправить OTP. Попробуйте снова.");
     }
-  };  const handleOtpSubmit = async (otp: string) => {
+  };
+
+  const handleOtpSubmit = async (otp: string) => {
     if (selectedCandidate !== null && selectedElection !== null) {
       try {
         const result = await VoteService.castVote(
@@ -150,6 +180,11 @@ export default function VotePage() {
           console.warn("No token received from server");
           toast.success("Ваш голос успешно принят!");
         }
+
+        // Remove the current election from filtered elections since user has now voted
+        setFilteredElections((prev) =>
+          prev.filter((election) => election.election_id !== selectedElection)
+        );
       } catch (error) {
         console.error("Ошибка голосования:", error);
         toast.error("Ошибка голосования. Пожалуйста, попробуйте еще раз.");
@@ -158,7 +193,6 @@ export default function VotePage() {
       toast.warn("Выберите кандидата перед голосованием!");
     }
   };
-
   const copyTokenToClipboard = async () => {
     if (voteToken) {
       try {
@@ -195,25 +229,40 @@ export default function VotePage() {
               <span className="selection-icon">🗳️</span>
             </div>
             <div className="select-wrapper">
+              {" "}
               <select
                 id="election-select"
                 value={selectedElection ?? ""}
                 onChange={handleElectionChange}
                 className="election-select"
+                disabled={electionsLoading}
               >
-                <option value="">{t("chooseElection")}</option>
-                {elections.map((election) => (
+                <option value="">
+                  {electionsLoading
+                    ? "Загрузка доступных выборов..."
+                    : t("chooseElection")}
+                </option>
+                {filteredElections.map((election) => (
                   <option
                     key={election.election_id}
                     value={election.election_id}
                   >
                     {election.title}
                   </option>
-                ))}
+                ))}{" "}
               </select>
             </div>
           </div>
-
+          {!electionsLoading && filteredElections.length === 0 && (
+            <div className="no-elections-message">
+              <div className="message-icon">📋</div>
+              <h3>Нет доступных выборов</h3>
+              <p>
+                Вы уже проголосовали во всех доступных выборах или в настоящее
+                время нет активных выборов.
+              </p>
+            </div>
+          )}
           {selectedElection && (
             <div className="candidates-section">
               <div className="candidates-header">
@@ -282,22 +331,26 @@ export default function VotePage() {
                 <div className="already-voted">
                   <div className="voted-icon">✅</div>
                   <h3>{t("alreadyVoted")}</h3>
-                  <p>{t("voteRecorded")}</p>                  {voteToken && (
+                  <p>{t("voteRecorded")}</p>{" "}
+                  {voteToken && (
                     <div className="vote-token-display">
                       <h4>🔐 Ваш токен голосования:</h4>
                       <div className="token-container">
                         <code className="token-code">{voteToken}</code>
                         <button
                           onClick={copyTokenToClipboard}
-                          className={`copy-token-btn ${tokenCopied ? 'copied' : ''}`}
+                          className={`copy-token-btn ${
+                            tokenCopied ? "copied" : ""
+                          }`}
                           title="Скопировать токен"
                         >
-                          {tokenCopied ? '✅' : '📋'}
+                          {tokenCopied ? "✅" : "📋"}
                         </button>
                       </div>
                       <div className="token-info">
                         <p className="token-note">
-                          💡 <strong>Важно:</strong> Сохраните этот токен для проверки вашего голоса в будущем
+                          💡 <strong>Важно:</strong> Сохраните этот токен для
+                          проверки вашего голоса в будущем
                         </p>
                         <p className="token-warning">
                           ⚠️ Не передавайте этот токен третьим лицам
@@ -305,7 +358,6 @@ export default function VotePage() {
                       </div>
                     </div>
                   )}
-
                   <button
                     onClick={() => setIsTokenVerificationOpen(true)}
                     className="verify-token-btn"
@@ -316,7 +368,6 @@ export default function VotePage() {
               )}
             </div>
           )}
-
           {selectedElection && !hasVoted && (
             <div className="vote-actions">
               <button
@@ -343,7 +394,7 @@ export default function VotePage() {
                 </p>
               )}
             </div>
-          )}
+          )}{" "}
         </div>
       </div>{" "}
       <OtpModal

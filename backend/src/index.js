@@ -5,8 +5,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpecs = require('./config/swagger');
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpecs = require("./config/swagger");
 
 const {
   verifyToken,
@@ -28,7 +28,7 @@ const app = express();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:3000",
-  process.env.BACKEND_URL  || "http://localhost:7000"
+  process.env.BACKEND_URL || "http://localhost:7000",
 ];
 
 const corsOptions = {
@@ -38,12 +38,22 @@ const corsOptions = {
     } else {
       callback(new Error(`CORS policy: denied access from ${origin}`));
     }
-  },  // Разрешённый источник для запросов
+  }, // Разрешённый источник для запросов
   credentials: true, // Разрешает передачу cookie и заголовков авторизации (Authorization) между фронтендом и сервером
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],  // Указывает, какие HTTP-методы разрешены для кросс-доменных запросов 
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],    // Разрешённые заголовки, которые клиент может отправлять на сервер.
-  exposedHeaders: ["Authorization", "RateLimit-Limit", "RateLimit-Remaining", "RateLimit-Reset"],   // Указывает, какие заголовки сервер позволяет клиенту читать в ответе.
-  optionsSuccessStatus: 204,  // Указывает HTTP-статус для успешных preflight-запросов (OPTIONS).
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Указывает, какие HTTP-методы разрешены для кросс-доменных запросов
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Accept",
+  ], // Разрешённые заголовки, которые клиент может отправлять на сервер.
+  exposedHeaders: [
+    "Authorization",
+    "RateLimit-Limit",
+    "RateLimit-Remaining",
+    "RateLimit-Reset",
+  ], // Указывает, какие заголовки сервер позволяет клиенту читать в ответе.
+  optionsSuccessStatus: 204, // Указывает HTTP-статус для успешных preflight-запросов (OPTIONS).
   maxAge: 600, // Указывает, сколько секунд браузер может кэшировать preflight-запрос (10 минут)
 };
 app.use(cors(corsOptions));
@@ -74,9 +84,9 @@ app.use(
 
 const limiterOptions = {
   windowMs: 15 * 60 * 1000, // Период времени (15 минут)
-  max: 100,                 // Максимальное число запросов за период
-  standardHeaders: true,    // Стандартные заголовки с информацией о лимите
-  legacyHeaders: false,     // Отключение устаревших заголовков
+  max: 400, // Максимальное число запросов за период
+  standardHeaders: true, // Стандартные заголовки с информацией о лимите
+  legacyHeaders: false, // Отключение устаревших заголовков
   message: "Превышен лимит запросов, пожалуйста, повторите позже.",
 };
 
@@ -93,7 +103,7 @@ app.get("/", (req, res) => {
 });
 
 if (true) {
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 }
 
 app.use("/api/auth", authRoutes);

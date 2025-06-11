@@ -212,7 +212,6 @@ export default function RequestsPage() {
                 <th>{t("userName")}</th>
                 <th>{t("iin")}</th>
                 <th>{t("email")}</th>
-                <th>{t("phone")}</th>
                 <th>{t("fieldName")}</th>
                 <th>{t("oldValue")}</th>
                 <th>{t("newValue")}</th>
@@ -244,7 +243,6 @@ export default function RequestsPage() {
                     </td>
                     <td>{request.iin || t("notAvailable")}</td>
                     <td>{request.user?.email || t("notAvailable")}</td>
-                    <td>{request.user?.phone_number || t("notAvailable")}</td>
                     <td>
                       <span className="field-name">
                         {getFieldDisplayName(request.field_name)}

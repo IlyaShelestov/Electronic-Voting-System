@@ -1,7 +1,8 @@
 import { apiClient } from "@/services/apiClient";
 
 export class VoteService {
-  private static apiEndpoint = "/vote";  public static async castVote(
+  private static apiEndpoint = "/vote";
+  public static async castVote(
     electionId: number,
     candidateId: number,
     otp?: string
@@ -14,9 +15,9 @@ export class VoteService {
       });
 
       console.log("Vote cast response:", data);
-      
+
       // Ensure we return the token from the response
-      if (data && typeof data === 'string') {
+      if (data && typeof data === "string") {
         // If the response is just a token string
         return { token: data, success: true };
       } else if (data && data.token) {

@@ -83,8 +83,8 @@ export default function AdminPage() {
           AdminService.fetchUsers(),
           AdminService.fetchRequests(),
           AdminService.fetchCityDistribution(),
-          AdminService.fetchUserGrowth(selectedPeriod),
-          AdminService.fetchRequestsTrend(selectedPeriod),
+          AdminService.fetchUserGrowth(),
+          AdminService.fetchRequestsTrend(),
         ]);
       setDashboardStats(stats);
 

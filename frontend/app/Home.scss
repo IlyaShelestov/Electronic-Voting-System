@@ -116,6 +116,9 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    * {
+      text-align: left !important;
+    }
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;

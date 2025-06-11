@@ -6,247 +6,509 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(0px);
   padding: 20px;
   box-sizing: border-box;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.visible {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    opacity: 1;
+  }
 }
 
 .popup-content {
   background: white;
   width: 100%;
-  max-width: 900px;
+  max-width: 950px;
   max-height: 90vh;
-  border-radius: 20px;
+  border-radius: 24px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &.visible {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      $button_light 0%,
+      lighten($button_light, 10%) 50%,
+      darken($button_light, 5%) 100%
+    );
+    z-index: 10;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba($general_dark, 0.1);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: $general_dark;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .popup-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 32px;
-  border-bottom: 1px solid rgba($general_dark, 0.1);
-  background: rgba($button_light, 0.02);
+  padding: 40px 40px 32px;
+  background: linear-gradient(
+    135deg,
+    rgba($button_light, 0.03) 0%,
+    rgba($button_light, 0.08) 100%
+  );
+  border-bottom: 1px solid rgba($general_dark, 0.08);
+  position: relative;
 
   .header-content {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
+    position: relative;
 
-    .candidate-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid rgba($button_light, 0.3);
+    .candidate-avatar {
+      position: relative;
+      flex-shrink: 0;
+
+      .candidate-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15),
+          0 0 0 1px rgba($button_light, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.02);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba($button_light, 0.2);
+        }
+      }
+
+      .avatar-fallback {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+        bottom: 4px;
+        background: linear-gradient(
+          135deg,
+          $button_light,
+          lighten($button_light, 15%)
+        );
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
     }
 
     .candidate-basic-info {
+      flex: 1;
+      min-width: 0;
+
       .candidate-name {
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 32px;
+        font-weight: 800;
         color: $general_dark;
-        margin: 0 0 4px 0;
+        margin: 0 0 12px 0;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        background: linear-gradient(
+          135deg,
+          $general_dark 0%,
+          lighten($general_dark, 20%) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .candidate-party {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         font-size: 16px;
-        color: lighten($general_dark, 20%);
-        font-weight: 500;
-        margin: 0;
-        padding: 4px 12px;
-        background: rgba($button_light, 0.1);
-        border-radius: 12px;
-        display: inline-block;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          $button_light,
+          lighten($button_light, 10%)
+        );
+        color: white;
+        box-shadow: 0 4px 16px rgba($button_light, 0.3);
+        transition: all 0.2s ease;
+        border: none;
+        text-decoration: none;
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba($button_light, 0.4);
+        }
 
         &.independent {
-          background: rgba($general_dark, 0.1);
-          color: $general_dark;
+          background: linear-gradient(135deg, #6b7280, #9ca3af);
+          box-shadow: 0 4px 16px rgba(107, 114, 128, 0.3);
+
+          &:hover {
+            box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+          }
         }
       }
-    }
-  }
-
-  .close-btn {
-    background: rgba($general_dark, 0.1);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    color: $general_dark;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: rgba($general_dark, 0.2);
-      transform: scale(1.1);
     }
   }
 }
 
 .popup-body {
-  padding: 32px;
+  padding: 40px;
   overflow-y: auto;
   flex: 1;
 
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($general_dark, 0.05);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($button_light, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba($button_light, 0.5);
+    }
+  }
+
   .info-section {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    &:nth-child(4) {
+      animation-delay: 0.4s;
+    }
 
     &:last-child {
       margin-bottom: 0;
     }
 
     .section-title {
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 700;
       color: $general_dark;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid rgba($button_light, 0.2);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid transparent;
+      background: linear-gradient(
+        to right,
+        rgba($button_light, 0.2),
+        transparent
+      );
+      background-size: 100% 3px;
+      background-position: bottom;
+      background-repeat: no-repeat;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      position: relative;
 
       &::before {
         content: attr(data-icon);
-        font-size: 18px;
+        font-size: 24px;
         color: $button_light;
+        text-shadow: 0 2px 4px rgba($button_light, 0.3);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        height: 3px;
+        width: 60px;
+        background: linear-gradient(
+          90deg,
+          $button_light,
+          lighten($button_light, 20%)
+        );
+        border-radius: 2px;
       }
     }
 
     .info-content {
       .info-item {
         display: flex;
-        margin-bottom: 12px;
         align-items: flex-start;
-        gap: 12px;
+        margin-bottom: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba($general_dark, 0.06);
+        transition: all 0.2s ease;
 
         &:last-child {
           margin-bottom: 0;
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: rgba($button_light, 0.02);
+          margin-left: -8px;
+          margin-right: -8px;
+          padding-left: 8px;
+          padding-right: 8px;
+          border-radius: 8px;
         }
 
         .info-label {
           font-weight: 600;
           color: $general_dark;
-          min-width: 120px;
+          min-width: 160px;
           flex-shrink: 0;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
 
         .info-value {
           color: lighten($general_dark, 15%);
-          line-height: 1.5;
+          line-height: 1.6;
           flex: 1;
+          font-size: 15px;
 
           &.not-available {
-            color: lighten($general_dark, 40%);
+            color: lighten($general_dark, 50%);
             font-style: italic;
+            opacity: 0.7;
           }
 
           a {
             color: $button_light;
             text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 2px 6px;
+            border-radius: 4px;
 
             &:hover {
-              text-decoration: underline;
+              background: rgba($button_light, 0.1);
+              color: darken($button_light, 10%);
             }
           }
         }
       }
 
       .biography-text {
-        color: lighten($general_dark, 15%);
-        line-height: 1.6;
+        color: lighten($general_dark, 10%);
+        line-height: 1.8;
         text-align: justify;
-        background: rgba($general_dark, 0.02);
-        padding: 16px;
-        border-radius: 8px;
+        background: linear-gradient(
+          135deg,
+          rgba($button_light, 0.03),
+          rgba($button_light, 0.08)
+        );
+        padding: 24px;
+        border-radius: 16px;
         border-left: 4px solid $button_light;
-      }
+        font-size: 16px;
+        box-shadow: 0 2px 8px rgba($button_light, 0.1);
+        position: relative;
 
-      .resources-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+        &::before {
+          content: '"';
+          position: absolute;
+          top: 0;
+          left: 6px;
+          font-size: 48px;
+          color: rgba($button_light, 0.2);
+          font-family: serif;
+          line-height: 1;
+        }
 
-        .resource-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px;
-          background: rgba($button_light, 0.05);
-          border-radius: 8px;
-          border: 1px solid rgba($button_light, 0.2);
-
-          .resource-icon {
-            width: 20px;
-            height: 20px;
-            color: $button_light;
-          }
-
-          .resource-link {
-            color: $button_light;
-            text-decoration: none;
-            font-weight: 500;
-            flex: 1;
-
-            &:hover {
-              text-decoration: underline;
-            }
-          }
+        &::after {
+          content: '"';
+          position: absolute;
+          bottom: 0px;
+          right: 6px;
+          font-size: 48px;
+          color: rgba($button_light, 0.2);
+          font-family: serif;
+          line-height: 1;
         }
       }
 
       .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
 
         .contact-item {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 12px;
-          background: rgba($general_dark, 0.02);
-          border-radius: 8px;
+          gap: 16px;
+          padding: 20px;
+          background: linear-gradient(
+            135deg,
+            rgba($general_dark, 0.02),
+            rgba($general_dark, 0.05)
+          );
+          border-radius: 16px;
+          border: 1px solid rgba($general_dark, 0.08);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(
+              90deg,
+              transparent,
+              $button_light,
+              transparent
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          }
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba($button_light, 0.15);
+            border-color: rgba($button_light, 0.2);
+
+            &::before {
+              opacity: 1;
+            }
+          }
+
+          &.empty {
+            opacity: 0.6;
+
+            .contact-icon {
+              opacity: 0.5;
+            }
+          }
 
           .contact-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             color: $button_light;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+
+            svg {
+              width: 100%;
+              height: 100%;
+            }
           }
 
           .contact-info {
+            flex: 1;
+            min-width: 0;
+
             .contact-type {
               font-size: 12px;
-              color: lighten($general_dark, 30%);
+              color: lighten($general_dark, 40%);
               text-transform: uppercase;
-              letter-spacing: 0.5px;
-              margin-bottom: 2px;
+              letter-spacing: 1px;
+              font-weight: 600;
+              margin-bottom: 4px;
             }
 
             .contact-value {
               color: $general_dark;
               font-weight: 500;
+              font-size: 15px;
+              word-break: break-all;
+
+              &.not-available {
+                color: lighten($general_dark, 50%);
+                font-style: italic;
+              }
 
               a {
                 color: $button_light;
                 text-decoration: none;
+                transition: all 0.2s ease;
 
                 &:hover {
-                  text-decoration: underline;
+                  color: darken($button_light, 10%);
                 }
               }
             }
@@ -258,18 +520,37 @@
 
   .empty-section {
     text-align: center;
-    padding: 24px;
+    padding: 40px 24px;
     color: lighten($general_dark, 40%);
-    font-style: italic;
-    background: rgba($general_dark, 0.02);
-    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      rgba($general_dark, 0.02),
+      rgba($general_dark, 0.05)
+    );
+    border-radius: 16px;
+    border: 2px dashed rgba($general_dark, 0.1);
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: 16px;
+      font-style: italic;
+      margin: 0;
+    }
   }
 }
-
 .popup-footer {
-  padding: 24px 32px;
-  border-top: 1px solid rgba($general_dark, 0.1);
-  background: rgba($general_dark, 0.02);
+  padding: 32px 40px;
+  border-top: 1px solid rgba($general_dark, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba($general_dark, 0.02),
+    rgba($general_dark, 0.05)
+  );
   display: flex;
   justify-content: center;
 
@@ -277,67 +558,149 @@
     background: linear-gradient(
       135deg,
       $button_light 0%,
-      darken($button_light, 10%) 100%
+      darken($button_light, 8%) 100%
     );
     color: white;
     border: none;
-    padding: 12px 32px;
-    border-radius: 12px;
+    padding: 16px 32px;
+    border-radius: 16px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba($button_light, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba($button_light, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 140px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: left 0.5s ease;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba($button_light, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba($button_light, 0.35);
+      background: linear-gradient(
+        135deg,
+        lighten($button_light, 5%) 0%,
+        $button_light 100%
+      );
+
+      &::before {
+        left: 100%;
+      }
+
+      svg {
+        transform: rotate(90deg);
+      }
     }
 
     &:active {
-      transform: translateY(0);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba($button_light, 0.3);
     }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
 // Responsive design
 @media (max-width: 768px) {
   .popup-overlay {
-    padding: 10px;
+    padding: 16px;
   }
 
   .popup-content {
     max-height: 95vh;
+    border-radius: 20px;
+  }
+
+  .close-btn {
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   .popup-header {
-    padding: 20px 24px;
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
+    padding: 32px 24px 24px;
 
     .header-content {
       flex-direction: column;
-      gap: 12px;
+      gap: 20px;
+      text-align: center;
 
-      .candidate-image {
-        width: 60px;
-        height: 60px;
+      .candidate-avatar {
+        .candidate-image {
+          width: 80px;
+          height: 80px;
+          border-radius: 16px;
+        }
+
+        .avatar-fallback {
+          border-radius: 12px;
+          font-size: 24px;
+        }
       }
 
       .candidate-basic-info {
-        text-align: center;
-
         .candidate-name {
-          font-size: 20px;
+          font-size: 24px;
+        }
+
+        .candidate-party {
+          font-size: 14px;
+          padding: 8px 16px;
         }
       }
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
     }
   }
 
@@ -345,52 +708,110 @@
     padding: 24px 20px;
 
     .info-section {
-      margin-bottom: 24px;
+      margin-bottom: 32px;
 
       .section-title {
-        font-size: 18px;
+        font-size: 20px;
+        margin-bottom: 16px;
+
+        &::before {
+          font-size: 20px;
+        }
       }
 
       .info-content {
         .info-item {
           flex-direction: column;
           align-items: flex-start;
-          gap: 4px;
+          gap: 8px;
+          padding: 12px 0;
 
           .info-label {
             min-width: auto;
+            font-size: 14px;
+          }
+
+          .info-value {
             font-size: 14px;
           }
         }
 
         .contact-grid {
           grid-template-columns: 1fr;
+          gap: 16px;
+
+          .contact-item {
+            padding: 16px;
+          }
+        }
+
+        .biography-text {
+          font-size: 15px;
+          padding: 20px;
         }
       }
     }
   }
 
   .popup-footer {
-    padding: 20px 24px;
+    padding: 24px 20px;
+
+    .close-footer-btn {
+      padding: 14px 28px;
+      font-size: 15px;
+      min-width: 120px;
+    }
   }
 }
 
 @media (max-width: 480px) {
+  .popup-overlay {
+    padding: 12px;
+  }
+
   .popup-header {
-    padding: 16px 20px;
+    padding: 28px 20px 20px;
 
     .header-content {
-      .candidate-basic-info .candidate-name {
-        font-size: 18px;
+      .candidate-basic-info {
+        .candidate-name {
+          font-size: 20px;
+        }
       }
     }
   }
 
   .popup-body {
     padding: 20px 16px;
+
+    .info-section {
+      .section-title {
+        font-size: 18px;
+      }
+
+      .info-content {
+        .contact-grid {
+          .contact-item {
+            padding: 14px;
+          }
+        }
+
+        .resources-list {
+          .resource-item {
+            padding: 16px;
+          }
+        }
+      }
+    }
   }
 
   .popup-footer {
-    padding: 16px 20px;
+    padding: 20px 16px;
+
+    .close-footer-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      min-width: 100px;
+    }
   }
 }
