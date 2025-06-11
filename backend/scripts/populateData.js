@@ -144,9 +144,9 @@ async function populateData() {
     const electionsRes = await pool.query(`
       INSERT INTO elections (title, start_date, end_date, region_id, city_id)
       VALUES 
-        ('Astana Elections 2025', '2025-03-01 08:00:00', '2025-03-06 20:00:00', ${astanaRegionId}, ${astanaCityId}),
+        ('Astana Elections 2025', '2025-06-09 08:00:00', '2025-06-14 20:00:00', ${astanaRegionId}, ${astanaCityId}),
         ('Astana City Council', '2025-04-01 08:00:00', '2025-04-06 20:00:00', ${astanaRegionId}, ${astanaCityId}),
-        ('Almaty Elections 2025', '2025-05-01 08:00:00', '2025-05-06 20:00:00', ${almatyRegionId}, ${almatyCityId}),
+        ('Almaty Elections 2025', '2025-06-09 08:00:00', '2025-06-14 20:00:00', ${almatyRegionId}, ${almatyCityId}),
         ('Almaty City Council', '2025-06-01 08:00:00', '2025-06-06 20:00:00', ${almatyRegionId}, ${almatyCityId})
       RETURNING election_id;
     `);
@@ -245,13 +245,13 @@ async function populateData() {
       const candidates = candidatesByElection[electionId];
       const candidateId =
         candidates[Math.floor(Math.random() * candidates.length)];
-      const dayOffset = Math.floor(Math.random() * 6);
+      const dayOffset = Math.floor(Math.random() * 2);
 
       astanaVotes.push(`(
         ${candidateId},
         ${electionId},
         'token${userId}_${electionId}',
-        '2025-03-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+        '2025-06-09 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
       )`);
     });
 
@@ -280,13 +280,13 @@ async function populateData() {
       const candidates = candidatesByElection[electionId];
       const candidateId =
         candidates[Math.floor(Math.random() * candidates.length)];
-      const dayOffset = Math.floor(Math.random() * 6);
+      const dayOffset = Math.floor(Math.random() * 2);
 
       almatyVotes.push(`(
         ${candidateId},
         ${electionId},
         'token${userId}_${electionId}',
-        '2025-05-01 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
+        '2025-06-09 08:00:00'::timestamp + INTERVAL '${dayOffset} days'
       )`);
     });
 
