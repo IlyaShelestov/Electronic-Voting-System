@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 
 import BannerSlider from "@/components/BannerSlider/BannerSlider";
 import ElectionCard from "@/components/ElectionCard/ElectionCard";
+import EventCard from "@/components/EventCard/EventCard";
 import { IElection } from "@/models/IElection";
+import { IEvent } from "@/models/IEvent";
 import { ElectionService } from "@/services/electionService";
+import { EventService } from "@/services/eventService";
 import { useAppDispatch, useIsAuthenticated } from "@/store/hooks";
 import { setElections } from "@/store/slices/electionSlice";
 
@@ -38,10 +41,9 @@ export default function Home() {
     { src: "/images/default-banner.png", alt: t("bannerAlt") },
     { src: "/images/default-banner.png", alt: t("bannerAlt") },
   ];
-
   const [availableElections, setAvailableElections] = useState<IElection[]>([]);
   const [allElections, setAllElections] = useState<IElection[]>([]);
-
+  const [upcomingEvents, setUpcomingEvents] = useState<IEvent[]>([]);
   useEffect(() => {
     const fetchElections = async () => {
       setErrorMessage(null);
@@ -105,7 +107,17 @@ export default function Home() {
       }
     };
 
+    const fetchUpcomingEvents = async () => {
+      try {
+        const events = await EventService.getUpcoming();
+        setUpcomingEvents(events.slice(0, 3)); // Show only first 3 upcoming events
+      } catch (error) {
+        console.error("Failed to fetch upcoming events:", error);
+      }
+    };
+
     fetchElections();
+    fetchUpcomingEvents();
   }, [sort, isAuthenticated]);
 
   const filteredElections =
@@ -119,10 +131,24 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="home-title">{t("title")}</h1>
-
+      <h1 className="home-title">{t("title")}</h1>{" "}
       <BannerSlider slides={slides} />
-
+      {/* Upcoming Events Section */}
+      <section className="upcoming-events-section">
+        <h2 className="section-title">{t("upcomingEvents")}</h2>
+        {upcomingEvents.length > 0 ? (
+          <div className="events-grid">
+            {upcomingEvents.map((event) => (
+              <EventCard
+                key={event.event_id}
+                event={event}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="no-events-message">{t("noUpcomingEvents")}</div>
+        )}
+      </section>
       <div className="filter-container">
         <input
           id="election-search"
@@ -160,7 +186,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <div
         className="elections-list"
         aria-live="polite"

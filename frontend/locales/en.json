@@ -169,7 +169,11 @@
     "byVotes": "By votes",
     "byName": "By name",
     "searchPlaceholder": "Search",
-    "farthestDate": "Farthest date"
+    "farthestDate": "Farthest date",
+    "upcomingEvents": "Upcoming Events",
+    "noUpcomingEvents": "No upcoming events",
+    "viewAllEvents": "View All Events",
+    "eventDate": "Date"
   },
   "candidatesPage": {
     "title": "Candidates",

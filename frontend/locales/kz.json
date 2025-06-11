@@ -131,7 +131,11 @@
     "byVotes": "Дауыс саны бойынша",
     "byName": "Аты бойынша",
     "searchPlaceholder": "Іздеу",
-    "farthestDate": "Ең алыс күн"
+    "farthestDate": "Ең алыс күн",
+    "upcomingEvents": "Алдағы оқиғалар",
+    "noUpcomingEvents": "Алдағы оқиғалар жоқ",
+    "viewAllEvents": "Барлық оқиғаларды қарау",
+    "eventDate": "Күні"
   },
   "votePage": {
     "title": "Дауыс беру",

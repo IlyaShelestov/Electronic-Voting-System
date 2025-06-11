@@ -304,7 +304,11 @@
     "byVotes": "По голосам",
     "byName": "По имени",
     "searchPlaceholder": "Поиск",
-    "farthestDate": "Самая дальняя дата"
+    "farthestDate": "Самая дальняя дата",
+    "upcomingEvents": "Предстоящие события",
+    "noUpcomingEvents": "Нет предстоящих событий",
+    "viewAllEvents": "Посмотреть все события",
+    "eventDate": "Дата"
   },
   "votePage": {
     "title": "Голосование",
