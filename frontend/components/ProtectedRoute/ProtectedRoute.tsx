@@ -33,6 +33,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     redirect(fallbackUrl);
   }
 
+  if (requiredRole === UserRoleEnum.USER && !hasRole(UserRoleEnum.USER)) {
+    return <>{children}</>;
+  }
+
   if (requiredRole && !hasRole(requiredRole)) {
     redirect("/auth/login");
   }

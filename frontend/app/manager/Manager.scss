@@ -3,7 +3,6 @@
 .manager-page {
   width: 100%;
 
-
   h1 {
     font-size: 36px;
     font-weight: 700;
@@ -12,6 +11,7 @@
   }
 
   .manager-tabs {
+    text-align: center;
     display: flex;
     background: white;
     border-radius: 12px;
