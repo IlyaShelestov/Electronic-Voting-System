@@ -11,6 +11,7 @@ const {
   createCity,
   createRegion,
 } = require("../helpers/entitiesHelper");
+const { token } = require("morgan");
 
 describe("Vote API Integration Tests", () => {
   let userToken;
@@ -116,7 +117,7 @@ describe("Vote API Integration Tests", () => {
           candidateId: candidate.candidate_id,
         });
       expect(res.status).toBe(201);
-      expect(res.body).toEqual(expect.any(String));
+      expect(res.body).toEqual({ token: expect.any(String) });
     });
 
     it("should return 409 if user tries to vote for himself", async () => {
@@ -186,13 +187,13 @@ describe("Vote API Integration Tests", () => {
       const res2 = await request(app)
         .post("/api/vote/token")
         .set("Cookie", `token=${userToken}`)
-        .send({ token: token });
+        .send({ token: token.token });
 
       expect(res2.status).toBe(200);
       expect(res2.body).toEqual({
         candidate_id: 1,
         election_id: 1,
-        token: token,
+        token: token.token,
         vote_id: 1,
         voted_at: expect.any(String),
       });
