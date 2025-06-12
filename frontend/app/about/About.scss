@@ -1,28 +1,205 @@
 @use "@/styles/variables.scss" as *;
+
 .about_us {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: stretch;
+  gap: 30px;
   justify-content: space-around;
   margin-top: 60px;
   width: 100%;
-
+  flex-wrap: wrap;
   .profile {
-    color: $general_light;
-    background-color: $border_dark;
+    color: $general_dark;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
     border-radius: 20px;
-    border: 2px solid $border_dark;
-    padding: 20px;
+    border: 2px solid #e2e8f0;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    min-width: 320px;
+    max-width: 400px;
+    flex: 1;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed, #ec4899);
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border-color: #cbd5e1;
+    }
+    .profile-image {
+      margin-bottom: 10px;
+
+      img {
+        border-radius: 50%;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      &:hover img {
+        border-color: rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+      }
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      gap: 12px;
+    }
     h2 {
       text-wrap: wrap;
       text-align: center;
-      margin-bottom: 20px;
-      color: $general_light;
+      margin: 0;
+      color: $general_dark;
+      font-size: 1.4rem;
+      font-weight: 600;
+      background: linear-gradient(45deg, #1e293b, #475569);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .role {
+      font-size: 1.1rem;
+      color: #4f46e5;
+      font-weight: 500;
+      margin: 0;
+      padding: 4px 12px;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(79, 70, 229, 0.3);
+    }
+    .group {
+      font-size: 0.95rem;
+      color: #64748b;
+      margin: 0;
+      font-weight: 400;
+    }
+    .achievements {
+      margin-top: 15px;
+      width: 100%;
+
+      h3 {
+        color: #d97706;
+        font-size: 1rem;
+        margin: 0 0 10px 0;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        li {
+          background: rgba(217, 119, 6, 0.1);
+          border: 1px solid rgba(217, 119, 6, 0.2);
+          border-radius: 8px;
+          padding: 8px 12px;
+          font-size: 0.9rem;
+          color: #92400e;
+          position: relative;
+
+          &::before {
+            content: "🏅";
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    .github-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: $general_dark;
+      text-decoration: none;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 10px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+        border-color: rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      svg {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover svg {
+        transform: rotate(5deg) scale(1.1);
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    .profile {
+      max-width: 500px;
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 40px;
+    gap: 30px;
+
+    .profile {
+      min-width: unset;
+      width: 95%;
+      padding: 20px;
+
+      .profile-image img {
+        width: 200px;
+        height: 200px;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .role {
+        font-size: 1rem;
+      }
+
+      .achievements ul li {
+        font-size: 0.85rem;
+      }
     }
   }
 }
