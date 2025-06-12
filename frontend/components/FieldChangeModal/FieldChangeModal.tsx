@@ -31,7 +31,7 @@ const FieldChangeModal: React.FC<FieldChangeModalProps> = ({
   currentValue,
   onSuccess,
 }) => {
-  const t = useTranslations("profile");
+  const t = useTranslations("profilePage");
   const { isLoading, withLoading } = useLoading();
   const [newValue, setNewValue] = useState("");
   const [error, setError] = useState<string | null>(null);

@@ -27,4 +27,29 @@ export class AuthService {
   public static async logout(): Promise<void> {
     await apiClient.post(`${this.apiEndpoint}/logout`);
   }
+  public static async sendForgotPasswordOtp(email: string): Promise<{ message: string }> {
+    const response = await apiClient.post(
+      `${this.apiEndpoint}/forgot-password/send-otp`,
+      {
+        email,
+      }
+    );
+    return response.data;
+  }
+
+  public static async resetPassword(
+    email: string,
+    otp: string,
+    newPassword: string
+  ): Promise<{ message: string }> {
+    const response = await apiClient.post(
+      `${this.apiEndpoint}/forgot-password/reset`,
+      {
+        email,
+        otp,
+        newPassword,
+      }
+    );
+    return response.data;
+  }
 }

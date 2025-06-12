@@ -202,8 +202,38 @@ export const userUpdateSchema = z.object({
   }),
 });
 
+// Forgot password schema
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .email("validation.emailInvalid")
+    .max(255, "validation.emailTooLong"),
+});
+
+// Reset password schema
+export const resetPasswordSchema = z
+  .object({
+    otp: z
+      .string()
+      .length(6, "validation.otpIncomplete")
+      .regex(/^\d+$/, "validation.otpDigitsOnly"),
+    password: z
+      .string()
+      .min(9, "validation.passwordMinLength")
+      .regex(/[A-Za-z]/, "validation.passwordMustContainLetter")
+      .regex(/\d/, "validation.passwordMustContainNumber")
+      .regex(/[@$!%*?&]/, "validation.passwordMustContainSpecial"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "validation.passwordMismatch",
+    path: ["confirmPassword"],
+  });
+
 // Type exports for TypeScript
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type FieldChangeFormData = z.infer<typeof fieldChangeSchema>;
 export type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
+export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;

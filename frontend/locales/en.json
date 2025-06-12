@@ -46,6 +46,41 @@
     "alreadyHaveAccount": "Already have an account?",
     "login": "Login"
   },
+  "forgotPasswordPage": {
+    "title": "Forgot Password",
+    "description": "Enter your email address and we'll send you a code to reset your password.",
+    "sendResetLink": "Send Reset Code",
+    "sending": "Sending...",
+    "emailSent": "Code Sent",
+    "emailSentDescription": "We've sent a reset code to your email address.",
+    "rememberPassword": "Remember your password?",
+    "backToLogin": "Back to Login",
+    "error": "Failed to send reset code",
+    "errorSendingOtp": "Failed to send verification code",
+    "errorResettingPassword": "Failed to reset password",
+    "otpSentDescription": "We've sent a 6-digit code to {email}. Enter the code and your new password below.",
+    "otpPlaceholder": "Enter 6-digit code",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "resetPassword": "Reset Password",
+    "resetting": "Resetting...",
+    "backToEmail": "Back to Email",
+    "passwordResetSuccess": "Password Reset Successfully",
+    "passwordResetSuccessDescription": "Your password has been reset successfully. You can now login with your new password."
+  },
+  "resetPasswordPage": {
+    "title": "Reset Password",
+    "description": "Enter your new password below.",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "resetPassword": "Reset Password",
+    "resetting": "Resetting...",
+    "success": "Password Reset Successfully!",
+    "successDescription": "Your password has been reset successfully. You can now log in with your new password.",
+    "error": "Failed to reset password. Please try again or request a new reset link.",
+    "invalidToken": "Invalid or expired reset token. Please request a new password reset.",
+    "loginNow": "Login Now"
+  },
   "adminPage": {
     "title": "Admin Panel",
     "userManagement": "User Management",
@@ -204,7 +239,8 @@
     "electionNotActiveMessage": "This election is not currently active for voting.",
     "locationNotEligibleMessage": "You are not eligible to vote in this election based on your registered location.",
     "voteAlreadyCastMessage": "Your vote has already been recorded for this election.",
-    "fetchError": "Error loading election data"
+    "fetchError": "Error loading election data",
+    "backToHome": "Back to Home"
   },
   "candidateCard": {
     "additionalInfo": "Additional Info",
@@ -302,7 +338,11 @@
     "verificationSuccess": "Your vote has been successfully verified!",
     "verificationError": "Token verification failed",
     "tokenNotFound": "Token not found",
-    "tokenRequired": "Please enter a token"
+    "tokenRequired": "Token is required",
+    "passwordMismatch": "Passwords do not match",
+    "noElectionsAvailable": "No elections available to vote",
+    "noElectionsMessage": "You have already voted in all available elections or there are no active elections at the moment.",
+    "loadingElections": "Loading elections..."
   },
   "validation": {
     "iinFormat": "IIN must be exactly 12 digits",
@@ -341,7 +381,9 @@
       "strong": "Strong"
     },
     "otpIncomplete": "Please enter all 6 digits",
-    "otpDigitsOnly": "OTP must contain only digits"
+    "otpDigitsOnly": "OTP must contain only digits",
+    "tokenRequired": "Token is required",
+    "passwordMismatch": "Passwords do not match"
   },
   "common": {
     "showPassword": "Show password",

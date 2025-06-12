@@ -46,6 +46,19 @@
     "alreadyHaveAccount": "У вас уже есть аккаунт?",
     "login": "Войти"
   },
+  "resetPasswordPage": {
+    "title": "Сброс пароля",
+    "description": "Введите новый пароль ниже.",
+    "newPassword": "Новый пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "resetPassword": "Сбросить пароль",
+    "resetting": "Сброс...",
+    "success": "Пароль успешно сброшен!",
+    "successDescription": "Ваш пароль был успешно сброшен. Теперь вы можете войти с новым паролем.",
+    "error": "Не удалось сбросить пароль. Попробуйте еще раз или запросите новую ссылку для сброса.",
+    "invalidToken": "Недействительный или истекший токен сброса. Пожалуйста, запросите новый сброс пароля.",
+    "loginNow": "Войти сейчас"
+  },
   "votePage": {
     "title": "Голосование",
     "subtitle": "Выберите выборы и кандидата для безопасного голосования",
@@ -179,7 +192,9 @@
       "strong": "Надежный"
     },
     "otpIncomplete": "Пожалуйста, введите все 6 цифр",
-    "otpDigitsOnly": "Код должен содержать только цифры"
+    "otpDigitsOnly": "Код должен содержать только цифры",
+    "tokenRequired": "Токен обязателен",
+    "passwordMismatch": "Пароли не совпадают"
   },
   "common": {
     "showPassword": "Показать пароль",
@@ -272,9 +287,7 @@
     "description": "Описание",
     "createdAt": "Создано",
     "enterEventTitle": "Введите название события",
-    "enterEventDescription": "Введите описание события",
-    "parsedDateOfBirth": "Дата рождения из ИИН",
-    "registering": "Регистрация..."
+    "enterEventDescription": "Введите описание события"
   },
   "dashboard": {
     "title": "Панель управления",
@@ -465,6 +478,28 @@
   },
   "aboutPage": {
     "title": "О нас"
+  },
+  "forgotPasswordPage": {
+    "title": "Забыли пароль",
+    "description": "Введите ваш email адрес и мы отправим вам код для сброса пароля.",
+    "sendResetLink": "Отправить код сброса",
+    "sending": "Отправка...",
+    "emailSent": "Код отправлен",
+    "emailSentDescription": "Мы отправили код сброса на ваш email адрес.",
+    "rememberPassword": "Вспомнили пароль?",
+    "backToLogin": "Вернуться к входу",
+    "error": "Не удалось отправить код сброса",
+    "errorSendingOtp": "Не удалось отправить код подтверждения",
+    "errorResettingPassword": "Не удалось сбросить пароль",
+    "otpSentDescription": "Мы отправили 6-значный код на {email}. Введите код и новый пароль ниже.",
+    "otpPlaceholder": "Введите 6-значный код",
+    "newPasswordPlaceholder": "Введите новый пароль",
+    "confirmPasswordPlaceholder": "Подтвердите новый пароль",
+    "resetPassword": "Сбросить пароль",
+    "resetting": "Сброс...",
+    "backToEmail": "Вернуться к email",
+    "passwordResetSuccess": "Пароль успешно сброшен",
+    "passwordResetSuccessDescription": "Ваш пароль успешно сброшен. Теперь вы можете войти с новым паролем."
   },
   "otpModal": {
     "title": "Подтверждение кода",

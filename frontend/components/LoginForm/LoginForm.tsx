@@ -76,7 +76,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           autoComplete="current-password"
         />
         <Link
-          href="/forgot"
+          href="/auth/forgot-password"
           className="forgot-password-link"
         >
           {t("forgotPassword")}
